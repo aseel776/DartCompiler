@@ -2,7 +2,7 @@ package flutter;
 
 import enums.Alignment;
 
-public class CrossAxis extends Column_rowAtts{
+public class CrossAxis extends Column_rowAtt{
     public Alignment al ;
     public CrossAxis(Alignment  al){
         this.al=al;

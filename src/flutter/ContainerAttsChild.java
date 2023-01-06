@@ -1,10 +1,12 @@
 package flutter;
 
-public class ContainerAttsChild extends ContainerAtts{
+import nodes.DartObject;
+
+public class ContainerAttsChild extends ContainerAtt{
 
 
-    public String object;
-    public ContainerAttsChild(String object) {
+    public DartObject object;
+    public ContainerAttsChild(DartObject object) {
         this.object = object;
     }
     @Override

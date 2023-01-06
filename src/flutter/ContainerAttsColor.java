@@ -2,7 +2,7 @@ package flutter;
 
 import enums.Color;
 
-public class ContainerAttsColor extends ContainerAtts {
+public class ContainerAttsColor extends ContainerAtt {
     public Color color;
 
     public ContainerAttsColor(Color color){

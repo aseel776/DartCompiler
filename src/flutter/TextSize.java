@@ -1,8 +1,6 @@
 package flutter;
-
 import nodes.PositiveInteger;
-
-public class TextSize extends TextAtts{
+public class TextSize extends TextAtt{
    public PositiveInteger number ;
     public TextSize(PositiveInteger number){
         this.number=number;

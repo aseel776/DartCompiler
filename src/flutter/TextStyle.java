@@ -2,7 +2,7 @@ package flutter;
 
 import enums.Style;
 
-public class TextStyle extends TextAtts{
+public class TextStyle extends TextAtt{
    public Style style;
     public TextStyle(  Style style){
         this.style= style;

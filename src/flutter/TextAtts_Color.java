@@ -1,6 +1,6 @@
 package flutter;
 
-public class TextAtts_Color extends TextAtts{
+public class TextAtts_Color extends TextAtt{
     public enums.Color color ;
     public TextAtts_Color(enums.Color color){
         this.color=color;

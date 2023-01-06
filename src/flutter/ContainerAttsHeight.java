@@ -2,7 +2,7 @@ package flutter;
 
 import nodes.PositiveInteger;
 
-public class ContainerAttsHeight extends ContainerAtts{
+public class ContainerAttsHeight extends ContainerAtt{
     public PositiveInteger number ;
     public ContainerAttsHeight(PositiveInteger number) {
         this.number = number;

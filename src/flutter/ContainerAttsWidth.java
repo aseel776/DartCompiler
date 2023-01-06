@@ -2,9 +2,9 @@ package flutter;
 
 import nodes.PositiveInteger;
 
-public class containerAttsWidth extends ContainerAtts{
+public class ContainerAttsWidth extends ContainerAtt{
     public PositiveInteger number ;
-    public containerAttsWidth(PositiveInteger number) {
+    public ContainerAttsWidth(PositiveInteger number) {
         this.number = number;
     }
 
