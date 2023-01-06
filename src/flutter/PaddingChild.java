@@ -1,12 +1,12 @@
 package flutter;
 
-public class PaddingAttsChild extends PaddingAtts{
+import nodes.DartObject;
 
+public class PaddingChild extends PaddingAtt{
 
+    public DartObject object ;
 
-    public String object ;
-
-    public PaddingAttsChild(String object) {
+    public PaddingChild(DartObject object) {
         this.object = object;
     }
     @Override

@@ -2,10 +2,10 @@ package flutter;
 
 import nodes.PositiveInteger;
 
-public class SizedBox_height extends SizedBoxAtts{
+public class SizedBoxHeight extends SizedBoxAtt{
     public PositiveInteger number ;
 
-    public SizedBox_height( PositiveInteger number ){
+    public SizedBoxHeight(PositiveInteger number ){
         this.number=number;
     }
 
@@ -14,7 +14,3 @@ public class SizedBox_height extends SizedBoxAtts{
         return "height:" +number.toString();
     }
 }
-
-//height
-//        : HEIGHT':'INT_NUM COMMA?
-//        ;

@@ -1,20 +1,18 @@
 package flutter;
 
-public class MaterialHome extends MaterialAppAtts{
-    //%%% create  obj object------------------------------------------
-    public String object ;
+import nodes.DartObject;
 
+public class MaterialHome extends MaterialAppAtt{
+    public DartObject object ;
 
-    public  MaterialHome(String object ){
+    public  MaterialHome(DartObject object ){
         super();
         this.object= object;
     }
 
     @Override
     public String toString() {
-
-            return "home:" + object.toString() ;
-
+        return "home:" + object.toString() ;
     }
 }
 

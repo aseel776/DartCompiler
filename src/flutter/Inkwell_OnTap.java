@@ -1,5 +1,5 @@
 package flutter;
 
-public abstract class Inkwell_OnTap extends InkwellAtts {
+public abstract class Inkwell_OnTap extends InkWellAtt{
 
 }

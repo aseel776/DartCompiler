@@ -1,5 +1,5 @@
 package flutter;
 
-public abstract class Button_OnTap extends ButtonAtts {
+public abstract class Button_OnTap extends ButtonAtt{
 
 }

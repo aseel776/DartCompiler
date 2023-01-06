@@ -2,7 +2,7 @@ package flutter;
 
 import enums.Color;
 
-public class ScaffoldBackground extends ScaffoldAtts{
+public class ScaffoldBackground extends ScaffoldAtt{
 
     public Color color;
 
@@ -17,4 +17,3 @@ public class ScaffoldBackground extends ScaffoldAtts{
     }
 
 }
-//    : COLOR':'COLORS COMMA?

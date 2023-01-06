@@ -2,7 +2,7 @@ package flutter;
 
 import nodes.PositiveInteger;
 
-public class ImageAttsHeight extends ImageAtts{
+public class ImageAttsHeight extends ImageAtt{
     PositiveInteger number ;
     public ImageAttsHeight(PositiveInteger number) {
         this.number = number;
