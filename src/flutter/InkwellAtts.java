@@ -1,6 +1,35 @@
 package flutter;
 
-import nodes.Node;
+import nodes.Parameters;
 
-public abstract class InkwellAtts extends Node {
+import java.util.ArrayList;
+import java.util.List;
+
+public class InkwellAtts extends Parameters {
+    List<InkWellAtt> atts;
+
+    public InkwellAtts(List<InkWellAtt> atts){
+        this.atts = atts;
+    }
+
+    public InkwellAtts(){
+        atts = new ArrayList<>();
+    }
+
+    public void addAtt(InkWellAtt att){
+        atts.add(att);
+    }
+
+    @Override
+    public String toString() {
+        String top = "";
+        for (int i = 0; i < atts.size(); i++) {
+            if (i == atts.size() - 1) {
+                top = top.concat(atts.get(i).toString() + "\n");
+            } else {
+                top = top.concat(atts.get(i).toString() + "," + "\n");
+            }
+        }
+        return top;
+    }
 }

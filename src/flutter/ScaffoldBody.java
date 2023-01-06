@@ -1,20 +1,19 @@
 package flutter;
 
-public class ScaffoldBody extends ScaffoldAtts{
+import nodes.DartObject;
 
-    public String object ;
+public class ScaffoldBody extends ScaffoldAtt{
+
+    public DartObject object ;
 
 
-    public  ScaffoldBody(String object ){
+    public  ScaffoldBody(DartObject object ){
         super();
         this.object= object;
     }
 
     @Override
     public String toString() {
-
         return "body:" + object.toString() ;
-
     }
 }
-//    : BODY':'object COMMA?

@@ -1,39 +1,16 @@
 package flutter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Image extends Component{
-    public List<ImageAtts> imageAtts ;
-    public String character;
-    public Image(String character){
-        this.imageAtts= new ArrayList<>();
-        this.character=character;
+    public ImageAtts imageAtts ;
+    public String src;
+    public Image(String src, ImageAtts imageAtts){
+        super("Image", imageAtts);
+        this.src = src;
+        this.imageAtts = imageAtts;
     }
-    public Image(List<ImageAtts> listt,String character ){
-        this.imageAtts= listt;
-        this.character=character;
 
-    }
-    public void addImageAtts(ImageAtts cm ){
-        imageAtts.add(cm);
-    }
     @Override
     public String toString() {
-        String top= new String( "new Image (" )  ;
-        top.concat(character);
-        top.concat(",");
-        for (int i = 0; i < imageAtts.size(); i++) {
-            if (i == imageAtts.size() - 1) {
-                top = top.concat(imageAtts.toString() + "\n");
-            } else {
-                top = top.concat(imageAtts.toString() + "," + "\n");
-            }
-        }
-        top = top.concat(")");
-        return top ;
+        return "new Image (\n" + src + '\n' + imageAtts.toString() + "\n)";
     }
 }
-//    NEW TEXT '(' CHARACTERS COMMA? textAtts* ')'
-
-// new Text ("character,List)

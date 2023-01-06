@@ -2,10 +2,10 @@ package flutter;
 
 import enums.Color;
 
-public class ButtonAtts_Color extends ButtonAtts{
+public class ButtonColor extends ButtonAtt{
     public Color color;
 
-    public ButtonAtts_Color(Color color){
+    public ButtonColor(Color color){
 
         this.color= color;
     }

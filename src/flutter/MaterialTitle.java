@@ -1,18 +1,18 @@
 package flutter;
 
-public class MaterialTitle extends MaterialAppAtts{
-    public String character;
+public class MaterialTitle extends MaterialAppAtt{
+    public String title;
 
     public MaterialTitle(String character){
         super();
-        this.character= character;
+        this.title= character;
 
     }
 
     @Override
     public String toString() {
 
-        return "title:"+character;
+        return "title:"+title;
     }
 }
 

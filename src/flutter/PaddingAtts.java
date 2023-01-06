@@ -1,8 +1,35 @@
 package flutter;
 
-import nodes.Node;
+import nodes.Parameters;
 
-public  abstract  class PaddingAtts extends Node {
+import java.util.ArrayList;
+import java.util.List;
 
+public class PaddingAtts extends Parameters {
+    public List<PaddingAtt> atts;
 
+    public PaddingAtts(List<PaddingAtt> atts){
+        this.atts = atts;
+    }
+
+    public PaddingAtts(){
+        atts = new ArrayList<>();
+    }
+
+    public void addAtt(PaddingAtt att){
+        atts.add(att);
+    }
+
+    @Override
+    public String toString() {
+        String top = "";
+        for (int i = 0; i < atts.size(); i++) {
+            if (i == atts.size() - 1) {
+                top = top.concat(atts.get(i).toString() + "\n");
+            } else {
+                top = top.concat(atts.get(i).toString() + "," + "\n");
+            }
+        }
+        return top;
+    }
 }

@@ -1,8 +1,9 @@
 package flutter;
-//import enums.StackFit;
 
-public class ImageFit extends ImageAtts{
-    public   enums.BoxFit imageFit ;
+import enums.BoxFit;
+
+public class ImageFit extends ImageAtt{
+    public BoxFit imageFit ;
     public ImageFit(enums.BoxFit imageFit ){
         this.imageFit= imageFit;
     }
@@ -12,4 +13,3 @@ public class ImageFit extends ImageAtts{
         return  "fit:BoxFit."+imageFit.toString();
     }
 }
-//    : FIT':'STACK_FIT COMMA?

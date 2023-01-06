@@ -1,8 +1,12 @@
 package flutter;
 
-public class ButtonAtts_Child extends ButtonAtts{
-    String object;
-    public ButtonAtts_Child(String object){
+
+import nodes.DartObject;
+
+
+public class SizedBoxChild extends SizedBoxAtt{
+    DartObject object;
+    public SizedBoxChild(DartObject object){
         this.object=object;
     }
 

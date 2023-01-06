@@ -2,7 +2,7 @@ package flutter;
 
 import nodes.PositiveInteger;
 
-public class ImageAttsWidth extends ImageAtts{
+public class ImageAttsWidth extends ImageAtt{
     PositiveInteger number ;
     public ImageAttsWidth(PositiveInteger number) {
         this.number = number;
@@ -13,4 +13,3 @@ public class ImageAttsWidth extends ImageAtts{
         return "width:"+number.toString();
     }
 }
-//    : WIDTH':'INT_NUM COMMA?

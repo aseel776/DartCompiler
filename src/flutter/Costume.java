@@ -2,7 +2,7 @@ package flutter;
 
 import java.util.List;
 
-public class Costume extends Values{
+public class Costume extends PaddingValues {
 
     public List<CostumeValues> costumeValues;
     public Costume(List<CostumeValues> costumeValues) {
@@ -11,7 +11,7 @@ public class Costume extends Values{
 
     @Override
     public String toString() {
-        String top= new String( "Values.costume(" )  ;
+        String top= new String( "values: PaddingValues.costume(" )  ;
         for (int i = 0; i < costumeValues.size(); i++) {
             if (i == costumeValues.size() - 1) {
                 top = top.concat(costumeValues.get(i).toString() + "\n");
