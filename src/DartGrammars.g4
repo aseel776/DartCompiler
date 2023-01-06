@@ -217,8 +217,8 @@ consArg
 
 //function calls and objects
 functionCall
-    : AWAIT? ID parameters
-    | AWAIT? ID'.'ID parameters
+    : AWAIT? ID '(' parameters ')'
+    | AWAIT? ID'.'ID '(' parameters ')'
     ;
 object
     : NEW ID '(' parameters ')'
