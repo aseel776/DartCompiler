@@ -24,6 +24,7 @@ public class DartClass extends Node {
         }else{
             implementsAnInterface = false;
         }
+        this.classBody = classBody;
     }
 
     @Override

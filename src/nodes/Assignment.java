@@ -11,6 +11,6 @@ public class Assignment extends Statement{
 
     @Override
     public String toString() {
-        return id + " = " + value.toString();
+        return id + " = " + value.toString() + ";";
     }
 }

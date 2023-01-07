@@ -8,6 +8,6 @@ public class ThisStatement extends Assignment{
 
     @Override
     public String toString() {
-        return "this." + id + " = " + value.toString();
+        return "this." + id + " = " + value.toString() + ";";
     }
 }

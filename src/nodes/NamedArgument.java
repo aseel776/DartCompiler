@@ -11,9 +11,17 @@ public class NamedArgument extends Argument{
     @Override
     public String toString() {
         if(isRequired){
-            return "required" + " " + type.toString() + " " + id;
+            if(type != null){
+                return "required" + " " + type + " " + id;
+            }else {
+                return "required" + " " + id;
+            }
         }else {
-            return type.toString() + " " + id;
+            if(type != null){
+                return type + " " + id;
+            }else {
+                return id;
+            }
         }
     }
 }

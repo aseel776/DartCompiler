@@ -5,12 +5,18 @@ public class Argument extends Node{
     public String id;
 
     public Argument(String type, String id){
-        this.type =type;
+        if(type != null){
+            this.type =type;
+        }
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return type.toString() + " " + id;
+        if(type != null){
+            return type + " " + id;
+        }else{
+            return id;
+        }
     }
 }

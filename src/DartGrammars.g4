@@ -141,7 +141,7 @@ arguments
     | zeroArguments
     ;
 positionalNamedArguments
-    : (positionalArguments COMMA)+ namedArguments+
+    : positionalArguments COMMA namedArguments
     ;
 positionalArguments
     : (arg COMMA)* arg
@@ -189,7 +189,7 @@ consArguments
     | conZeroArgs
     ;
 consPositionalNamedArguments
-    : (consPositionalArguments COMMA)+ consNamedArguments+
+    : consPositionalArguments COMMA consNamedArguments
     ;
 consPositionalArguments
     : (consArg COMMA)* consArg
@@ -221,13 +221,13 @@ parameters
     | zeroParameters
     ;
 positionalNamedParameters
-    : (positionalParameters COMMA)+ namedParameters+
+    : positionalParameters COMMA namedParameters
     ;
 positionalParameters
-    : (parameter COMMA)* parameter COMMA?
+    : (parameter COMMA)* parameter
     ;
 namedParameters
-    : (ID':'parameter COMMA)* ID':'parameter COMMA?
+    : (ID':'parameter COMMA)* ID':'parameter
     ;
 zeroParameters
     :

@@ -14,7 +14,7 @@ public class FunctionBody extends Block {
 
     @Override
     public String toString() {
-        String body = "( + \n";
+        String body = "( \n";
         for (Statement statement: statements) {
             body = body.concat(statement.toString() + '\n');
         }
