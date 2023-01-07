@@ -1,5 +1,7 @@
 package flutter;
 
+import nodes.ZeroParameters;
+
 public class ScrollView extends Component{
     public ScrollViewAtts scrollViewAtts ;
 
@@ -8,9 +10,17 @@ public class ScrollView extends Component{
         this.scrollViewAtts= scrollViewAtts;
     }
 
+    public ScrollView(){
+        super("ScrollView", new ZeroParameters());
+    }
+
     @Override
     public String toString() {
-        return "new ScrollView (\n" + scrollViewAtts.toString() + "\n)";
+        if(scrollViewAtts != null){
+            return "new ScrollView (\n" + scrollViewAtts.toString() + "\n)";
+        }else{
+            return "new ScrollView ()";
+        }
     }
 
 }

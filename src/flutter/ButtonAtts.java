@@ -29,7 +29,6 @@ public class ButtonAtts extends Parameters {
                 top = top.concat(atts.get(i).toString() + "," + "\n");
             }
         }
-        top = top.concat(")");
         return top;
     }
 }

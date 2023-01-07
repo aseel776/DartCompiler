@@ -492,12 +492,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
     }
 
-    //error
     @Override
     public Node visitMaterialApp(DartGrammarsParser.MaterialAppContext ctx) {
         if(ctx.getChildCount() > 4){
-            MaterialAppAtts materialAppAtts = (MaterialAppAtts) visit(ctx.getChild(3));
-            return new MaterialApp(materialAppAtts);
+            MaterialAppAtts atts = new MaterialAppAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                MaterialAppAtt att = (MaterialAppAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new MaterialApp(atts);
         }else {
             return new MaterialApp();
         }
@@ -520,12 +523,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new MaterialHome(dartObject);
     }
 
-    //error
     @Override
     public Node visitScaffold(DartGrammarsParser.ScaffoldContext ctx) {
         if(ctx.getChildCount() > 4){
-            ScaffoldAtts scaffoldAtts = (ScaffoldAtts) visit(ctx.getChild(3));
-            return new Scaffold(scaffoldAtts);
+            ScaffoldAtts atts = new ScaffoldAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                ScaffoldAtt att = (ScaffoldAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Scaffold(atts);
         }else {
             return new Scaffold();
         }
@@ -548,23 +554,29 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new ScaffoldBody(dartObject);
     }
 
-    //error
     @Override
     public Node visitColumn(DartGrammarsParser.ColumnContext ctx) {
         if(ctx.getChildCount() > 4){
-            Column_rowAtts column_rowAtts = (Column_rowAtts) visit(ctx.getChild(3));
-            return new Column(column_rowAtts);
+            Column_rowAtts atts = new Column_rowAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                Column_rowAtt att = (Column_rowAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Column(atts);
         }else {
             return new Column();
         }
     }
 
-    //error
     @Override
     public Node visitRow(DartGrammarsParser.RowContext ctx) {
         if(ctx.getChildCount() > 4){
-            Column_rowAtts column_rowAtts = (Column_rowAtts) visit(ctx.getChild(3));
-            return new Row(column_rowAtts);
+            Column_rowAtts atts = new Column_rowAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                Column_rowAtt att = (Column_rowAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Row(atts);
         }else {
             return new Row();
         }
@@ -597,8 +609,12 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitStack(DartGrammarsParser.StackContext ctx) {
         if(ctx.getChildCount() > 4){
-            StackAtts stackAtts = (StackAtts) visit(ctx.getChild(3));
-            return new Stack(stackAtts);
+            StackAtts atts = new StackAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                StackAtt att = (StackAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Stack(atts);
         }else {
             return new Stack();
         }
@@ -617,7 +633,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitStackChildren(DartGrammarsParser.StackChildrenContext ctx) {
-        ListType listType = (ListType) ctx.getChild(2);
+        ListType listType = (ListType) visit(ctx.getChild(2));
         return new StackChildren(listType);
     }
 
@@ -626,8 +642,12 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitText(DartGrammarsParser.TextContext ctx) {
         String text = ctx.getChild(3).getText();
         if(ctx.getChildCount() > 5){
-            TextAtts textAtts = (TextAtts) visit(ctx.getChild(5));
-            return new Text(text, textAtts);
+            TextAtts atts = new TextAtts();
+            for(int i = 5; i < ctx.getChildCount() - 1; i++){
+                TextAtt att = (TextAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Text(text, atts);
         }else{
             return new Text(text);
         }
@@ -646,7 +666,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitTextSize(DartGrammarsParser.TextSizeContext ctx) {
-        DartInteger size = (DartInteger) visit(ctx.getChild(2));
+        String num = ctx.getChild(2).getText();
+        DartInteger size = new DartInteger(Integer.parseInt(num));
         return new TextSize(size);
     }
 

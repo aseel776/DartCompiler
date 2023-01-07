@@ -16,7 +16,7 @@ public  class Column_rowAtts extends Parameters {
     public  Column_rowAtts(){
         this.column_rowAtt= new ArrayList<>();
     }
-    public  void addAtts(Column_rowAtt column_rowAtt){
+    public void addAtt(Column_rowAtt column_rowAtt){
         this.column_rowAtt.add(column_rowAtt);
     }
 

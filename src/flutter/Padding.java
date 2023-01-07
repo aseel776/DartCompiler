@@ -1,5 +1,7 @@
 package flutter;
 
+import nodes.ZeroParameters;
+
 public class Padding extends Component{
     public PaddingAtts paddingAtts;
 
@@ -8,9 +10,16 @@ public class Padding extends Component{
         this.paddingAtts = paddingAtts;
     }
 
+    public Padding(){
+        super("Padding", new ZeroParameters());
+    }
+
     @Override
     public String toString() {
-        return "new Padding (\n" + paddingAtts.toString() + "\n)";
+        if(paddingAtts != null){
+            return "new Padding (\n" + paddingAtts.toString() + "\n)";
+        }else{
+            return "new Padding ()";
+        }
     }
 }
-//    : NEW PADDING '(' paddingAtts* ')'

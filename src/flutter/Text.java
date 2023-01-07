@@ -21,7 +21,7 @@ public class Text extends Component {
         if(textAtts != null){
             return "new Text (\n" + text + '\n' + textAtts.toString() + "\n);";
         }else{
-            return "new Text (\n" + text + "\n);";
+            return "new Text (\n" + text + "\n)";
         }
     }
 }

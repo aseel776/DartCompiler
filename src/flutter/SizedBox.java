@@ -1,5 +1,7 @@
 package flutter;
 
+import nodes.ZeroParameters;
+
 public class SizedBox extends Component {
     public SizedBoxAtts sizedBoxAtts;
 
@@ -8,8 +10,16 @@ public class SizedBox extends Component {
         this.sizedBoxAtts = sizedBoxAtts;
     }
 
+    public SizedBox(){
+        super("SizedBox", new ZeroParameters());
+    }
+
     @Override
     public String toString() {
-        return "new SizedBox (\n" + sizedBoxAtts.toString() + "\n)";
+        if(sizedBoxAtts != null){
+            return "new SizedBox (\n" + sizedBoxAtts.toString() + "\n)";
+        }else{
+            return "new SizedBox ()";
+        }
     }
 }

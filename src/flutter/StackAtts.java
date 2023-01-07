@@ -16,7 +16,7 @@ public  class StackAtts extends Parameters {
     public  StackAtts(){
         this.stackAtt= new ArrayList<>();
     }
-    public  void addAtts(StackAtt stackAtt){
+    public  void addAtt(StackAtt stackAtt){
         this.stackAtt.add(stackAtt);
     }
 

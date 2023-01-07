@@ -1,16 +1,29 @@
 package flutter;
 
+import nodes.ZeroParameters;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class InkWell extends Component{
+
     public InkwellAtts inkwellAtts ;
+
     public InkWell(InkwellAtts inkwellAtts){
         super("InkWell", inkwellAtts);
         this.inkwellAtts= inkwellAtts;
     }
+
+    public InkWell(){
+        super("InkWell", new ZeroParameters());
+    }
+
     @Override
     public String toString() {
-        return "new InkWell (\n" + inkwellAtts.toString() + "\n)";
+        if(inkwellAtts != null){
+            return "new InkWell (\n" + inkwellAtts.toString() + "\n)";
+        }else {
+            return "new InkWell ()";
+        }
     }
 }

@@ -20,7 +20,7 @@ public class Row extends Component{
         if(rowAtts != null){
             return "new Row (\n" + rowAtts.toString()+"\n);";
         }else {
-            return "new Row ();";
+            return "new Row ()";
         }
     }
 }
