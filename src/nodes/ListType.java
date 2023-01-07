@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListType extends Node{
-    List<Node> elements;
+    public List<Node> elements;
 
     public ListType(List<Node> elements){
         this.elements = elements;
@@ -14,7 +14,7 @@ public class ListType extends Node{
         elements = new ArrayList<>();
     }
 
-    void addElement(Node element){
+    public void addElement(Node element){
         elements.add(element);
     }
 

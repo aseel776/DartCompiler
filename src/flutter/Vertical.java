@@ -1,10 +1,10 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class Vertical extends HorizontalOrVertical{
-    public PositiveInteger number ;
-    public Vertical(PositiveInteger number) {
+    public DartInteger number ;
+    public Vertical(DartInteger number) {
         this.number = number;
     }
 

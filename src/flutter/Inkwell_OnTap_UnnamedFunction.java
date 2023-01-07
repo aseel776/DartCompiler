@@ -10,6 +10,6 @@ public class Inkwell_OnTap_UnnamedFunction extends Inkwell_OnTap{
 
     @Override
     public String toString() {
-        return "ON_TAP:" + unnamedFunction.toString();
+        return "inkWellOnTap:" + unnamedFunction.toString();
     }
 }

@@ -1,6 +1,6 @@
 package nodes;
 
-public class Variable extends Node{
+public class Variable extends Expression{
     public String id;
 
     public Variable(String id){

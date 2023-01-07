@@ -17,77 +17,29 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitStart(DartGrammarsParser.StartContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code PositveNumber}
+	 * Enter a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void enterPositveNumber(DartGrammarsParser.PositveNumberContext ctx);
+	void enterInteger(DartGrammarsParser.IntegerContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code PositveNumber}
+	 * Exit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void exitPositveNumber(DartGrammarsParser.PositveNumberContext ctx);
+	void exitInteger(DartGrammarsParser.IntegerContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code NegativeNumber}
+	 * Enter a parse tree produced by the {@code Double}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void enterNegativeNumber(DartGrammarsParser.NegativeNumberContext ctx);
+	void enterDouble(DartGrammarsParser.DoubleContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code NegativeNumber}
+	 * Exit a parse tree produced by the {@code Double}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 */
-	void exitNegativeNumber(DartGrammarsParser.NegativeNumberContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code PositiveInteger}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 */
-	void enterPositiveInteger(DartGrammarsParser.PositiveIntegerContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code PositiveInteger}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 */
-	void exitPositiveInteger(DartGrammarsParser.PositiveIntegerContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code PositiveDouble}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 */
-	void enterPositiveDouble(DartGrammarsParser.PositiveDoubleContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code PositiveDouble}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 */
-	void exitPositiveDouble(DartGrammarsParser.PositiveDoubleContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code NegativeInteger}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 */
-	void enterNegativeInteger(DartGrammarsParser.NegativeIntegerContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code NegativeInteger}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 */
-	void exitNegativeInteger(DartGrammarsParser.NegativeIntegerContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code NegativeDouble}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 */
-	void enterNegativeDouble(DartGrammarsParser.NegativeDoubleContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code NegativeDouble}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 */
-	void exitNegativeDouble(DartGrammarsParser.NegativeDoubleContext ctx);
+	void exitDouble(DartGrammarsParser.DoubleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#block}.
 	 * @param ctx the parse tree
@@ -179,15 +131,29 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitSwitchBody(DartGrammarsParser.SwitchBodyContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#case}.
+	 * Enter a parse tree produced by the {@code NumberCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
 	 * @param ctx the parse tree
 	 */
-	void enterCase(DartGrammarsParser.CaseContext ctx);
+	void enterNumberCase(DartGrammarsParser.NumberCaseContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#case}.
+	 * Exit a parse tree produced by the {@code NumberCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
 	 * @param ctx the parse tree
 	 */
-	void exitCase(DartGrammarsParser.CaseContext ctx);
+	void exitNumberCase(DartGrammarsParser.NumberCaseContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CharCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
+	 * @param ctx the parse tree
+	 */
+	void enterCharCase(DartGrammarsParser.CharCaseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CharCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
+	 * @param ctx the parse tree
+	 */
+	void exitCharCase(DartGrammarsParser.CharCaseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#defaultCase}.
 	 * @param ctx the parse tree
@@ -1007,6 +973,16 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitStackFit(DartGrammarsParser.StackFitContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#stackChildren}.
+	 * @param ctx the parse tree
+	 */
+	void enterStackChildren(DartGrammarsParser.StackChildrenContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#stackChildren}.
+	 * @param ctx the parse tree
+	 */
+	void exitStackChildren(DartGrammarsParser.StackChildrenContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#text}.
 	 * @param ctx the parse tree
 	 */
@@ -1027,15 +1003,15 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitTextAtts(DartGrammarsParser.TextAttsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#color}.
+	 * Enter a parse tree produced by {@link DartGrammarsParser#textColor}.
 	 * @param ctx the parse tree
 	 */
-	void enterColor(DartGrammarsParser.ColorContext ctx);
+	void enterTextColor(DartGrammarsParser.TextColorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#color}.
+	 * Exit a parse tree produced by {@link DartGrammarsParser#textColor}.
 	 * @param ctx the parse tree
 	 */
-	void exitColor(DartGrammarsParser.ColorContext ctx);
+	void exitTextColor(DartGrammarsParser.TextColorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#textSize}.
 	 * @param ctx the parse tree
@@ -1077,35 +1053,45 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitContainerAtts(DartGrammarsParser.ContainerAttsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#width}.
+	 * Enter a parse tree produced by {@link DartGrammarsParser#containerWidth}.
 	 * @param ctx the parse tree
 	 */
-	void enterWidth(DartGrammarsParser.WidthContext ctx);
+	void enterContainerWidth(DartGrammarsParser.ContainerWidthContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#width}.
+	 * Exit a parse tree produced by {@link DartGrammarsParser#containerWidth}.
 	 * @param ctx the parse tree
 	 */
-	void exitWidth(DartGrammarsParser.WidthContext ctx);
+	void exitContainerWidth(DartGrammarsParser.ContainerWidthContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#height}.
+	 * Enter a parse tree produced by {@link DartGrammarsParser#containerHeight}.
 	 * @param ctx the parse tree
 	 */
-	void enterHeight(DartGrammarsParser.HeightContext ctx);
+	void enterContainerHeight(DartGrammarsParser.ContainerHeightContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#height}.
+	 * Exit a parse tree produced by {@link DartGrammarsParser#containerHeight}.
 	 * @param ctx the parse tree
 	 */
-	void exitHeight(DartGrammarsParser.HeightContext ctx);
+	void exitContainerHeight(DartGrammarsParser.ContainerHeightContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#child}.
+	 * Enter a parse tree produced by {@link DartGrammarsParser#containerChild}.
 	 * @param ctx the parse tree
 	 */
-	void enterChild(DartGrammarsParser.ChildContext ctx);
+	void enterContainerChild(DartGrammarsParser.ContainerChildContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#child}.
+	 * Exit a parse tree produced by {@link DartGrammarsParser#containerChild}.
 	 * @param ctx the parse tree
 	 */
-	void exitChild(DartGrammarsParser.ChildContext ctx);
+	void exitContainerChild(DartGrammarsParser.ContainerChildContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#containerColor}.
+	 * @param ctx the parse tree
+	 */
+	void enterContainerColor(DartGrammarsParser.ContainerColorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#containerColor}.
+	 * @param ctx the parse tree
+	 */
+	void exitContainerColor(DartGrammarsParser.ContainerColorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#sizedBox}.
 	 * @param ctx the parse tree
@@ -1127,6 +1113,36 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitSizedBoxAtts(DartGrammarsParser.SizedBoxAttsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#sizedBoxWidth}.
+	 * @param ctx the parse tree
+	 */
+	void enterSizedBoxWidth(DartGrammarsParser.SizedBoxWidthContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#sizedBoxWidth}.
+	 * @param ctx the parse tree
+	 */
+	void exitSizedBoxWidth(DartGrammarsParser.SizedBoxWidthContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#sizedBoxHeight}.
+	 * @param ctx the parse tree
+	 */
+	void enterSizedBoxHeight(DartGrammarsParser.SizedBoxHeightContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#sizedBoxHeight}.
+	 * @param ctx the parse tree
+	 */
+	void exitSizedBoxHeight(DartGrammarsParser.SizedBoxHeightContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#sizedBoxChild}.
+	 * @param ctx the parse tree
+	 */
+	void enterSizedBoxChild(DartGrammarsParser.SizedBoxChildContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#sizedBoxChild}.
+	 * @param ctx the parse tree
+	 */
+	void exitSizedBoxChild(DartGrammarsParser.SizedBoxChildContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#padding}.
 	 * @param ctx the parse tree
 	 */
@@ -1147,14 +1163,24 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitPaddingAtts(DartGrammarsParser.PaddingAttsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#paddingChild}.
+	 * @param ctx the parse tree
+	 */
+	void enterPaddingChild(DartGrammarsParser.PaddingChildContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#paddingChild}.
+	 * @param ctx the parse tree
+	 */
+	void exitPaddingChild(DartGrammarsParser.PaddingChildContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumberpositivepositivenegativenegativeinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
 	 * @param ctx the parse tree
 	 */
 	void enterValues(DartGrammarsParser.ValuesContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumberpositivepositivenegativenegativeinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
 	 * @param ctx the parse tree
 	 */
 	void exitValues(DartGrammarsParser.ValuesContext ctx);
@@ -1199,15 +1225,25 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitInkWellAtts(DartGrammarsParser.InkWellAttsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link DartGrammarsParser#onTap}.
+	 * Enter a parse tree produced by {@link DartGrammarsParser#inkWellOnTap}.
 	 * @param ctx the parse tree
 	 */
-	void enterOnTap(DartGrammarsParser.OnTapContext ctx);
+	void enterInkWellOnTap(DartGrammarsParser.InkWellOnTapContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DartGrammarsParser#onTap}.
+	 * Exit a parse tree produced by {@link DartGrammarsParser#inkWellOnTap}.
 	 * @param ctx the parse tree
 	 */
-	void exitOnTap(DartGrammarsParser.OnTapContext ctx);
+	void exitInkWellOnTap(DartGrammarsParser.InkWellOnTapContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#inkWellChild}.
+	 * @param ctx the parse tree
+	 */
+	void enterInkWellChild(DartGrammarsParser.InkWellChildContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#inkWellChild}.
+	 * @param ctx the parse tree
+	 */
+	void exitInkWellChild(DartGrammarsParser.InkWellChildContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#image}.
 	 * @param ctx the parse tree
@@ -1239,6 +1275,26 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitImageFit(DartGrammarsParser.ImageFitContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#imageWidth}.
+	 * @param ctx the parse tree
+	 */
+	void enterImageWidth(DartGrammarsParser.ImageWidthContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#imageWidth}.
+	 * @param ctx the parse tree
+	 */
+	void exitImageWidth(DartGrammarsParser.ImageWidthContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#imageHeight}.
+	 * @param ctx the parse tree
+	 */
+	void enterImageHeight(DartGrammarsParser.ImageHeightContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#imageHeight}.
+	 * @param ctx the parse tree
+	 */
+	void exitImageHeight(DartGrammarsParser.ImageHeightContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#button}.
 	 * @param ctx the parse tree
 	 */
@@ -1258,6 +1314,36 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitButtonAtts(DartGrammarsParser.ButtonAttsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#buttonOnTap}.
+	 * @param ctx the parse tree
+	 */
+	void enterButtonOnTap(DartGrammarsParser.ButtonOnTapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#buttonOnTap}.
+	 * @param ctx the parse tree
+	 */
+	void exitButtonOnTap(DartGrammarsParser.ButtonOnTapContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#buttonChild}.
+	 * @param ctx the parse tree
+	 */
+	void enterButtonChild(DartGrammarsParser.ButtonChildContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#buttonChild}.
+	 * @param ctx the parse tree
+	 */
+	void exitButtonChild(DartGrammarsParser.ButtonChildContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#buttonColor}.
+	 * @param ctx the parse tree
+	 */
+	void enterButtonColor(DartGrammarsParser.ButtonColorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#buttonColor}.
+	 * @param ctx the parse tree
+	 */
+	void exitButtonColor(DartGrammarsParser.ButtonColorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#scrollView}.
 	 * @param ctx the parse tree
@@ -1288,4 +1374,14 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitScrollDirection(DartGrammarsParser.ScrollDirectionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#scrollChild}.
+	 * @param ctx the parse tree
+	 */
+	void enterScrollChild(DartGrammarsParser.ScrollChildContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#scrollChild}.
+	 * @param ctx the parse tree
+	 */
+	void exitScrollChild(DartGrammarsParser.ScrollChildContext ctx);
 }

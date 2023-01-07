@@ -6,4 +6,9 @@ public class Characters extends Node{
     public Characters(String text){
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

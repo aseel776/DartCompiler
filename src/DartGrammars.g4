@@ -7,16 +7,8 @@ start
 
 
 number
-    : positive      # PositveNumber
-    | negative      # NegativeNumber
-    ;
-positive
-    : INT_NUM       # PositiveInteger
-    | DOUBLE_NUM    # PositiveDouble
-    ;
-negative
-    : '-' INT_NUM       # NegativeInteger
-    | '-' DOUBLE_NUM    # NegativeDouble
+    : INT_NUM           # Integer
+    | DOUBLE_NUM        # Double
     ;
 
 
@@ -43,9 +35,7 @@ condition
     ;
 
 comparison
-    : ID ('<' | '<=' | '>' | '>=' | '==' | '!=') ID
-    | ID ('<' | '<=' | '>' | '>=' | '==' | '!=') expression
-    | ID ('==' | '!=') CHARACTERS
+    : ID ('<' | '<=' | '>' | '>=' | '==' | '!=') expression
     ;
 
 
@@ -54,7 +44,7 @@ ifStatement
     : IF '(' condition ')' block (elseIf* else)?
     ;
 elseIf
-    : ELSE IF '(' condition ')' block
+    : ELSEIF '(' condition ')' block
     ;
 else
     : ELSE block
@@ -67,8 +57,8 @@ switchBody
     : '{' case+ defaultCase '}'
     ;
 case
-    : CASE number ':' caseBody
-    | CASE CHARACTERS ':' caseBody
+    : CASE number ':' caseBody          # NumberCase
+    | CASE CHARACTERS ':' caseBody      # CharCase
     ;
 defaultCase
     : DEFAULT':' caseBody
@@ -333,10 +323,13 @@ stack
     ;
 stackAtts
     : stackFit
-    | children
+    | stackChildren
     ;
 stackFit
     : FIT':'STACK_FIT COMMA?
+    ;
+stackChildren
+    : STACK_CHILDREN ':' list COMMA?
     ;
 
 
@@ -344,18 +337,18 @@ text:
     NEW TEXT '(' CHARACTERS COMMA? textAtts* ')'
     ;
 textAtts
-    : color
+    : textColor
     | textSize
     | textStyle
     ;
-color
-    : COLOR':'COLORS COMMA?
+textColor
+    : TEXT_COLOR':'COLORS COMMA?
     ;
 textSize
-    : SIZE':'INT_NUM COMMA?
+    : TEXT_SIZE':'INT_NUM COMMA?
     ;
 textStyle
-    : STYLE':'STYLES COMMA?
+    : TEXT_STYLE':'STYLES COMMA?
     ;
 
 
@@ -363,19 +356,22 @@ container
     : NEW CONTAINER '(' containerAtts* ')'
     ;
 containerAtts
-    : width
-    | height
-    | child
-    | color
+    : containerWidth
+    | containerHeight
+    | containerChild
+    | containerColor
     ;
-width
-    : WIDTH':'INT_NUM COMMA?
+containerWidth
+    : CONTAINER_WIDTH':'INT_NUM COMMA?
     ;
-height
-    : HEIGHT':'INT_NUM COMMA?
+containerHeight
+    : CONTAINER_HEIGHT':'INT_NUM COMMA?
     ;
-child
-    : CHILD':'object COMMA?
+containerChild
+    : CONTAINER_CHILD':'object COMMA?
+    ;
+containerColor
+    : CONTAINER_COLOR':'COLORS
     ;
 
 
@@ -383,9 +379,18 @@ sizedBox
     : NEW SIZEDBOX '(' sizedBoxAtts* ')'
     ;
 sizedBoxAtts
-    : width
-    | height
-    | child
+    : sizedBoxWidth
+    | sizedBoxHeight
+    | sizedBoxChild
+    ;
+sizedBoxWidth
+    : SIZEDBOX_WIDTH':'INT_NUM COMMA?
+    ;
+sizedBoxHeight
+    : SIZEDBOX_HEIGHT':'INT_NUM COMMA?
+    ;
+sizedBoxChild
+    : SIZEDBOX_CHILD':'object COMMA?
     ;
 
 
@@ -394,9 +399,11 @@ padding
     ;
 paddingAtts
     : VALUES':'values COMMA?
-    | child
+    | paddingChild
     ;
-
+paddingChild
+    : PADDING_CHILD':'object COMMA?
+    ;
 values
     : ZERO //values.zero
     | ALL '(' INT_NUM ')' //values.all(5)
@@ -419,12 +426,15 @@ inkWell
     : NEW INK_WELL '(' inkWellAtts* ')'
     ;
 inkWellAtts
-    : onTap
-    | child
+    : inkWellOnTap
+    | inkWellChild
     ;
-onTap
-    : ON_TAP':' functionCall COMMA?
-    | ON_TAP':' unnamedFunction COMMA?
+inkWellOnTap
+    : INK_WELL_ON_TAP':' functionCall COMMA?
+    | INK_WELL_ON_TAP':' unnamedFunction COMMA?
+    ;
+inkWellChild
+    : INK_WELL_CHILD':'object COMMA?
     ;
 
 
@@ -433,11 +443,17 @@ image
     ;
 imageAtts
     : imageFit
-    | width
-    | height
+    | imageWidth
+    | imageHeight
     ;
 imageFit
     : FIT':'BOX_FIT COMMA?
+    ;
+imageWidth
+    : IMAGE_WIDTH':'INT_NUM COMMA?
+    ;
+imageHeight
+    : IMAGE_HEIGHT':'INT_NUM COMMA?
     ;
 
 
@@ -445,9 +461,19 @@ button
     : NEW BUTTON '(' buttonAtts* ')'
     ;
 buttonAtts
-    : onTap
-    | child
-    | color
+    : buttonOnTap
+    | buttonChild
+    | buttonColor
+    ;
+buttonOnTap
+    : BUTTON_ON_TAP':' functionCall COMMA?
+    | BUTTON_ON_TAP':' unnamedFunction COMMA?
+    ;
+buttonChild
+    : BUTTON_CHILD':'object COMMA?
+    ;
+buttonColor
+    : BUTTON_COLOR':'COLORS
     ;
 
 
@@ -456,10 +482,13 @@ scrollView
     ;
 scrollViewAtts
     : scrollDirection
-    | child
+    | scrollChild
     ;
 scrollDirection
     : SCROLL_DIRECTION':' (HORIZONTAL | VERTICAL) COMMA?
+    ;
+scrollChild
+    : SCROLL_CHILD':'object COMMA?
     ;
 
 
@@ -468,6 +497,7 @@ scrollDirection
 //CONDITIONS
 IF: 'if';
 ELSE: 'else';
+ELSEIF: 'else if';
 SWITCH: 'switch';
 CASE: 'case';
 DEFAULT: 'default';
@@ -530,33 +560,49 @@ COLUMN: 'Column';
 ROW: 'Row';
 MAIN_AXIS_ALIGNMENT: 'mainAxisAlignment';
 CROSS_AXIS_ALIGNMENT: 'crossAxisAlignment';
+CHILDREN: 'children';
 /////////////
 TEXT: 'Text';
-COLOR: 'color';
-SIZE: 'size';
-STYLE: 'style';
+TEXT_COLOR: 'textColor';
+TEXT_SIZE: 'textSize';
+TEXT_STYLE: 'textStyle';
 /////////////
 CONTAINER: 'Container';
+CONTAINER_WIDTH: 'containerWidth';
+CONTAINER_HEIGHT: 'containerHeight';
+CONTAINER_COLOR: 'containerColor';
+CONTAINER_CHILD: 'containerChild';
+/////////////
 SIZEDBOX: 'SizedBox';
-WIDTH: 'width';
-HEIGHT: 'height';
-MARGIN: 'margin';
+SIZEDBOX_WIDTH: 'sizedBoxWidth';
+SIZEDBOX_HEIGHT: 'sizedBoxHeight';
+SIZEDBOX_CHILD: 'sizedBoxChild';
 /////////////
 INK_WELL: 'InkWell';
+INK_WELL_ON_TAP: 'inkWellOnTap';
+INK_WELL_CHILD: 'inkWellChild';
 /////////////
 IMAGE: 'Image';
 FIT: 'fit';
 BOX_FIT: 'BoxFit.cover' | 'BoxFit.fill' | 'BoxFit.fitWidth' | 'BoxFit.fitHeight';
+IMAGE_WIDTH: 'imageWidth';
+IMAGE_HEIGHT: 'imageHeight';
 /////////////
 STACK: 'Stack';
 STACK_FIT: 'StackFit.expanded' | 'StackFit.loose';
+STACK_CHILDREN: 'stackChildren';
 /////////////
 BUTTON: 'Button';
+BUTTON_ON_TAP: 'buttonOnTap';
+BUTTON_CHILD: 'buttonChild';
+BUTTON_COLOR: 'buttonColor';
 /////////////
 SCROLL_VIEW: 'ScrollView';
 SCROLL_DIRECTION: 'scrollDirection';
+SCROLL_CHILD: 'scrollChild';
 /////////////
 PADDING: 'Padding';
+PADDING_CHILD: 'paddingChild';
 VALUES: 'values';
 ZERO: 'Values.zero';
 ALL: 'Values.all';
@@ -567,9 +613,6 @@ RIGHT: 'right';
 TOP: 'top';
 BOTTOM: 'bottom';
 /////////////
-CHILD: 'child';
-CHILDREN: 'children';
-ON_TAP: 'onTap';
 COLORS: 'Purple' | 'Blue' | 'Yellow' | 'Black' | 'White' | 'Green' | 'Red';
 STYLES: 'Italic' | 'Bold' | 'BoldItalic';
 ALIGNMENT: 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly' | 'spaceAround';
@@ -580,8 +623,8 @@ VERTICAL: 'vertical';
 
 COMMA: ',';
 SEMICOLON: ';';
-INT_NUM: ( '0' | [1-9]+DIGIT* );
-DOUBLE_NUM: ( '0.'DIGIT+ | [1-9]+DIGIT* ('.'DIGIT+) );
+INT_NUM: '-'? ( '0' | [1-9]+DIGIT* );
+DOUBLE_NUM: '-'? ( '0.'DIGIT+ | [1-9]+DIGIT* ('.'DIGIT+) );
 //اكتر فاصلتين برانيات للتوكن نفسو
 //اكتر فاصلتين جوانيات للريغيولر اكسبريشن
 //الفاصلتين يلي قبلهن سلاش لينحطو ضمن التوكن نفسو يعني تقريبا يصير سترينغ رسمي

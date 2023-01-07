@@ -1,15 +1,13 @@
 package flutter;
 
-import enums.Alignment;
-
 public class CrossAxis extends Column_rowAtt{
-    public Alignment al ;
-    public CrossAxis(Alignment  al){
+    public String al ;
+    public CrossAxis(String  al){
         this.al=al;
     }
 
     @Override
     public String toString() {
-        return "crossAxisAlignment:" + al.toString();
+        return "crossAxisAlignment:" + al;
     }
 }

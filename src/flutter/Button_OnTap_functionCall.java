@@ -10,6 +10,6 @@ public class Button_OnTap_functionCall extends Button_OnTap{
 
     @Override
     public String toString() {
-        return "ON_TAP:" + functionCall.toString();
+        return "buttonOnTap: " + functionCall.toString();
     }
 }

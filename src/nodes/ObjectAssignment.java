@@ -10,6 +10,6 @@ public class ObjectAssignment extends Assignment {
 
     @Override
     public String toString() {
-        return objectId + "." + id + "=" + value.toString();
+        return objectId + "." + id + " = " + value.toString();
     }
 }

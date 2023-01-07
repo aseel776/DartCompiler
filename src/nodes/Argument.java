@@ -1,12 +1,10 @@
 package nodes;
 
-import enums.VarOrType;
-
 public class Argument extends Node{
-    public VarOrType type;
+    public String type;
     public String id;
 
-    public Argument(VarOrType type, String id){
+    public Argument(String type, String id){
         this.type =type;
         this.id = id;
     }

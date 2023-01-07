@@ -1,12 +1,10 @@
 package flutter;
 
-import enums.Color;
-
 public class ScaffoldBackground extends ScaffoldAtt{
 
-    public Color color;
+    public String color;
 
-    public ScaffoldBackground(Color color){
+    public ScaffoldBackground(String color){
         super();
         this.color= color;
     }

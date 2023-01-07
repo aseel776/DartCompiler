@@ -1,13 +1,11 @@
 package nodes;
 
-import enums.VoidOrType;
-
 public class Signature extends Node{
-    public VoidOrType returnType;
+    public String returnType;
     public String id;
     public Arguments arguments;
 
-    public Signature(VoidOrType returnType, String id, Arguments arguments){
+    public Signature(String returnType, String id, Arguments arguments){
         if(returnType != null){
             this.returnType = returnType;
         }

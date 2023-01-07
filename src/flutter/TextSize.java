@@ -1,14 +1,14 @@
 package flutter;
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 public class TextSize extends TextAtt{
-   public PositiveInteger number ;
-    public TextSize(PositiveInteger number){
+   public DartInteger number ;
+    public TextSize(DartInteger number){
         this.number=number;
     }
 
     @Override
     public String toString() {
-    return "size:" + number.toString();
+    return "textSize:" + number.toString();
     }
 }
 

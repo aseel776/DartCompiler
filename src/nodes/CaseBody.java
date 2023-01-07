@@ -10,14 +10,13 @@ public class CaseBody extends Block{
 
     @Override
     public String toString() {
-        String body = new String("{");
+        String body = "\n";
         for (Node n : statements) {
-            body = body.concat('\n' + n.toString());
+            body = body.concat(n.toString() + '\n');
         }
         if(containsBreak){
-            body = body.concat('\n' + "break;");
+            body = body.concat("break;");
         }
-        body = body.concat("\n }");
         return body;
     }
 }

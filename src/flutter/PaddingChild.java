@@ -11,7 +11,7 @@ public class PaddingChild extends PaddingAtt{
     }
     @Override
     public String toString() {
-        return "child:" +object.toString() ;
+        return "paddingChild: " +object.toString() ;
 
     }
 

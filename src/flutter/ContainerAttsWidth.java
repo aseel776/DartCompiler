@@ -1,16 +1,16 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class ContainerAttsWidth extends ContainerAtt{
-    public PositiveInteger number ;
-    public ContainerAttsWidth(PositiveInteger number) {
+    public DartInteger number ;
+    public ContainerAttsWidth(DartInteger number) {
         this.number = number;
     }
 
     @Override
     public String toString() {
-        return "width:"+number.toString();
+        return "containerWidth:"+number.toString();
     }
 }
 //    : WIDTH':'INT_NUM COMMA?

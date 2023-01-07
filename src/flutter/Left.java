@@ -1,12 +1,12 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class Left extends CostumeValues{
 
 
-    public PositiveInteger number;
-    public Left(PositiveInteger number) {
+    public DartInteger number;
+    public Left(DartInteger number) {
         this.number = number;
     }
 

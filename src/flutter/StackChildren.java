@@ -10,6 +10,6 @@ public class StackChildren extends StackAtt{
 
     @Override
     public String toString() {
-        return "children:"+ list.toString();
+        return "stackChildren:"+ list.toString();
     }
 }

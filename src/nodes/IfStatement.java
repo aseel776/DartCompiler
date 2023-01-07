@@ -12,7 +12,6 @@ public class IfStatement extends Statement{
     public IfStatement(Condition condition, Block block, List<ElseIf> elseIfs, Else anElse){
         this.condition = condition;
         this.block = block;
-        this.elseIfs = new ArrayList<>();
         if(elseIfs != null){
             this.elseIfs = elseIfs;
             this.anElse = anElse;

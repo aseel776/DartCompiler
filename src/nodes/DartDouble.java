@@ -1,10 +1,10 @@
 package nodes;
 
-public class PositiveDouble extends PositiveNumber{
+public class DartDouble extends Number {
     public double num;
 
-    public PositiveDouble(double num){
-        this.num = Math.max(num, 0);
+    public DartDouble(double num){
+        this.num = num;
     }
 
     @Override

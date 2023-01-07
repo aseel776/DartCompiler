@@ -1,20 +1,19 @@
 package nodes;
 
-import enums.InitConditionType;
-
 public class InitialConditionDeclaration extends InitialCondition{
-    public InitConditionType type;
+    public String type;
+    public String id;
     public Expression value;
 
-    public InitialConditionDeclaration(InitConditionType type, String id, Expression value){
-        super(id);
+    public InitialConditionDeclaration(String type, String id, Expression value){
         this.type = type;
+        this.id = id;
         this.value = value;
 
     }
 
     @Override
     public String toString() {
-        return type.toString() + id + '=' + value.toString();
+        return type + " " + id + '=' + value.toString();
     }
 }

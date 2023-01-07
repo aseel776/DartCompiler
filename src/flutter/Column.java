@@ -6,7 +6,7 @@ import java.util.List;
 public class Column extends Component{
     public Column_rowAtts column_rowAtts_;
 public Column(Column_rowAtts atts){
-    super("Colume",atts);
+    super("Column",atts);
     this.column_rowAtts_=atts;
 }
 

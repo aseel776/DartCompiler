@@ -12,6 +12,6 @@ public class InkWellChild extends InkWellAtt{
 
     @Override
     public String toString() {
-        return "child: " + object.toString();
+        return "inkWellChild: " + object.toString();
     }
 }

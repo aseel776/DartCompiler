@@ -1,15 +1,15 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class ImageAttsWidth extends ImageAtt{
-    PositiveInteger number ;
-    public ImageAttsWidth(PositiveInteger number) {
+    DartInteger number ;
+    public ImageAttsWidth(DartInteger number) {
         this.number = number;
     }
 
     @Override
     public String toString() {
-        return "width:"+number.toString();
+        return "imageWidth: " + number.toString();
     }
 }

@@ -1,8 +1,8 @@
 package flutter;
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 public class All extends PaddingValues {
-     public PositiveInteger number;
-    public All(PositiveInteger number) {
+     public DartInteger number;
+    public All(DartInteger number) {
         this.number = number;
     }
     @Override

@@ -1,10 +1,10 @@
 package nodes;
 
 public class SwitchStatement extends Statement{
-    public String id;
+    public Variable id;
     public SwitchBody body;
 
-    public SwitchStatement(String id, SwitchBody body){
+    public SwitchStatement(Variable id, SwitchBody body){
         this.id = id;
         this.body = body;
     }

@@ -1,16 +1,14 @@
 package flutter;
 
-import enums.Style;
-
 public class TextStyle extends TextAtt{
-   public Style style;
-    public TextStyle(  Style style){
+   public String style;
+    public TextStyle(String style){
         this.style= style;
     }
 
     @Override
     public String toString() {
-        return "style:" + style.toString();
+        return "textStyle: " + style;
     }
 }
 //    : STYLE':'STYLES COMMA?

@@ -16,47 +16,19 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStart(DartGrammarsParser.StartContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code PositveNumber}
+	 * Visit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPositveNumber(DartGrammarsParser.PositveNumberContext ctx);
+	T visitInteger(DartGrammarsParser.IntegerContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code NegativeNumber}
+	 * Visit a parse tree produced by the {@code Double}
 	 * labeled alternative in {@link DartGrammarsParser#number}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNegativeNumber(DartGrammarsParser.NegativeNumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code PositiveInteger}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPositiveInteger(DartGrammarsParser.PositiveIntegerContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code PositiveDouble}
-	 * labeled alternative in {@link DartGrammarsParser#positive}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPositiveDouble(DartGrammarsParser.PositiveDoubleContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code NegativeInteger}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegativeInteger(DartGrammarsParser.NegativeIntegerContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code NegativeDouble}
-	 * labeled alternative in {@link DartGrammarsParser#negative}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegativeDouble(DartGrammarsParser.NegativeDoubleContext ctx);
+	T visitDouble(DartGrammarsParser.DoubleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#block}.
 	 * @param ctx the parse tree
@@ -112,11 +84,19 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSwitchBody(DartGrammarsParser.SwitchBodyContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#case}.
+	 * Visit a parse tree produced by the {@code NumberCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCase(DartGrammarsParser.CaseContext ctx);
+	T visitNumberCase(DartGrammarsParser.NumberCaseContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CharCase}
+	 * labeled alternative in {@link DartGrammarsParser#case}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharCase(DartGrammarsParser.CharCaseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#defaultCase}.
 	 * @param ctx the parse tree
@@ -605,6 +585,12 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStackFit(DartGrammarsParser.StackFitContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#stackChildren}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStackChildren(DartGrammarsParser.StackChildrenContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#text}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -617,11 +603,11 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTextAtts(DartGrammarsParser.TextAttsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#color}.
+	 * Visit a parse tree produced by {@link DartGrammarsParser#textColor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitColor(DartGrammarsParser.ColorContext ctx);
+	T visitTextColor(DartGrammarsParser.TextColorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#textSize}.
 	 * @param ctx the parse tree
@@ -647,23 +633,29 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitContainerAtts(DartGrammarsParser.ContainerAttsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#width}.
+	 * Visit a parse tree produced by {@link DartGrammarsParser#containerWidth}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWidth(DartGrammarsParser.WidthContext ctx);
+	T visitContainerWidth(DartGrammarsParser.ContainerWidthContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#height}.
+	 * Visit a parse tree produced by {@link DartGrammarsParser#containerHeight}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHeight(DartGrammarsParser.HeightContext ctx);
+	T visitContainerHeight(DartGrammarsParser.ContainerHeightContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#child}.
+	 * Visit a parse tree produced by {@link DartGrammarsParser#containerChild}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitChild(DartGrammarsParser.ChildContext ctx);
+	T visitContainerChild(DartGrammarsParser.ContainerChildContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#containerColor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContainerColor(DartGrammarsParser.ContainerColorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#sizedBox}.
 	 * @param ctx the parse tree
@@ -677,6 +669,24 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSizedBoxAtts(DartGrammarsParser.SizedBoxAttsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#sizedBoxWidth}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSizedBoxWidth(DartGrammarsParser.SizedBoxWidthContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#sizedBoxHeight}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSizedBoxHeight(DartGrammarsParser.SizedBoxHeightContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#sizedBoxChild}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSizedBoxChild(DartGrammarsParser.SizedBoxChildContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#padding}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -689,8 +699,14 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPaddingAtts(DartGrammarsParser.PaddingAttsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#paddingChild}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPaddingChild(DartGrammarsParser.PaddingChildContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumberpositivepositivenegativenegativeinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -720,11 +736,17 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInkWellAtts(DartGrammarsParser.InkWellAttsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DartGrammarsParser#onTap}.
+	 * Visit a parse tree produced by {@link DartGrammarsParser#inkWellOnTap}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOnTap(DartGrammarsParser.OnTapContext ctx);
+	T visitInkWellOnTap(DartGrammarsParser.InkWellOnTapContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#inkWellChild}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInkWellChild(DartGrammarsParser.InkWellChildContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#image}.
 	 * @param ctx the parse tree
@@ -744,6 +766,18 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitImageFit(DartGrammarsParser.ImageFitContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#imageWidth}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImageWidth(DartGrammarsParser.ImageWidthContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#imageHeight}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImageHeight(DartGrammarsParser.ImageHeightContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#button}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -755,6 +789,24 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitButtonAtts(DartGrammarsParser.ButtonAttsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#buttonOnTap}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitButtonOnTap(DartGrammarsParser.ButtonOnTapContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#buttonChild}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitButtonChild(DartGrammarsParser.ButtonChildContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#buttonColor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitButtonColor(DartGrammarsParser.ButtonColorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#scrollView}.
 	 * @param ctx the parse tree
@@ -773,4 +825,10 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitScrollDirection(DartGrammarsParser.ScrollDirectionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#scrollChild}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScrollChild(DartGrammarsParser.ScrollChildContext ctx);
 }

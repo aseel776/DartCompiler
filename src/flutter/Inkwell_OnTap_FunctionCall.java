@@ -10,6 +10,6 @@ public class Inkwell_OnTap_FunctionCall extends Inkwell_OnTap{
 
     @Override
     public String toString() {
-        return "ON_TAP:" + functionCall.toString();
+        return "inkWellOnTap:" + functionCall.toString();
     }
 }

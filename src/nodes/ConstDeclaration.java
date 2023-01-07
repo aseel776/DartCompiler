@@ -1,13 +1,11 @@
 package nodes;
 
-import enums.Type;
-
 public class ConstDeclaration extends Declaration{
-    public Type type;
+    public String type;
     public String id;
     public Initialization init;
 
-    public ConstDeclaration(Type type, String id, Initialization init){
+    public ConstDeclaration(String type, String id, Initialization init){
         if(type != null){
             this.type = type;
         }
@@ -18,7 +16,7 @@ public class ConstDeclaration extends Declaration{
     @Override
     public String toString() {
         if(type != null){
-            return "const " + type.toString() + " " + id + " " + init.toString() + ";";
+            return "const " + type + " " + id + " " + init.toString() + ";";
         }else {
             return "const " + id + " " + init.toString() + ";";
         }

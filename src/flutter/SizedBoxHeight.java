@@ -1,16 +1,16 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class SizedBoxHeight extends SizedBoxAtt{
-    public PositiveInteger number ;
+    public DartInteger number ;
 
-    public SizedBoxHeight(PositiveInteger number ){
+    public SizedBoxHeight(DartInteger number ){
         this.number=number;
     }
 
     @Override
     public String toString() {
-        return "height:" +number.toString();
+        return "sizedBoxHeight:" +number.toString();
     }
 }

@@ -1,10 +1,10 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class Top extends CostumeValues{
-    PositiveInteger number;
-    public Top(PositiveInteger number) {
+    DartInteger number;
+    public Top(DartInteger number) {
         this.number = number;
     }
     @Override

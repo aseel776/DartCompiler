@@ -1,9 +1,9 @@
 package nodes;
 
-public class StringCase extends Case{
+public class CharCase extends Case{
     public String str;
 
-    public StringCase(String str, CaseBody caseBody){
+    public CharCase(String str, CaseBody caseBody){
         super(caseBody);
         this.str = str;
     }

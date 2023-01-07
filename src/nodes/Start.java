@@ -3,7 +3,7 @@ package nodes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Start extends Node{
+public class Start{
     public List<Node> nodes;
 
     public Start(){

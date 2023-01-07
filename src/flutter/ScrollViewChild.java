@@ -9,7 +9,7 @@ public class ScrollViewChild extends ScrollViewAtt{
     }
     @Override
     public String toString() {
-        return  "child:"+ object.toString();
+        return  "scrollChild:"+ object.toString();
     }
 }
 

@@ -10,6 +10,6 @@ public class Button_OnTap_unnamedFunction extends Button_OnTap{
 
     @Override
     public String toString() {
-        return "ON_TAP:" + unnamedFunction.toString();
+        return "buttonOnTap: " + unnamedFunction.toString();
     }
 }

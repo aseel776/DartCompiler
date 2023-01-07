@@ -10,6 +10,6 @@ public class ButtonChild extends ButtonAtt{
 
     @Override
     public String toString() {
-        return "child:" +object.toString();
+        return "buttonChild:" +object.toString();
     }
 }

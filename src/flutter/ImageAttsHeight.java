@@ -1,15 +1,15 @@
 package flutter;
 
-import nodes.PositiveInteger;
+import nodes.DartInteger;
 
 public class ImageAttsHeight extends ImageAtt{
-    PositiveInteger number ;
-    public ImageAttsHeight(PositiveInteger number) {
+    DartInteger number ;
+    public ImageAttsHeight(DartInteger number) {
         this.number = number;
     }
 
     @Override
     public String toString() {
-        return "height:"+number.toString();
+        return "imageHeight: " + number.toString();
     }
 }

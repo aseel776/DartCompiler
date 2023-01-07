@@ -1,11 +1,9 @@
 package nodes;
 
-import enums.VarOrType;
-
 public class NamedArgument extends Argument{
     public Boolean isRequired;
 
-    public NamedArgument(VarOrType type, String id, Boolean isRequired){
+    public NamedArgument(String type, String id, Boolean isRequired){
         super(type, id);
         this.isRequired = isRequired;
     }

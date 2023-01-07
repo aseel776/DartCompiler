@@ -12,6 +12,6 @@ public class SizedBoxChild extends SizedBoxAtt{
 
     @Override
     public String toString() {
-        return "child:" +object.toString();
+        return "sizedBoxChild:" +object.toString();
     }
 }

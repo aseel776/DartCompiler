@@ -1,24 +1,22 @@
 package nodes;
 
-import enums.VarOrType;
-
 public class ForeachStatement extends Statement{
 
-    public VarOrType type;
+    public String type;
     public String  id;
-    public String  array;
+    public Variable list;
     public Block block ;
 
-    public ForeachStatement(VarOrType type, String id, String array, Block block){
+    public ForeachStatement(String type, String id, Variable list, Block block){
         this.type = type;
         this.id = id;
-        this.array = array;
+        this.list = list;
         this.block = block;
     }
 
     @Override
     public String toString() {
-        return "forEach" + '(' + type.toString() + id + "in" + array + ')'
+        return "foreach" + '(' + type + " " + id + " in " + list.toString() + ')'
                 + '\n' + block.toString();
     }
 }

@@ -1,15 +1,15 @@
 package flutter;
 
 public class TextAtts_Color extends TextAtt{
-    public enums.Color color ;
-    public TextAtts_Color(enums.Color color){
+    public String color ;
+    public TextAtts_Color(String color){
         this.color=color;
 
     }
 
     @Override
     public String toString() {
-        return "color:"+color.toString();
+        return "textColor: " + color;
     }
 }
 //    : COLOR':'COLORS COMMA?

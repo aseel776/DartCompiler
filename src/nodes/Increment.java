@@ -1,11 +1,11 @@
 package nodes;
 
 public class Increment extends Node{
-    public String id;
+    public Variable id;
     public String symbol;
     public Expression expression;
 
-    public Increment(String id, String symbol, Expression expression){
+    public Increment(Variable id, String symbol, Expression expression){
         this.id = id;
         this.symbol = symbol;
         this.expression = expression;
@@ -13,6 +13,6 @@ public class Increment extends Node{
 
     @Override
     public String toString() {
-        return id + symbol + expression.toString();
+        return id.toString() + symbol + expression.toString();
     }
 }
