@@ -1,17 +1,24 @@
 package flutter;
 
-import java.util.ArrayList;
-import java.util.List;
+import nodes.ZeroParameters;
 
 public class Column extends Component{
-    public Column_rowAtts column_rowAtts_;
+    public Column_rowAtts columnAtts;
 public Column(Column_rowAtts atts){
     super("Column",atts);
-    this.column_rowAtts_=atts;
+    this.columnAtts=atts;
+}
+
+public Column(){
+    super("Column", new ZeroParameters());
 }
 
 @Override
     public String toString() {
-       return "new Column (\n" + column_rowAtts_.toString()+"\n);";
+        if(columnAtts != null){
+            return "new Column (\n" + columnAtts.toString()+"\n);";
+        }else{
+            return "new Column ();";
+        }
     }
 }

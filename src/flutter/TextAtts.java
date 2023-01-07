@@ -8,6 +8,7 @@ import java.util.List;
 public  class TextAtts extends Parameters {
 
     public List<TextAtt> textAtt;
+
     public  TextAtts(List<TextAtt>textAtt){
         this.textAtt=textAtt;
     }
@@ -15,7 +16,7 @@ public  class TextAtts extends Parameters {
     public  TextAtts(){
         this.textAtt= new ArrayList<>();
     }
-    public  void addAtt(TextAtt textAtt){
+    public void addAtt(TextAtt textAtt){
         this.textAtt.add(textAtt);
     }
 

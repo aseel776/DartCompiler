@@ -1,5 +1,7 @@
 package flutter;
 
+import nodes.ZeroParameters;
+
 public class Scaffold extends Component{
     public ScaffoldAtts scaffoldAtts ;
 
@@ -7,9 +9,17 @@ public class Scaffold extends Component{
         super("Scaffold", atts);
     }
 
+    public Scaffold(){
+        super("Scaffold", new ZeroParameters());
+    }
+
     @Override
     public String toString() {
-        return "new Scaffold (\n" + scaffoldAtts.toString() + "\n)";
+        if(scaffoldAtts != null){
+            return "new Scaffold (\n" + scaffoldAtts.toString() + "\n)";
+        }else{
+            return "new Scaffold()";
+        }
     }
 }
 

@@ -1,13 +1,26 @@
 package flutter;
+
+import nodes.ZeroParameters;
+
 public class Row extends Component{
-    public Column_rowAtts column_rowAtts;
+
+    public Column_rowAtts rowAtts;
+
     public Row(Column_rowAtts atts){
         super("Row",atts);
-        this.column_rowAtts=atts;
-    }
-    @Override
-    public String toString() {
-        return "new Row (\n" + column_rowAtts.toString()+"\n);";
+        this.rowAtts=atts;
     }
 
+    public Row(){
+        super("Row", new ZeroParameters());
+    }
+
+    @Override
+    public String toString() {
+        if(rowAtts != null){
+            return "new Row (\n" + rowAtts.toString()+"\n);";
+        }else {
+            return "new Row ();";
+        }
+    }
 }
