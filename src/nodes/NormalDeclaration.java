@@ -4,20 +4,16 @@ public class NormalDeclaration extends Declaration{
     public Boolean isLate;
     public String type;
     public String id;
-    private final Boolean isInitialized;
     public Initialization init;
 
     public NormalDeclaration(Boolean isLate, String type, String id, Initialization init){
+        super(id);
         this.isLate = isLate;
         if(type != null){
             this.type = type;
         }
-        this.id = id;
         if(init != null){
-            isInitialized = true;
             this.init = init;
-        }else{
-            this.isInitialized = false;
         }
     }
 
@@ -28,7 +24,7 @@ public class NormalDeclaration extends Declaration{
             normalDec = normalDec.concat(type + " ");
         }
         normalDec = normalDec.concat(id + " ");
-        if(isInitialized){
+        if(init != null){
             normalDec = normalDec.concat(init.toString());
         }
         //normalDec = normalDec.concat(";");

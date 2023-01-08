@@ -175,7 +175,7 @@ attribute
 method
     : OVERRIDE? signature ASYNC? functionBody                                   # NormalClassMethod
     | STATIC signature ASYNC? functionBody                                      # StaticClassMethod
-    | signature SEMICOLON                                                       # AbstractClassMethod
+    | ABSTRACT signature SEMICOLON                                              # AbstractClassMethod
     | ID'.'ID '(' consArguments ( (')' SEMICOLON) | (')' functionBody) )        # NamedConstructor
     ;
 defaultConstructer

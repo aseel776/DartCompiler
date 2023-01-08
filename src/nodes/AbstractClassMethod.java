@@ -9,6 +9,6 @@ public class AbstractClassMethod extends ClassMethod{
 
     @Override
     public String toString() {
-        return signature.toString() + ';' ;
+        return "abstract" + " " + signature.toString() + ';' ;
     }
 }

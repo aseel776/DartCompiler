@@ -2,14 +2,13 @@ package nodes;
 
 public class ConstDeclaration extends Declaration{
     public String type;
-    public String id;
     public Initialization init;
 
     public ConstDeclaration(String type, String id, Initialization init){
+        super(id);
         if(type != null){
             this.type = type;
         }
-        this.id = id;
         this.init = init;
     }
 

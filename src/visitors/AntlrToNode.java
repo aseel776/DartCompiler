@@ -4,6 +4,7 @@ import flutter.*;
 import nodes.*;
 import antlr.*;
 import nodes.Number;
+import org.antlr.v4.runtime.misc.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,6 +210,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if(ctx.initialization() != null){
             init = (Initialization) visit(ctx.initialization());
         }
+        int line = ctx.ID().getSymbol().getLine();
+        SymbolTable.addNode(id, new Pair<>("Final Variable", line));
         return new FinalDeclaration(late, type, id, init);
     }
 
@@ -220,6 +223,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
         String id = ctx.ID().getText();
         Initialization init = (Initialization) visit(ctx.initialization());
+        int line = ctx.ID().getSymbol().getLine();
+        SymbolTable.addNode(id, new Pair<>("Const Variable", line));
         return new ConstDeclaration(type, id, init);
     }
 
@@ -235,6 +240,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if(ctx.initialization() != null){
                 init = (Initialization) visit(ctx.initialization());
         }
+        int line = ctx.ID().getSymbol().getLine();
+        SymbolTable.addNode(id, new Pair<>("Variable", line));
         return new NormalDeclaration(late, type, id, init);
     }
 
@@ -335,9 +342,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Signature signature = (Signature) visit(ctx.getChild(0));
         if(ctx.ASYNC() != null){
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(2));
+            int line = ctx.signature().ID().getSymbol().getLine();
+            SymbolTable.addNode(signature.id, new Pair<>("Async Function", line));
             return new Function(signature, true, functionBody);
         }else {
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(1));
+            int line = ctx.signature().ID().getSymbol().getLine();
+            SymbolTable.addNode(signature.id, new Pair<>("Function", line));
             return new Function(signature, false, functionBody);
         }
     }
@@ -461,6 +472,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             impInterface = ctx.ID(idCounter).getText();
         }
         ClassBody classBody = (ClassBody) visit(ctx.classBody());
+        int line = ctx.ID(0).getSymbol().getLine();
+        SymbolTable.addNode(id, new Pair<>("Class", line));
         return new DartClass(Abstract, id, superClass, impInterface, classBody);
     }
 
@@ -491,6 +504,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitAttribute(DartGrammarsParser.AttributeContext ctx) {
         boolean isStatic = (ctx.STATIC() != null);
         Declaration dec = (Declaration) visit(ctx.declaration());
+        int line = ctx.declaration().start.getLine();
+        Pair<String, Integer> oldValue = new Pair<>("Variable", line);
+        Pair<String, Integer> newValue = new Pair<>("Class Attribute", line);
+        SymbolTable.replaceNode(dec.id, oldValue, newValue);
         return new ClassAttribute(isStatic, dec);
     }
 
@@ -500,6 +517,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Signature signature = (Signature) visit(ctx.signature());
         boolean async = (ctx.ASYNC() != null);
         FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
+        int line = ctx.signature().ID().getSymbol().getLine();
+        SymbolTable.addNode(signature.id, new Pair<>("Class Method", line));
         return new NormalClassMethod(override, signature, async, functionBody);
     }
 
@@ -508,12 +527,16 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Signature signature =  (Signature) visit(ctx.signature());
         boolean async = (ctx.ASYNC() != null);
         FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
+        int line = ctx.signature().ID().getSymbol().getLine();
+        SymbolTable.addNode(signature.id, new Pair<>("Static Class Method", line));
         return new StaticClassMethod(signature, async, functionBody);
     }
 
     @Override
     public Node visitAbstractClassMethod(DartGrammarsParser.AbstractClassMethodContext ctx) {
         Signature signature =  (Signature) visit(ctx.signature());
+        int line = ctx.signature().ID().getSymbol().getLine();
+        SymbolTable.addNode(signature.id, new Pair<>("Abstract Function", line));
         return new AbstractClassMethod(signature);
     }
 
@@ -526,6 +549,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.functionBody() != null){
             functionBody = (FunctionBody) visit(ctx.functionBody());
         }
+        int line = ctx.ID(1).getSymbol().getLine();
+        SymbolTable.addNode(classId+"."+id, new Pair<>("Named Constructor", line));
         return new NamedConstructor(classId, id, consArgs, functionBody);
     }
 
@@ -537,6 +562,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.functionBody() != null){
             functionBody = (FunctionBody) visit(ctx.functionBody());
         }
+        int line = ctx.ID().getSymbol().getLine();
+        SymbolTable.addNode(id, new Pair<>("Constructor", line));
         return new DefaultConstructor(id, consArgs, functionBody);
     }
 
@@ -627,6 +654,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     }
 
     @Override
+    public Node visitParameters(DartGrammarsParser.ParametersContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
     public Node visitPositionalNamedParameters(DartGrammarsParser.PositionalNamedParametersContext ctx) {
         PositionalParameters positionalParameters = (PositionalParameters) visit(ctx.getChild(0));
         NamedParameters namedParameters = (NamedParameters) visit(ctx.getChild(2));
@@ -713,6 +745,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitVariableExpression(DartGrammarsParser.VariableExpressionContext ctx) {
         return new Variable(ctx.getChild(0).getText());
+    }
+
+    @Override
+    public Node visitComponent(DartGrammarsParser.ComponentContext ctx) {
+        return visit(ctx.getChild(0));
     }
 
     @Override
