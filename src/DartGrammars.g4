@@ -371,7 +371,7 @@ containerChild
     : CONTAINER_CHILD':'object COMMA?
     ;
 containerColor
-    : CONTAINER_COLOR':'COLORS
+    : CONTAINER_COLOR':'COLORS COMMA?
     ;
 
 
@@ -398,17 +398,17 @@ padding
     : NEW PADDING '(' paddingAtts* ')'
     ;
 paddingAtts
-    : VALUES':'values COMMA?
+    : values
     | paddingChild
     ;
 paddingChild
     : PADDING_CHILD':'object COMMA?
     ;
 values
-    : ZERO //values.zero
-    | ALL '(' INT_NUM ')' //values.all(5)
-    | SYMMETRIC '(' horizontalOrVertical+ ')' //values.symmetric(horizontal: 4, vertical: 8)
-    | COSTUME '(' costumeValues+ ')'
+    : VALUES':'ZERO COMMA?
+    | VALUES':'ALL '(' INT_NUM ')' COMMA?
+    | VALUES':'SYMMETRIC '(' horizontalOrVertical+ ')' COMMA?
+    | VALUES':'COSTUME '(' costumeValues+ ')' COMMA?
     ;
 horizontalOrVertical
     : HORIZONTAL':'INT_NUM COMMA?
@@ -473,7 +473,7 @@ buttonChild
     : BUTTON_CHILD':'object COMMA?
     ;
 buttonColor
-    : BUTTON_COLOR':'COLORS
+    : BUTTON_COLOR':'COLORS COMMA?
     ;
 
 

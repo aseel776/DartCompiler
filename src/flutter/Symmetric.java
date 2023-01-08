@@ -12,7 +12,7 @@ public  class Symmetric extends PaddingValues {
 
     @Override
     public String toString() {
-        String top= new String( "values: PaddingValues.symmetric(" )  ;
+        String top= new String( "values: PaddingValues.symmetric(\n" )  ;
         for (int i = 0; i < horizontalOrVertical.size(); i++) {
             if (i == horizontalOrVertical.size() - 1) {
                 top = top.concat(horizontalOrVertical.get(i).toString() + "\n");

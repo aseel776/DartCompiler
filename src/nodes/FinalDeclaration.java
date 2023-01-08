@@ -31,7 +31,7 @@ public class FinalDeclaration extends Declaration{
         if(isInitialized){
             finalDec = finalDec.concat(init.toString());
         }
-        finalDec = finalDec.concat(";");
+        //finalDec = finalDec.concat(";");
         return finalDec;
     }
 }

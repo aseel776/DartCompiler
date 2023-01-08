@@ -2,7 +2,7 @@ package nodes;
 
 import java.util.List;
 
-public class ConsPositionalArgs extends Node{
+public class ConsPositionalArgs extends ConsArgs{
     public List<ConsArg> args;
 
     public ConsPositionalArgs(List<ConsArg> args){

@@ -3,9 +3,9 @@ package nodes;
 import java.util.List;
 
 public class ConsNamedArgs extends ConsArgs{
-    public List<NamedConsArg> args;
+    public List<ConsNamedArg> args;
 
-    public ConsNamedArgs(List<NamedConsArg> args){
+    public ConsNamedArgs(List<ConsNamedArg> args){
         this.args = args;
     }
 

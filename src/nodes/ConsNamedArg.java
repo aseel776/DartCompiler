@@ -1,11 +1,9 @@
 package nodes;
 
-import enums.TypeOrThis;
-
-public class NamedConsArg extends ConsArg {
+public class ConsNamedArg extends ConsArg {
     public Boolean isRequired;
 
-    public NamedConsArg(Boolean isRequired, TypeOrThis type, String id){
+    public ConsNamedArg(Boolean isRequired, String type, String id){
         super(type, id);
         this.isRequired = isRequired;
     }
@@ -14,7 +12,7 @@ public class NamedConsArg extends ConsArg {
     public String toString() {
         String arg = isRequired ? "required " : "" ;
         if(type != null){
-            if(type == TypeOrThis.THIS){
+            if(type.compareTo("this") == 0){
                 arg = arg.concat("this." + id);
             }else{
                 arg = arg.concat(type.toString() + " " + id);

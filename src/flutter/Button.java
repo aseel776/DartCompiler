@@ -16,7 +16,7 @@ public class Button extends Component{
     @Override
     public String toString() {
         if(buttonAtts != null){
-            return "new Button (\n" + buttonAtts.toString() + "\n)";
+            return "new Button (\n" + buttonAtts.toString() + ")";
         }else{
             return "new Button ()";
         }

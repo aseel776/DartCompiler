@@ -21,7 +21,7 @@ public class InkWell extends Component{
     @Override
     public String toString() {
         if(inkwellAtts != null){
-            return "new InkWell (\n" + inkwellAtts.toString() + "\n)";
+            return "new InkWell (\n" + inkwellAtts.toString() + ")";
         }else {
             return "new InkWell ()";
         }

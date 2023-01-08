@@ -25,7 +25,7 @@ public class PaddingAtts extends Parameters {
         String top = "";
         for (int i = 0; i < atts.size(); i++) {
             if (i == atts.size() - 1) {
-                top = top.concat(atts.get(i).toString() + "\n");
+                top = top.concat(atts.get(i).toString());
             } else {
                 top = top.concat(atts.get(i).toString() + "," + "\n");
             }

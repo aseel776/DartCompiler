@@ -14,7 +14,7 @@ public   class ContainerAtts extends Parameters {
     public ContainerAtts(){
         this.containerAtt= new ArrayList<>();
     }
-    public void addContainerAttr(ContainerAtt a){
+    public void addAtt(ContainerAtt a){
         this.containerAtt.add(a);
     }
     @Override

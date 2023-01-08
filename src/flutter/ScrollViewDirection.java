@@ -1,6 +1,6 @@
 package flutter;
 
-public abstract class ScrollViewDirection extends ScrollViewAtt {
+public class ScrollViewDirection extends ScrollViewAtt {
     public String scrollDirection;
     public ScrollViewDirection(String scrollDirection){
         this.scrollDirection=scrollDirection;
@@ -8,6 +8,6 @@ public abstract class ScrollViewDirection extends ScrollViewAtt {
 
     @Override
     public String toString() {
-        return "scrollDirection:" + scrollDirection;
+        return "scrollDirection: " + scrollDirection;
     }
 }

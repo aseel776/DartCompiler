@@ -14,12 +14,13 @@ public class Text extends Component {
 
     public Text(String text){
         super("Text", new ZeroParameters());
+        this.text = text;
     }
 
     @Override
     public String toString() {
         if(textAtts != null){
-            return "new Text (\n" + text + '\n' + textAtts.toString() + "\n);";
+            return "new Text (\n" + text + '\n' + textAtts.toString() + ")";
         }else{
             return "new Text (\n" + text + "\n)";
         }

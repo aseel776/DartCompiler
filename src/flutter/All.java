@@ -7,7 +7,7 @@ public class All extends PaddingValues {
     }
     @Override
     public String toString() {
-        return "values: PaddingValues.all("+number.toString() +")";
+        return "values: Values.all("+number.toString() +")";
     }
 }
 

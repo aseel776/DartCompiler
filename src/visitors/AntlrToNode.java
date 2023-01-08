@@ -364,7 +364,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             type = ctx.voidOrType().getText();
         }
         String id = ctx.ID().getText();
-        Arguments arguments = (Arguments) visit(ctx.getChild(3));
+        Arguments arguments = (Arguments) visit(ctx.arguments());
         return new Signature(type, id, arguments);
     }
 
@@ -677,4 +677,318 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new TextStyle(style);
     }
 
+    @Override
+    public Node visitContainer(DartGrammarsParser.ContainerContext ctx) {
+        if(ctx.getChildCount() > 4){
+            ContainerAtts atts = new ContainerAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                ContainerAtt att = (ContainerAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Container(atts);
+        }else {
+            return new Container();
+        }
+    }
+
+    @Override
+    public Node visitContainerAtts(DartGrammarsParser.ContainerAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitContainerWidth(DartGrammarsParser.ContainerWidthContext ctx) {
+        String num = ctx.getChild(2).getText();
+        DartInteger width = new DartInteger(Integer.parseInt(num));
+        return new ContainerAttsWidth(width);
+    }
+
+    @Override
+    public Node visitContainerHeight(DartGrammarsParser.ContainerHeightContext ctx) {
+        String num = ctx.getChild(2).getText();
+        DartInteger height = new DartInteger(Integer.parseInt(num));
+        return new ContainerAttsHeight(height);
+    }
+
+    @Override
+    public Node visitContainerChild(DartGrammarsParser.ContainerChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new ContainerAttsChild(dartObject);
+    }
+
+    @Override
+    public Node visitContainerColor(DartGrammarsParser.ContainerColorContext ctx) {
+        String color = ctx.getChild(2).getText();
+        return new ContainerAttsColor(color);
+    }
+
+    @Override
+    public Node visitSizedBox(DartGrammarsParser.SizedBoxContext ctx) {
+        if(ctx.getChildCount() > 4){
+            SizedBoxAtts atts = new SizedBoxAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                SizedBoxAtt att = (SizedBoxAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new SizedBox(atts);
+        }else {
+            return new SizedBox();
+        }
+    }
+
+    @Override
+    public Node visitSizedBoxAtts(DartGrammarsParser.SizedBoxAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitSizedBoxWidth(DartGrammarsParser.SizedBoxWidthContext ctx) {
+        String num = ctx.getChild(2).getText();
+        DartInteger width = new DartInteger(Integer.parseInt(num));
+        return new SizedBoxWidth(width);
+    }
+
+    @Override
+    public Node visitSizedBoxHeight(DartGrammarsParser.SizedBoxHeightContext ctx) {
+        String num = ctx.getChild(2).getText();
+        DartInteger height = new DartInteger(Integer.parseInt(num));
+        return new SizedBoxHeight(height);
+    }
+
+    @Override
+    public Node visitSizedBoxChild(DartGrammarsParser.SizedBoxChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new SizedBoxChild(dartObject);
+    }
+
+    @Override
+    public Node visitPadding(DartGrammarsParser.PaddingContext ctx) {
+        if(ctx.getChildCount() > 4){
+            PaddingAtts atts = new PaddingAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                PaddingAtt att = (PaddingAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Padding(atts);
+        }else {
+            return new Padding();
+        }
+    }
+
+    @Override
+    public Node visitPaddingAtts(DartGrammarsParser.PaddingAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitPaddingChild(DartGrammarsParser.PaddingChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new PaddingChild(dartObject);
+    }
+
+    @Override
+    public Node visitValues(DartGrammarsParser.ValuesContext ctx) {
+        String values = ctx.getChild(2).getText();
+        switch (values){
+            case "Values.zero":
+                return new Zero();
+            case "Values.all":
+                String numText = ctx.getChild(4).getText();
+                DartInteger num = new DartInteger(Integer.parseInt(numText));
+                return new All(num);
+            case "Values.symmetric":
+                List<HorizontalOrVertical> hORv = new ArrayList<>();
+                for(int i = 4; i < ctx.getChildCount() - 1; i++){
+                    if(ctx.getChild(i).getText().equals(")")){
+                        break;
+                    }
+                    HorizontalOrVertical temp = (HorizontalOrVertical) visit(ctx.getChild(i));
+                    hORv.add(temp);
+                }
+                return new Symmetric(hORv);
+            case "Values.costume":
+                List<CostumeValues> valuesList = new ArrayList<>();
+                for(int i = 4; i < ctx.getChildCount() - 1; i++){
+                    if(ctx.getChild(i).getText().equals(")")){
+                        break;
+                    }
+                    CostumeValues temp = (CostumeValues) visit(ctx.getChild(i));
+                    valuesList.add(temp);
+                }
+                return new Costume(valuesList);
+            default:
+                return new All(new DartInteger(0));
+        }
+    }
+
+    @Override
+    public Node visitHorizontalOrVertical(DartGrammarsParser.HorizontalOrVerticalContext ctx) {
+        DartInteger number = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
+        if(ctx.getChild(0) == ctx.HORIZONTAL()){
+            return new Horizontal(number);
+        }else{
+            return new Vertical(number);
+        }
+    }
+
+    @Override
+    public Node visitCostumeValues(DartGrammarsParser.CostumeValuesContext ctx) {
+        DartInteger number = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
+        if(ctx.getChild(0) == ctx.LEFT()){
+            return new Left(number);
+        }else if(ctx.getChild(0) == ctx.TOP()){
+            return new Top(number);
+        }else if(ctx.getChild(0) == ctx.RIGHT()){
+            return new Right(number);
+        }else {
+            return new Bottom(number);
+        }
+    }
+
+    @Override
+    public Node visitInkWell(DartGrammarsParser.InkWellContext ctx) {
+        if(ctx.getChildCount() > 4){
+            InkwellAtts atts = new InkwellAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                InkWellAtt att = (InkWellAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new InkWell(atts);
+        }else {
+            return new InkWell();
+        }
+    }
+
+    @Override
+    public Node visitInkWellAtts(DartGrammarsParser.InkWellAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitInkWellChild(DartGrammarsParser.InkWellChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new InkWellChild(dartObject);
+    }
+
+    @Override
+    public Node visitInkWellOnTap(DartGrammarsParser.InkWellOnTapContext ctx) {
+        if(ctx.getChild(2) == ctx.functionCall()){
+            FunctionCall functionCall = (FunctionCall) visit(ctx.getChild(2));
+            return new Inkwell_OnTap_FunctionCall(functionCall);
+        }else{
+            UnnamedFunction unnamedFunction = (UnnamedFunction) visit(ctx.getChild(2));
+            return new Inkwell_OnTap_UnnamedFunction(unnamedFunction);
+        }
+    }
+
+    @Override
+    public Node visitImage(DartGrammarsParser.ImageContext ctx) {
+        String src = ctx.getChild(3).getText();
+        if(ctx.getChildCount() > 6){
+            ImageAtts atts = new ImageAtts();
+            for(int i = 5; i < ctx.getChildCount() - 1; i++){
+                ImageAtt att = (ImageAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Image(src, atts);
+        }else {
+            return new Image(src);
+        }
+    }
+
+    @Override
+    public Node visitImageAtts(DartGrammarsParser.ImageAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitImageFit(DartGrammarsParser.ImageFitContext ctx) {
+        String fit = ctx.getChild(2).getText();
+        return new ImageFit(fit);
+    }
+
+    @Override
+    public Node visitImageWidth(DartGrammarsParser.ImageWidthContext ctx) {
+        DartInteger width = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
+        return new ImageAttsWidth(width);
+    }
+
+    @Override
+    public Node visitImageHeight(DartGrammarsParser.ImageHeightContext ctx) {
+        DartInteger height = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
+        return new ImageAttsHeight(height);
+    }
+
+    @Override
+    public Node visitButton(DartGrammarsParser.ButtonContext ctx) {
+        if(ctx.getChildCount() > 4){
+            ButtonAtts atts = new ButtonAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                ButtonAtt att = (ButtonAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new Button(atts);
+        }else {
+            return new Button();
+        }
+    }
+
+    @Override
+    public Node visitButtonAtts(DartGrammarsParser.ButtonAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitButtonOnTap(DartGrammarsParser.ButtonOnTapContext ctx) {
+        if(ctx.getChild(2) == ctx.functionCall()){
+            FunctionCall functionCall = (FunctionCall) visit(ctx.getChild(2));
+            return new Button_OnTap_functionCall(functionCall);
+        }else{
+            UnnamedFunction unnamedFunction = (UnnamedFunction) visit(ctx.getChild(2));
+            return new Button_OnTap_unnamedFunction(unnamedFunction);
+        }
+    }
+
+    @Override
+    public Node visitButtonChild(DartGrammarsParser.ButtonChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new ButtonChild(dartObject);
+    }
+
+    @Override
+    public Node visitButtonColor(DartGrammarsParser.ButtonColorContext ctx) {
+        String color = ctx.getChild(2).getText();
+        return new ButtonColor(color);
+    }
+
+    @Override
+    public Node visitScrollView(DartGrammarsParser.ScrollViewContext ctx) {
+        if(ctx.getChildCount() > 4){
+            ScrollViewAtts atts = new ScrollViewAtts();
+            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+                ScrollViewAtt att = (ScrollViewAtt) visit(ctx.getChild(i));
+                atts.addAtt(att);
+            }
+            return new ScrollView(atts);
+        }else {
+            return new ScrollView();
+        }
+    }
+
+    @Override
+    public Node visitScrollViewAtts(DartGrammarsParser.ScrollViewAttsContext ctx) {
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitScrollDirection(DartGrammarsParser.ScrollDirectionContext ctx) {
+        String dir = ctx.getChild(2).getText();
+        return new ScrollViewDirection(dir);
+    }
+
+    @Override
+    public Node visitScrollChild(DartGrammarsParser.ScrollChildContext ctx) {
+        DartObject dartObject = (DartObject) visit(ctx.getChild(2));
+        return new ScrollViewChild(dartObject);
+    }
 }
