@@ -1,6 +1,5 @@
 grammar DartGrammars;
 
-// to be changed
 start
     : (class | function)+ EOF
     ;

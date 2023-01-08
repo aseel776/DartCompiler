@@ -18,7 +18,7 @@ public class Start{
     public String toString() {
         String program = "";
         for (Node n: nodes) {
-            program = program.concat(n.toString());
+            program = program.concat(n.toString() + '\n' );
         }
         return program;
     }

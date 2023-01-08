@@ -3,9 +3,7 @@ package nodes;
 public class DartClass extends Node {
     public Boolean isAbstract;
     public String id;
-    private final Boolean extendsAClass;
     public String superClass;
-    private final Boolean implementsAnInterface;
     public String impInterface;
     public ClassBody classBody;
 
@@ -14,15 +12,9 @@ public class DartClass extends Node {
         this.id = id;
         if(superClass != null){
             this.superClass = superClass;
-            extendsAClass = true;
-        }else{
-            extendsAClass = false;
         }
         if(impInterface != null) {
             this.impInterface = impInterface;
-            implementsAnInterface = true;
-        }else{
-            implementsAnInterface = false;
         }
         this.classBody = classBody;
     }
@@ -35,10 +27,10 @@ public class DartClass extends Node {
         }else {
             wholeClass = "class" + " " + id + " ";
         }
-        if(extendsAClass){
+        if(superClass != null){
             wholeClass = wholeClass.concat("extends" + " " + superClass + " ");
         }
-        if(implementsAnInterface){
+        if(impInterface != null){
             wholeClass = wholeClass.concat("implements" + " " + impInterface + " ");
         }
         wholeClass = wholeClass.concat(classBody.toString());

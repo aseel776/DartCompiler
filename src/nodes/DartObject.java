@@ -11,6 +11,6 @@ public class DartObject extends Statement {
 
     @Override
     public String toString() {
-        return "new" + " " + id + parameters.toString() + ";";
+        return "new" + " " + id + parameters.toString();
     }
 }
