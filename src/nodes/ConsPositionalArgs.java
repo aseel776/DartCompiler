@@ -3,6 +3,7 @@ package nodes;
 import java.util.List;
 
 public class ConsPositionalArgs extends ConsArgs{
+
     public List<ConsArg> args;
 
     public ConsPositionalArgs(List<ConsArg> args){
@@ -21,5 +22,14 @@ public class ConsPositionalArgs extends ConsArgs{
         }
         posArgs = posArgs.concat(")");
         return posArgs;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("constructor positional arguments");
+        for (ConsArg c: args) {
+            str.append("\n\t\t").append(c.astImp());
+        }
+        return str;
     }
 }

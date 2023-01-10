@@ -3,6 +3,7 @@ package nodes;
 import java.util.List;
 
 public class NamedParameters extends Parameters{
+
     public List<NamedParameter> parameters;
 
     public NamedParameters(List<NamedParameter> parameters){
@@ -20,5 +21,14 @@ public class NamedParameters extends Parameters{
             }
         }
         return pars;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("named parameters");
+        for (NamedParameter p: parameters) {
+            str.append("\n\t\t").append(p.astImp());
+        }
+        return str;
     }
 }

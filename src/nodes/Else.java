@@ -1,6 +1,7 @@
 package nodes;
 
 public class Else extends Node{
+
     public Block block;
 
     public Else(Block block){
@@ -10,5 +11,10 @@ public class Else extends Node{
     @Override
     public String toString() {
         return "else" + '\n' + block.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("else").append("\n\t\t").append(block.astImp());
     }
 }

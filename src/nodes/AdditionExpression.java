@@ -14,4 +14,12 @@ public class AdditionExpression extends Expression{
         return left.toString() + '+' + right.toString();
     }
 
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("addition");
+        str.append("\n\t\t").append(left.astImp());
+        str.append("\n\t\t+");
+        str.append("\n\t\t").append(right.astImp());
+        return str;
+    }
 }

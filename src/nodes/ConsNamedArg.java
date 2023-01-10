@@ -22,4 +22,9 @@ public class ConsNamedArg extends ConsArg {
         }
         return arg;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("constructor named arg").append("\n\t\t").append(this);
+    }
 }

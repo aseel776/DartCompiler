@@ -10,4 +10,12 @@ public class DoWhileStatement extends WhileStatement{
     public String toString() {
         return "do" + '\n' + block.toString() + "while" + '(' + condition.toString() + ");" ;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("do");
+        str.append("\n\t\t").append(block.astImp());
+        str.append("\n\t\twhile ").append(condition.astImp());
+        return str;
+    }
 }

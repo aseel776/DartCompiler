@@ -26,4 +26,13 @@ public class InkWell extends Component{
             return "new InkWell ()";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("inkwell");
+        if(inkwellAtts != null){
+            str.append("\n\t\t").append(inkwellAtts.astImp());
+        }
+        return str;
+    }
 }

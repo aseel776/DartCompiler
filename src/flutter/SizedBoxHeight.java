@@ -13,4 +13,11 @@ public class SizedBoxHeight extends SizedBoxAtt{
     public String toString() {
         return "sizedBoxHeight:" +number.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("sizedBox height");
+        str.append("\n\t\t").append(this);
+        return str;
+    }
 }

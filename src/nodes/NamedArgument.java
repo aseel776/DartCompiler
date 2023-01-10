@@ -1,6 +1,7 @@
 package nodes;
 
 public class NamedArgument extends Argument{
+
     public Boolean isRequired;
 
     public NamedArgument(String type, String id, Boolean isRequired){
@@ -23,5 +24,10 @@ public class NamedArgument extends Argument{
                 return id;
             }
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("named arg").append("\n\t\t").append(this);
     }
 }

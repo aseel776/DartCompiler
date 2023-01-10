@@ -1,7 +1,9 @@
 package nodes;
 
 public class DartInteger extends Number {
+
     public int number;
+
     public DartInteger(int number){
         this.number = number ;
     }
@@ -9,5 +11,10 @@ public class DartInteger extends Number {
     @Override
     public String toString() {
         return String.valueOf(number);
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("int").append("\n\t\t").append(this);
     }
 }

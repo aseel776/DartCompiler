@@ -1,8 +1,6 @@
 package flutter;
 
-import nodes.Node;
 import nodes.Parameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +30,14 @@ public class ScaffoldAtts extends Parameters {
             }
         }
         return top;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("scaffold atts");
+        for(ScaffoldAtt att:atts){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

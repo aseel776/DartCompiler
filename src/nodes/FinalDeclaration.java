@@ -26,7 +26,13 @@ public class FinalDeclaration extends Declaration{
         if(init != null){
             finalDec = finalDec.concat(init.toString());
         }
-        //finalDec = finalDec.concat(";");
         return finalDec;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("declaration");
+        str.append("\n\t\t").append(this);
+        return str;
     }
 }

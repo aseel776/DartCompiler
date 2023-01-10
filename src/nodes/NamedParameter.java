@@ -1,6 +1,7 @@
 package nodes;
 
 public class NamedParameter extends Parameter{
+
     public String id;
 
     public NamedParameter(String id, Node value){
@@ -11,5 +12,10 @@ public class NamedParameter extends Parameter{
     @Override
     public String toString() {
         return id + ":" + " " + value.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("named parameter").append("\n\t\t").append(this);
     }
 }

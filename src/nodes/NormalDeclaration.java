@@ -1,6 +1,7 @@
 package nodes;
 
 public class NormalDeclaration extends Declaration{
+
     public Boolean isLate;
     public String type;
     public String id;
@@ -27,7 +28,13 @@ public class NormalDeclaration extends Declaration{
         if(init != null){
             normalDec = normalDec.concat(init.toString());
         }
-        //normalDec = normalDec.concat(";");
         return normalDec;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("declaration");
+        str.append("\n\t\t").append(this);
+        return str;
     }
 }

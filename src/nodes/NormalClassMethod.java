@@ -1,6 +1,7 @@
 package nodes;
 
 public class NormalClassMethod extends ClassMethod{
+
     public Boolean overrides;
     public Signature signature;
     public Boolean isAsync;
@@ -26,5 +27,19 @@ public class NormalClassMethod extends ClassMethod{
         }
         method = method.concat(methodBody.toString());
         return method;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("class method");
+        if(overrides){
+            str.append("\n\t\toverrides");
+        }
+        str.append("\n\t\t").append(signature.astImp());
+        if(isAsync){
+            str.append("\n\t\tasync");
+        }
+        str.append("\n\t\t").append(methodBody.astImp());
+        return str;
     }
 }

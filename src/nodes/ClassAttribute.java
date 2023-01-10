@@ -17,4 +17,14 @@ public class ClassAttribute extends Node {
             return declaration.toString();
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("class attribute");
+        if(isStatic){
+            str.append("\n\t\tstatic ");
+        }
+        str.append("\n\t\t").append(declaration.astImp());
+        return str;
+    }
 }

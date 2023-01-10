@@ -1,6 +1,7 @@
 package nodes;
 
 public class SwitchStatement extends Statement{
+
     public Variable id;
     public SwitchBody body;
 
@@ -12,5 +13,13 @@ public class SwitchStatement extends Statement{
     @Override
     public String toString() {
         return "switch" + '(' + id + ')' + body.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("switch");
+        str.append("\n\t\t").append(id);
+        str.append("\n\t\t").append(body.astImp());
+        return str;
     }
 }

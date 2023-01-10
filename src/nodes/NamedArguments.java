@@ -3,6 +3,7 @@ package nodes;
 import java.util.List;
 
 public class NamedArguments extends Arguments{
+
     public List<NamedArgument> args;
 
     public NamedArguments(List<NamedArgument> args){
@@ -21,5 +22,14 @@ public class NamedArguments extends Arguments{
         }
         namedArgs = namedArgs.concat("})");
         return namedArgs;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("named arguments");
+        for (NamedArgument arg: args) {
+            str.append("\n\t\t").append(arg.astImp());
+        }
+        return str;
     }
 }

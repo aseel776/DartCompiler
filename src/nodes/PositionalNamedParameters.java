@@ -24,4 +24,12 @@ public class PositionalNamedParameters extends Parameters{
         }
         return pars;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("positional named parameters");
+        str.append("\n\t\t").append(positionalParameters.astImp());
+        str.append("\n\t\t").append(namedParameters.astImp());
+        return str;
+    }
 }

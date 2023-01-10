@@ -31,4 +31,13 @@ public class ListType extends Node{
         list = list.concat("]");
         return list;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("list");
+        for (Node n: elements) {
+            str.append("\n\t\t").append(n.astImp());
+        }
+        return str;
+    }
 }

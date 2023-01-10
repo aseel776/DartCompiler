@@ -14,5 +14,9 @@ public class Left extends CostumeValues{
     public String toString() {
         return "left:"+number.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder(toString());
+    }
 }
-//    : LEFT':'INT_NUM COMMA?

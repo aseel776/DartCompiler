@@ -22,4 +22,13 @@ public class MaterialApp extends Component{
            return "new MaterialApp()";
        }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("material app");
+        if(materialAppAtts != null){
+            str.append("\n\t\t").append(materialAppAtts.astImp());
+        }
+        return str;
+    }
 }

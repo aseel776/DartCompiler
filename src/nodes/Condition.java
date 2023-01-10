@@ -13,4 +13,9 @@ public class Condition extends Node{
     public String toString() {
         return comparison.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("condition").append("\n\t\t").append(comparison.astImp());
+    }
 }

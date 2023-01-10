@@ -21,5 +21,14 @@ public class Scaffold extends Component{
             return "new Scaffold()";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("scaffold");
+        if(scaffoldAtts != null){
+            str.append("\n\t\t").append(scaffoldAtts.astImp());
+        }
+        return str;
+    }
 }
 

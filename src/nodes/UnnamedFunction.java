@@ -1,6 +1,7 @@
 package nodes;
 
 public class UnnamedFunction extends Node{
+
     public Arguments arguments;
     public Boolean isAsync;
     public FunctionBody functionBody;
@@ -18,5 +19,16 @@ public class UnnamedFunction extends Node{
         }else {
             return arguments.toString() + " " + functionBody.toString();
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("unnamed function");
+        str.append("\n\t\t").append(arguments.astImp());
+        if(isAsync){
+            str.append("\n\t\tasync");
+        }
+        str.append("\n\t\t").append(functionBody.astImp());
+        return str;
     }
 }

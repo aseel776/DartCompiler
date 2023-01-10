@@ -9,6 +9,7 @@ import java.util.List;
 public  class StackAtts extends Parameters {
 
     public List<StackAtt> stackAtt;
+
     public  StackAtts(List<StackAtt>stackAtt){
         this.stackAtt=stackAtt;
     }
@@ -16,6 +17,7 @@ public  class StackAtts extends Parameters {
     public  StackAtts(){
         this.stackAtt= new ArrayList<>();
     }
+
     public  void addAtt(StackAtt stackAtt){
         this.stackAtt.add(stackAtt);
     }
@@ -31,5 +33,14 @@ public  class StackAtts extends Parameters {
             }
         }
         return top ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("stack atts");
+        for(StackAtt s: stackAtt){
+            str.append("\n\t\t").append(s.astImp());
+        }
+        return str;
     }
 }

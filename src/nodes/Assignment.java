@@ -13,4 +13,11 @@ public class Assignment extends Statement{
     public String toString() {
         return id + " = " + value.toString() + ";";
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("assignment");
+        str.append("\n\t\t").append(this);
+        return str;
+    }
 }

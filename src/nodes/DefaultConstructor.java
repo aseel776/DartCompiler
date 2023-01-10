@@ -1,6 +1,7 @@
 package nodes;
 
 public class DefaultConstructor extends Node {
+
     public String id;
     public ConsArgs args;
     public FunctionBody consBody;
@@ -22,5 +23,16 @@ public class DefaultConstructor extends Node {
             cons = cons.concat(";");
         }
         return cons;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("default constructor");
+        str.append("\n\t\t").append(id);
+        str.append("\n\t\t").append(args.astImp());
+        if(consBody != null){
+            str.append("\n\t\t").append(consBody.astImp());
+        }
+        return str;
     }
 }

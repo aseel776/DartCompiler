@@ -1,6 +1,7 @@
 package nodes;
 
 public class ConsArg extends Node {
+
     public String type;
     public String id;
 
@@ -22,5 +23,10 @@ public class ConsArg extends Node {
         }else{
             return id;
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("constructor arg").append("\n\t\t").append(this);
     }
 }

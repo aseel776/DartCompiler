@@ -23,5 +23,14 @@ public class Stack extends Component{
             return "new Stack ();";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("stack");
+        if(stackAtts != null){
+            str.append("\n\t\t").append(stackAtts.astImp());
+        }
+        return str;
+    }
 }
 

@@ -1,9 +1,6 @@
 package flutter;
 
-import nodes.Node;
 import nodes.Parameters;
-import java.util.ArrayList;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,5 +28,14 @@ public  class Column_rowAtts extends Parameters {
             }
         }
         return top ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("column_rowAtts");
+        for (Column_rowAtt att: column_rowAtt) {
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

@@ -23,4 +23,13 @@ public class Column extends Component{
             return "new Column ()";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("column");
+        if(columnAtts != null){
+            str.append("\n\t\t").append(columnAtts.astImp());
+        }
+        return str;
+    }
 }

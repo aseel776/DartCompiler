@@ -1,7 +1,6 @@
 package flutter;
 
 import nodes.Parameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,5 +30,14 @@ public  class TextAtts extends Parameters {
             }
         }
         return top ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("text atts");
+        for (TextAtt att: textAtt){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

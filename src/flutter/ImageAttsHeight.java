@@ -12,4 +12,11 @@ public class ImageAttsHeight extends ImageAtt{
     public String toString() {
         return "imageHeight: " + number.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("image height");
+        str.append("\n\t\t").append(this);
+        return str;
+    }
 }

@@ -22,4 +22,13 @@ public class Container extends Component{
             return "new Container ()";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("container");
+        if(containerAtts != null){
+            str.append("\n\t\t").append(containerAtts.astImp());
+        }
+        return str;
+    }
 }

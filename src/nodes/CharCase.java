@@ -1,6 +1,7 @@
 package nodes;
 
 public class CharCase extends Case{
+
     public String str;
 
     public CharCase(String str, CaseBody caseBody){
@@ -11,5 +12,13 @@ public class CharCase extends Case{
     @Override
     public String toString() {
         return "case " + "\"" + str + "\"" + ':' + caseBody.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder ("case");
+        str.append("\n\t\t").append(this);
+        str.append("\n\t\t").append(caseBody.astImp());
+        return str;
     }
 }

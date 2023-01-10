@@ -3,12 +3,12 @@ package flutter;
 import java.util.List;
 
 public  class Symmetric extends PaddingValues {
+
     public List <HorizontalOrVertical> horizontalOrVertical;
 
     public Symmetric(List<HorizontalOrVertical> horizontalOrVertical) {
         this.horizontalOrVertical = horizontalOrVertical;
     }
-
 
     @Override
     public String toString() {
@@ -22,5 +22,15 @@ public  class Symmetric extends PaddingValues {
         }
         top = top.concat(")");
         return top ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("values");
+        str.append("\n\t\tsymmetric");
+        for (HorizontalOrVertical horv: horizontalOrVertical){
+            str.append("\n\t\t").append(horv.astImp());
+        }
+        return str;
     }
 }

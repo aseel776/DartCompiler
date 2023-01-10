@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SizedBoxAtts extends Parameters {
+
     public List<SizedBoxAtt> atts;
 
     public SizedBoxAtts(List<SizedBoxAtt> atts){
@@ -32,4 +33,14 @@ public class SizedBoxAtts extends Parameters {
         }
         return top;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("sizedBox atts");
+        for(SizedBoxAtt att : atts){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
+    }
+
 }

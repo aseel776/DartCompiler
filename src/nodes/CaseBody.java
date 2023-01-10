@@ -1,6 +1,7 @@
 package nodes;
 
 public class CaseBody extends Block{
+
     public Boolean containsBreak;
 
     public CaseBody(Boolean containsBreak){
@@ -18,5 +19,17 @@ public class CaseBody extends Block{
             body = body.concat("break;");
         }
         return body;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("case body");
+        for (Node n: statements) {
+            str.append("\n\t\t").append(n.astImp());
+        }
+        if(containsBreak){
+            str.append("\n\t\tbreak");
+        }
+        return str;
     }
 }

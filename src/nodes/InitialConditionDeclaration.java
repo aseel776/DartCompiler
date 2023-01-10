@@ -1,6 +1,7 @@
 package nodes;
 
 public class InitialConditionDeclaration extends InitialCondition{
+
     public String type;
     public String id;
     public Expression value;
@@ -15,5 +16,12 @@ public class InitialConditionDeclaration extends InitialCondition{
     @Override
     public String toString() {
         return type + " " + id + '=' + value.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("initial condition");
+        str.append("\n\t\t").append(this);
+        return str;
     }
 }

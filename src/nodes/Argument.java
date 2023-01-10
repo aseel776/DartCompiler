@@ -1,6 +1,7 @@
 package nodes;
 
 public class Argument extends Node{
+
     public String type;
     public String id;
 
@@ -18,5 +19,10 @@ public class Argument extends Node{
         }else{
             return id;
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("arg ").append(this);
     }
 }

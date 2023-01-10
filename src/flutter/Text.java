@@ -3,7 +3,9 @@ package flutter;
 import nodes.ZeroParameters;
 
 public class Text extends Component {
+
     public String text;
+
     public TextAtts textAtts;
 
     public Text(String text, TextAtts atts) {
@@ -24,5 +26,15 @@ public class Text extends Component {
         }else{
             return "new Text (\n" + text + "\n)";
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("text");
+        str.append("\n\t\t").append(text);
+        if(textAtts != null){
+            str.append("\n\t\t").append(textAtts.astImp());
+        }
+        return str;
     }
 }

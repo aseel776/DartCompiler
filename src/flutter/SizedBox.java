@@ -3,6 +3,7 @@ package flutter;
 import nodes.ZeroParameters;
 
 public class SizedBox extends Component {
+
     public SizedBoxAtts sizedBoxAtts;
 
     public SizedBox(SizedBoxAtts sizedBoxAtts) {
@@ -21,5 +22,14 @@ public class SizedBox extends Component {
         }else{
             return "new SizedBox ()";
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("sizedBox");
+        if(sizedBoxAtts != null){
+            str.append("\n\t\t").append(sizedBoxAtts.astImp());
+        }
+        return str;
     }
 }

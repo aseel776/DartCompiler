@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InkwellAtts extends Parameters {
+
     List<InkWellAtt> atts;
 
     public InkwellAtts(List<InkWellAtt> atts){
@@ -31,5 +32,14 @@ public class InkwellAtts extends Parameters {
             }
         }
         return top;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("inkwell atts");
+        for (InkWellAtt att: atts){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

@@ -1,6 +1,7 @@
 package nodes;
 
 public class Signature extends Node{
+
     public String returnType;
     public String id;
     public Arguments arguments;
@@ -16,9 +17,20 @@ public class Signature extends Node{
     @Override
     public String toString() {
         if(returnType != null){
-            return returnType.toString() + " " + id + " " + arguments.toString();
+            return returnType + " " + id + " " + arguments.toString();
         }else {
             return id + " " + arguments.toString();
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("signature");
+        if(returnType != null){
+            str.append("\n\t\t").append(returnType);
+        }
+        str.append("\n\t\t").append(id);
+        str.append("\n\t\t").append(arguments.astImp());
+        return  str;
     }
 }

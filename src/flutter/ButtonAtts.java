@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ButtonAtts extends Parameters {
+
     public List<ButtonAtt> atts;
 
     public ButtonAtts(List<ButtonAtt> atts){
@@ -31,10 +32,13 @@ public class ButtonAtts extends Parameters {
         }
         return top;
     }
-}
 
-//buttonAtts
-//        : onTap
-//        | child
-//        | color
-//        ;
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("button atts");
+        for (ButtonAtt b: atts) {
+            str.append("\n\t\t").append(b.astImp());
+        }
+        return str;
+    }
+}

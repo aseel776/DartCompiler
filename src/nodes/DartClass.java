@@ -1,6 +1,7 @@
 package nodes;
 
 public class DartClass extends Node {
+
     public Boolean isAbstract;
     public String id;
     public String superClass;
@@ -35,5 +36,24 @@ public class DartClass extends Node {
         }
         wholeClass = wholeClass.concat(classBody.toString());
         return wholeClass;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+
+        StringBuilder str = new StringBuilder("class");
+        if(isAbstract){
+            str.append("\n\t\tabstract");
+        }
+        str.append("\n\t\tclass ").append(id);
+        if(superClass != null){
+            str.append("\n\t\textends ").append(superClass);
+        }
+        if(impInterface != null){
+            str.append("\n\t\timplements ").append(impInterface);
+        }
+        str.append("\n\t\t").append(classBody.astImp());
+        return str;
+
     }
 }

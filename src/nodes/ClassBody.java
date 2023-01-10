@@ -3,6 +3,7 @@ package nodes;
 import java.util.List;
 
 public class ClassBody extends Node{
+
     public List<ClassAttribute> attributes;
     public List<ClassMethod> methods;
     public DefaultConstructor defaultConstructor;
@@ -29,5 +30,20 @@ public class ClassBody extends Node{
         }
         body = body.concat("}");
         return body;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("class body");
+        for (ClassAttribute att: attributes) {
+            str.append("\n\t\t").append(att.astImp());
+        }
+        for (ClassMethod m: methods) {
+            str.append("\n\t\t").append(m.astImp());
+        }
+        if(defaultConstructor != null){
+            str.append("\n\t\t").append(defaultConstructor.astImp());
+        }
+        return str;
     }
 }

@@ -12,5 +12,11 @@ public class ContainerAttsColor extends ContainerAtt {
 
         return "containerColor: " + color.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("container color");
+        str.append("\n\t\t").append(this);
+        return str;
+    }
 }
-//    : COLOR':'COLORS COMMA?

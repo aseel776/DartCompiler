@@ -5,6 +5,7 @@ import java.util.List;
 public class Costume extends PaddingValues {
 
     public List<CostumeValues> costumeValues;
+
     public Costume(List<CostumeValues> costumeValues) {
         this.costumeValues = costumeValues;
     }
@@ -21,5 +22,15 @@ public class Costume extends PaddingValues {
         }
         top = top.concat(")");
         return top ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("values");
+        str.append("\n\t\tcostume");
+        for(CostumeValues v : costumeValues){
+            str.append("\n\t\t").append(v.astImp());
+        }
+        return str;
     }
 }

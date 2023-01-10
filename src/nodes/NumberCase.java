@@ -12,4 +12,12 @@ public class NumberCase extends Case{
     public String toString() {
         return "case " + number.toString() + ':' + caseBody.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("case");
+        str.append("\n\t\t").append(this);
+        str.append("\n\t\t").append(caseBody.astImp());
+        return str;
+    }
 }

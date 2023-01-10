@@ -14,4 +14,10 @@ public class ScaffoldBackground extends ScaffoldAtt{
         return "backgroundColor:"+color.toString();
     }
 
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("scaffold background color");
+        str.append("\n\t\t").append(this);
+        return str;
+    }
 }

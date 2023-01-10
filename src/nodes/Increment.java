@@ -1,6 +1,7 @@
 package nodes;
 
 public class Increment extends Node{
+
     public Variable id;
     public String symbol;
     public Expression expression;
@@ -14,5 +15,12 @@ public class Increment extends Node{
     @Override
     public String toString() {
         return id.toString() + symbol + expression.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("increment");
+        str.append("\n\t\t").append(this);
+        return str;
     }
 }

@@ -3,6 +3,7 @@ package flutter;
 import nodes.ZeroParameters;
 
 public class Padding extends Component{
+
     public PaddingAtts paddingAtts;
 
     public Padding(PaddingAtts paddingAtts) {
@@ -21,5 +22,14 @@ public class Padding extends Component{
         }else{
             return "new Padding ()";
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("padding");
+        if(paddingAtts != null){
+            str.append("\n\t\t").append(paddingAtts.astImp());
+        }
+        return str;
     }
 }

@@ -1,6 +1,7 @@
 package nodes;
 
 public class ForStatement extends Statement{
+
     public InitialCondition initialCondition;
     public Condition stopCondition;
     public Increment increment;
@@ -21,5 +22,15 @@ public class ForStatement extends Statement{
                 + increment.toString() + ')'
                 + '\n' + block.toString()
                 ;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("for");
+        str.append("\n\t\t").append(initialCondition.astImp());
+        str.append("\n\t\t").append(stopCondition.astImp());
+        str.append("\n\t\t").append(increment.astImp());
+        str.append("\n\t\t").append(block.astImp());
+        return str;
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Block extends Node{
+
     public List<Statement> statements;
 
     public Block(){
@@ -22,5 +23,14 @@ public class Block extends Node{
         }
         block = block.concat("\n }");
         return block;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("block");
+        for (Node n : statements){
+            str.append("\n\t\t").append(n.astImp());
+        }
+        return str;
     }
 }

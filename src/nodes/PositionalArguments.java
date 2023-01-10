@@ -22,4 +22,13 @@ public class PositionalArguments extends Arguments{
         posArgs = posArgs.concat(")");
         return posArgs;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("positional arguments");
+        for (Argument arg: args) {
+            str.append("\n\t\t").append(arg.astImp());
+        }
+        return str;
+    }
 }

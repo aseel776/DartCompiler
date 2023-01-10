@@ -6,4 +6,9 @@ public class ZeroParameters extends Parameters{
     public String toString() {
         return "()";
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("zero parameters");
+    }
 }

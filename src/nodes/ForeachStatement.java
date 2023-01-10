@@ -19,4 +19,12 @@ public class ForeachStatement extends Statement{
         return "foreach" + '(' + type + " " + id + " in " + list.toString() + ')'
                 + '\n' + block.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("foreach");
+        str.append("\n\t\t").append(type).append(" ").append(id).append(" in ").append(list.astImp());
+        str.append("\n\t\t").append(block.astImp());
+        return str;
+    }
 }

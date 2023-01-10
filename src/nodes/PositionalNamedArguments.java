@@ -1,6 +1,7 @@
 package nodes;
 
 public class PositionalNamedArguments extends Arguments{
+
     public PositionalArguments posArgs;
     public NamedArguments namedArgs;
 
@@ -28,5 +29,13 @@ public class PositionalNamedArguments extends Arguments{
             }
         }
         return args;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("positional named arguments");
+        str.append("\n\t\t").append(posArgs.astImp());
+        str.append("\n\t\t").append(namedArgs.astImp());
+        return str;
     }
 }

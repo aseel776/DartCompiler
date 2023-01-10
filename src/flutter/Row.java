@@ -23,4 +23,13 @@ public class Row extends Component{
             return "new Row ()";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("row");
+        if(rowAtts != null){
+            str.append("\n\t\t").append(rowAtts.astImp());
+        }
+        return str;
+    }
 }

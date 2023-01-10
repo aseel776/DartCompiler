@@ -5,7 +5,9 @@ import nodes.DartObject;
 
 
 public class SizedBoxChild extends SizedBoxAtt{
+
     DartObject object;
+
     public SizedBoxChild(DartObject object){
         this.object=object;
     }
@@ -13,5 +15,12 @@ public class SizedBoxChild extends SizedBoxAtt{
     @Override
     public String toString() {
         return "sizedBoxChild:" +object.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("sizedBox child");
+        str.append("\n\t\t").append(object.astImp());
+        return str;
     }
 }

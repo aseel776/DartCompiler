@@ -1,6 +1,7 @@
 package nodes;
 
 public class NamedConstructor extends ClassMethod{
+
     public String classId;
     public String id;
     public ConsArgs args;
@@ -24,5 +25,18 @@ public class NamedConstructor extends ClassMethod{
             cons = cons.concat(";");
         }
         return cons;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("class method");
+        str.append("\n\t\tnamed constructor");
+        str.append("\n\t\t").append(classId);
+        str.append("\n\t\t").append(id);
+        str.append("\n\t\t").append(args.astImp());
+        if(consBody != null){
+            str.append("\n\t\t").append(consBody.astImp());
+        }
+        return str;
     }
 }

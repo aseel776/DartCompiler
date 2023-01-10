@@ -1,8 +1,6 @@
 package flutter;
 
-import nodes.Node;
 import nodes.Parameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +26,14 @@ public   class ContainerAtts extends Parameters {
             }
         }
         return string;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("container atts");
+        for (ContainerAtt att: containerAtt) {
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

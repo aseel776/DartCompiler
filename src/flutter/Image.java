@@ -27,4 +27,14 @@ public class Image extends Component{
             return "new Image (\n" + src + "\n)";
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("image");
+        str.append("\n\t\t").append(src);
+        if(imageAtts != null){
+            str.append("\n\t\t").append(imageAtts.astImp());
+        }
+        return str;
+    }
 }

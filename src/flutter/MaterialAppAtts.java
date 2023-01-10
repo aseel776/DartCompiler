@@ -31,4 +31,13 @@ public class MaterialAppAtts extends Parameters {
         }
         return top;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("material app atts");
+        for (MaterialAppAtt att: atts) {
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
+    }
 }

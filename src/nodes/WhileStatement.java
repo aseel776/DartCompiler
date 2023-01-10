@@ -14,4 +14,12 @@ public class WhileStatement extends Statement{
     public String toString() {
         return "while" + '(' + condition.toString() + ')' + '\n' + block.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("while");
+        str.append("\n\t\t").append(condition.astImp());
+        str.append("\n\t\t").append(block.astImp());
+        return str;
+    }
 }

@@ -31,4 +31,14 @@ public class ImageAtts extends Parameters {
         }
         return top;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("image atts");
+        for (ImageAtt att: atts) {
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
+    }
+
 }

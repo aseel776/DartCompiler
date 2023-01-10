@@ -21,4 +21,13 @@ public class PositionalParameters extends Parameters{
         }
         return pars;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("positional parameters");
+        for (Parameter p: parameters) {
+            str.append("\n\t\t").append(p.astImp());
+        }
+        return str;
+    }
 }

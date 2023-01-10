@@ -1,6 +1,7 @@
 package nodes;
 
 public class ConsPositionalNamedArgs extends ConsArgs{
+
     public ConsPositionalArgs posArgs;
     public ConsNamedArgs namedArgs;
 
@@ -28,5 +29,13 @@ public class ConsPositionalNamedArgs extends ConsArgs{
             }
         }
         return args;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("constructor positional named arguments");
+        str.append("\n\t\t").append(posArgs.astImp());
+        str.append("\n\t\t").append(namedArgs.astImp());
+        return str;
     }
 }

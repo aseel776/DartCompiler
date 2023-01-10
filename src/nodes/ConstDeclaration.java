@@ -1,6 +1,7 @@
 package nodes;
 
 public class ConstDeclaration extends Declaration{
+
     public String type;
     public Initialization init;
 
@@ -19,5 +20,12 @@ public class ConstDeclaration extends Declaration{
         }else {
             return "const " + id + " " + init.toString();
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("declaration");
+        str.append("\n\t\t").append(this);
+        return str;
     }
 }

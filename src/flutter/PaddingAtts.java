@@ -1,11 +1,11 @@
 package flutter;
 
 import nodes.Parameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaddingAtts extends Parameters {
+
     public List<PaddingAtt> atts;
 
     public PaddingAtts(List<PaddingAtt> atts){
@@ -31,5 +31,14 @@ public class PaddingAtts extends Parameters {
             }
         }
         return top;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("padding atts");
+        for(PaddingAtt att: atts){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

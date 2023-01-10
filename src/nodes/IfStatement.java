@@ -1,9 +1,9 @@
 package nodes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IfStatement extends Statement{
+
     public Condition condition;
     public Block block;
     public List<ElseIf> elseIfs;
@@ -39,5 +39,23 @@ public class IfStatement extends Statement{
                 return "if" + '(' + condition.toString() + ')' + '\n' + block.toString();
             }
         }
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("if");
+        str.append("\n\t\t").append(condition.astImp());
+        str.append("\n\t\t").append(block.astImp());
+        if(elseIfs != null){
+            for (ElseIf elseIf: elseIfs){
+                str.append("\n\t\t").append(elseIf.astImp());
+            }
+            str.append("\n\t\t").append(anElse.astImp());
+        }else{
+            if(anElse != null){
+                str.append("\n\t\t").append(anElse.astImp());
+            }
+        }
+        return str;
     }
 }

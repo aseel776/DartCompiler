@@ -1,6 +1,7 @@
 package nodes;
 
 public class Initialization extends Node{
+
     public Node value;
 
     public Initialization(Node value){
@@ -10,5 +11,10 @@ public class Initialization extends Node{
     @Override
     public String toString() {
         return "= " + value.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("initialization").append("\n\t\t").append(value.astImp());
     }
 }

@@ -15,4 +15,9 @@ public class Comparison extends Node{
     public String toString() {
         return left.toString() + symbol + right.toString();
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder(toString());
+    }
 }

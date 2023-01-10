@@ -25,4 +25,16 @@ public class FunctionBody extends Block {
         }
         return body;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("function body");
+        for (Node n: statements) {
+            str.append("\n\t\t").append(n.astImp());
+        }
+        if(returnStatement != null){
+            str.append("\n\t\t").append(returnStatement.astImp());
+        }
+        return str;
+    }
 }

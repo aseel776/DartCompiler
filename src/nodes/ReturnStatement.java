@@ -17,4 +17,9 @@ public class ReturnStatement extends Node{
             return "return;" ;
         }
     }
+
+    @Override
+    public StringBuilder astImp() {
+        return new StringBuilder("return").append("\n\t\t").append(returnValue.astImp());
+    }
 }

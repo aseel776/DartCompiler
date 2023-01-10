@@ -3,6 +3,7 @@ package nodes;
 import java.util.List;
 
 public class ConsNamedArgs extends ConsArgs{
+
     public List<ConsNamedArg> args;
 
     public ConsNamedArgs(List<ConsNamedArg> args){
@@ -21,5 +22,14 @@ public class ConsNamedArgs extends ConsArgs{
         }
         namedArgs = namedArgs.concat("})");
         return namedArgs;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("constructor named arguments");
+        for (ConsNamedArg c: args) {
+            str.append("\n\t\t").append(c.astImp());
+        }
+        return str;
     }
 }

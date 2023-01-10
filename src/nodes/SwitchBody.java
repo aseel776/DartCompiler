@@ -31,4 +31,13 @@ public class SwitchBody extends Node{
         body = body.concat("}");
         return body;
     }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("switch body");
+        for(Case c : cases){
+            str.append("\n\t\t").append(c.astImp());
+        }
+        return str;
+    }
 }

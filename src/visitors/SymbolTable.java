@@ -1,5 +1,4 @@
 package visitors;
-import org.antlr.v4.codegen.model.SrcOp;
 import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.*;

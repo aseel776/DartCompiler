@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScrollViewAtts extends Parameters {
+
     public List<ScrollViewAtt> atts;
 
     public ScrollViewAtts(List<ScrollViewAtt> atts){
@@ -30,5 +31,14 @@ public class ScrollViewAtts extends Parameters {
             }
         }
         return top;
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("scroll view atts");
+        for(ScrollViewAtt att: atts){
+            str.append("\n\t\t").append(att.astImp());
+        }
+        return str;
     }
 }

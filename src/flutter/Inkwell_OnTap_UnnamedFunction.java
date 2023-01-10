@@ -3,7 +3,9 @@ package flutter;
 import nodes.UnnamedFunction;
 
 public class Inkwell_OnTap_UnnamedFunction extends Inkwell_OnTap{
+
     public UnnamedFunction unnamedFunction;
+
     public Inkwell_OnTap_UnnamedFunction(UnnamedFunction unnamedFunction){
         this.unnamedFunction=unnamedFunction;
     }
@@ -11,5 +13,12 @@ public class Inkwell_OnTap_UnnamedFunction extends Inkwell_OnTap{
     @Override
     public String toString() {
         return "inkWellOnTap:" + unnamedFunction.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("inkwell on tap");
+        str.append("\n\t\t").append(unnamedFunction.astImp());
+        return str;
     }
 }

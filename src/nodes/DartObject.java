@@ -1,6 +1,7 @@
 package nodes;
 
 public class DartObject extends Statement {
+
     public String id;
     public Parameters parameters;
 
@@ -12,5 +13,13 @@ public class DartObject extends Statement {
     @Override
     public String toString() {
         return "new" + " " + id + parameters.toString();
+    }
+
+    @Override
+    public StringBuilder astImp() {
+        StringBuilder str = new StringBuilder("object");
+        str.append("\n\t\t").append(id);
+        str.append("\n\t\t").append(parameters.astImp());
+        return str;
     }
 }
