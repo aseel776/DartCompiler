@@ -307,7 +307,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitList(DartGrammarsParser.ListContext ctx) {
-        ListType list = new ListType();
+        DartList list = new DartList();
         int idCounter = 0;
         int charsCounter = 0;
         for(int i = 1; i < ctx.getChildCount() - 1; i+=2){
@@ -861,8 +861,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitChildren(DartGrammarsParser.ChildrenContext ctx) {
-        ListType listType = (ListType) visit(ctx.getChild(2));
-        return new Column_row_Children(listType);
+        DartList dartList = (DartList) visit(ctx.getChild(2));
+        return new Column_row_Children(dartList);
     }
 
     //error
@@ -893,8 +893,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitStackChildren(DartGrammarsParser.StackChildrenContext ctx) {
-        ListType listType = (ListType) visit(ctx.getChild(2));
-        return new StackChildren(listType);
+        DartList dartList = (DartList) visit(ctx.getChild(2));
+        return new StackChildren(dartList);
     }
 
     //error
@@ -1252,4 +1252,88 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new ScrollViewChild(dartObject);
     }
 
+
+    ////////////////////////////////////
+
+    @Override
+    public Node visitListItem(DartGrammarsParser.ListItemContext ctx) {
+        String listId = ctx.ID().getText();
+        int index = Integer.parseInt(ctx.INT_NUM().getText());
+        return new ListItem(listId, index);
+    }
+
+    @Override
+    public Node visitMap(DartGrammarsParser.MapContext ctx) {
+        DartMap map = new DartMap();
+        int idCounter = 0;
+        int charsCounter = 0;
+        for(int i = 1; i < ctx.getChildCount() - 1; i+=4){
+            String key = ctx.getChild(i).getText();
+            charsCounter++;
+            if(ctx.getChild(i+2) == ctx.ID(idCounter)){
+                Variable variable = new Variable(ctx.getChild(i+2).getText());
+                map.addElement(new Pair<>(key, variable));
+                idCounter++;
+            } else if (ctx.getChild(i+2) == ctx.CHARACTERS(charsCounter)) {
+                Characters chars = new Characters(ctx.getChild(i+2).getText());
+                map.addElement(new Pair<>(key, chars));
+                charsCounter++;
+            }else{
+                map.addElement(new Pair<>(key, visit(ctx.getChild(i+2))));
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public Node visitMapItem(DartGrammarsParser.MapItemContext ctx) {
+        String mapId = ctx.ID().getText();
+        String key = ctx.CHARACTERS().getText();
+        return new MapItem(mapId, key);
+    }
+
+    @Override
+    public Node visitNavigationPushing(DartGrammarsParser.NavigationPushingContext ctx) {
+        Page page = (Page) visit(ctx.page());
+        return new NavigationPushing(page);
+    }
+
+    @Override
+    public Node visitNavigationPopping(DartGrammarsParser.NavigationPoppingContext ctx) {
+        return new NavigationPopping();
+    }
+
+    @Override
+    public Node visitPage(DartGrammarsParser.PageContext ctx) {
+        Route route = (Route) visit(ctx.route());
+        if(ctx.getChildCount() > 1){
+            Parameter parameter = (Parameter) visit(ctx.parameter());
+            return new Page(route, parameter);
+        }
+        return new Page(route);
+    }
+
+    @Override
+    public Node visitStringRoute(DartGrammarsParser.StringRouteContext ctx) {
+        return new StringRoute(ctx.getText());
+    }
+
+    @Override
+    public Node visitObjectRoute(DartGrammarsParser.ObjectRouteContext ctx) {
+        DartObject object = (DartObject) visit(ctx.object());
+        return new ObjectRoute(object);
+    }
+
+    @Override
+    public Node visitPageArgsExtracting(DartGrammarsParser.PageArgsExtractingContext ctx) {
+        String type = ctx.varOrType().getText();
+        String id = ctx.ID().getText();
+        return new PageArgsExtracting(type, id);
+    }
+
+    @Override
+    public Node visitSetState(DartGrammarsParser.SetStateContext ctx) {
+        Block block = (Block) visit(ctx.block());
+        return new SetState(block);
+    }
 }

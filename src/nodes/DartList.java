@@ -3,14 +3,14 @@ package nodes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListType extends Node{
+public class DartList extends Node{
     public List<Node> elements;
 
-    public ListType(List<Node> elements){
+    public DartList(List<Node> elements){
         this.elements = elements;
     }
 
-    public ListType(){
+    public DartList(){
         elements = new ArrayList<>();
     }
 

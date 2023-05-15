@@ -1,7 +1,6 @@
 package flutter;
 
 import nodes.DartObject;
-import nodes.Node;
 import nodes.Parameters;
 
 public abstract class Component extends DartObject {

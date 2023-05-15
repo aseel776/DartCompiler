@@ -1,11 +1,11 @@
 package flutter;
 
-import nodes.ListType;
+import nodes.DartList;
 
 public  class Column_row_Children extends Column_rowAtt{
 
-    public ListType list ;
-    public Column_row_Children(ListType list){
+    public DartList list ;
+    public Column_row_Children(DartList list){
         this.list=list;
     }
 

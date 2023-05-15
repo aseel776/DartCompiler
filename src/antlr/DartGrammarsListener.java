@@ -373,6 +373,36 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 */
 	void exitList(DartGrammarsParser.ListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#listItem}.
+	 * @param ctx the parse tree
+	 */
+	void enterListItem(DartGrammarsParser.ListItemContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#listItem}.
+	 * @param ctx the parse tree
+	 */
+	void exitListItem(DartGrammarsParser.ListItemContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#map}.
+	 * @param ctx the parse tree
+	 */
+	void enterMap(DartGrammarsParser.MapContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#map}.
+	 * @param ctx the parse tree
+	 */
+	void exitMap(DartGrammarsParser.MapContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#mapItem}.
+	 * @param ctx the parse tree
+	 */
+	void enterMapItem(DartGrammarsParser.MapItemContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#mapItem}.
+	 * @param ctx the parse tree
+	 */
+	void exitMapItem(DartGrammarsParser.MapItemContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DartGrammarsParser#voidOrType}.
 	 * @param ctx the parse tree
 	 */
@@ -1174,13 +1204,13 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	void exitPaddingChild(DartGrammarsParser.PaddingChildContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpressionnavigationnavigationrouteroute}.
 	 * @param ctx the parse tree
 	 */
 	void enterValues(DartGrammarsParser.ValuesContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpressionnavigationnavigationrouteroute}.
 	 * @param ctx the parse tree
 	 */
 	void exitValues(DartGrammarsParser.ValuesContext ctx);
@@ -1384,4 +1414,82 @@ public interface DartGrammarsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitScrollChild(DartGrammarsParser.ScrollChildContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NavigationPushing}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 */
+	void enterNavigationPushing(DartGrammarsParser.NavigationPushingContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NavigationPushing}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 */
+	void exitNavigationPushing(DartGrammarsParser.NavigationPushingContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NavigationPopping}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 */
+	void enterNavigationPopping(DartGrammarsParser.NavigationPoppingContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NavigationPopping}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 */
+	void exitNavigationPopping(DartGrammarsParser.NavigationPoppingContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#page}.
+	 * @param ctx the parse tree
+	 */
+	void enterPage(DartGrammarsParser.PageContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#page}.
+	 * @param ctx the parse tree
+	 */
+	void exitPage(DartGrammarsParser.PageContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StringRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringRoute(DartGrammarsParser.StringRouteContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringRoute(DartGrammarsParser.StringRouteContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectRoute(DartGrammarsParser.ObjectRouteContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectRoute(DartGrammarsParser.ObjectRouteContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#pageArgsExtracting}.
+	 * @param ctx the parse tree
+	 */
+	void enterPageArgsExtracting(DartGrammarsParser.PageArgsExtractingContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#pageArgsExtracting}.
+	 * @param ctx the parse tree
+	 */
+	void exitPageArgsExtracting(DartGrammarsParser.PageArgsExtractingContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DartGrammarsParser#setState}.
+	 * @param ctx the parse tree
+	 */
+	void enterSetState(DartGrammarsParser.SetStateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DartGrammarsParser#setState}.
+	 * @param ctx the parse tree
+	 */
+	void exitSetState(DartGrammarsParser.SetStateContext ctx);
 }

@@ -227,6 +227,24 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitList(DartGrammarsParser.ListContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#listItem}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListItem(DartGrammarsParser.ListItemContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#map}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMap(DartGrammarsParser.MapContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#mapItem}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMapItem(DartGrammarsParser.MapItemContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DartGrammarsParser#voidOrType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -706,7 +724,7 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	T visitPaddingChild(DartGrammarsParser.PaddingChildContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code values}
-	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpression}.
+	 * labeled alternative in {@link DartGrammarsParser#numbernumbercasecaseinitialConditioninitialConditioninitialConditiondeclarationdeclarationdeclarationassignmentassignmentassignmentmethodmethodmethodmethodexpressionexpressionexpressionexpressionexpressionexpressionnavigationnavigationrouteroute}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -831,4 +849,50 @@ public interface DartGrammarsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitScrollChild(DartGrammarsParser.ScrollChildContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NavigationPushing}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNavigationPushing(DartGrammarsParser.NavigationPushingContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NavigationPopping}
+	 * labeled alternative in {@link DartGrammarsParser#navigation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNavigationPopping(DartGrammarsParser.NavigationPoppingContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#page}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPage(DartGrammarsParser.PageContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StringRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringRoute(DartGrammarsParser.StringRouteContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ObjectRoute}
+	 * labeled alternative in {@link DartGrammarsParser#route}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectRoute(DartGrammarsParser.ObjectRouteContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#pageArgsExtracting}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPageArgsExtracting(DartGrammarsParser.PageArgsExtractingContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DartGrammarsParser#setState}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSetState(DartGrammarsParser.SetStateContext ctx);
 }

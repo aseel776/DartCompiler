@@ -1,6 +1,6 @@
 package nodes;
 
-public class DartObject extends Statement {
+public class DartObject extends Node {
 
     public String id;
     public Parameters parameters;

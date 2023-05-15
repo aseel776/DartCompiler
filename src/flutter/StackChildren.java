@@ -1,12 +1,12 @@
 package flutter;
 
-import nodes.ListType;
+import nodes.DartList;
 
 public class StackChildren extends StackAtt{
 
-    public ListType list ;
+    public DartList list ;
 
-    public StackChildren(ListType list){
+    public StackChildren(DartList list){
         this.list=list;
     }
 

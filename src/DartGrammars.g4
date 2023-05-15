@@ -26,7 +26,9 @@ statement
     | assignment SEMICOLON
     | function
     | functionCall SEMICOLON
-    | object
+    | navigation
+    | pageArgsExtracting
+    | setState
     ;
 
 condition
@@ -95,7 +97,7 @@ foreachStatement
 
 //variables
 type
-    : INT | DOUBLE | STRING | LIST | DYNAMIC | BOOL | OBJECT | FUNCTION
+    : INT | DOUBLE | STRING | LIST | MAP | DYNAMIC | BOOL | OBJECT | FUNCTION
     ;
 varOrType
     : VAR | type
@@ -106,17 +108,28 @@ declaration
     | LATE? varOrType ID initialization?            # NormalDeclarartion
     ;
 initialization
-    : '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list)
+    : '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list | map | listItem | mapItem)
     ;
 assignment
-    : ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list)            # Assign
-    | ID'.'ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list)       # ObjectAssign
-    | THIS'.'ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list)     # ThisAssign
+    : ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list | map | listItem | mapItem)            # Assign
+    | ID'.'ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list | map | listItem | mapItem)       # ObjectAssign
+    | THIS'.'ID '=' (ID | CHARACTERS | unnamedFunction | functionCall | object | expression | list | map | listItem | mapItem)     # ThisAssign
     ;
 list
-    : '[' ( ((ID | CHARACTERS | expression | object | list | functionCall | unnamedFunction) COMMA)*
-            (ID | CHARACTERS | expression | object | list | functionCall | unnamedFunction))?
+    : '[' ( ((ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction) COMMA)*
+            (ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction))?
       ']'
+    ;
+listItem
+    : ID'['INT_NUM']'
+    ;
+map
+    : '{' ( CHARACTERS ':' (ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction) COMMA)*
+          ( CHARACTERS ':' (ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction))?
+      '}'
+    ;
+mapItem
+    : ID'['CHARACTERS']'
     ;
 
 
@@ -158,7 +171,7 @@ functionBody
     : '{' statement* returnStatement? '}'
     ;
 returnStatement
-    : RETURN (ID | CHARACTERS | expression | object | list | functionCall | unnamedFunction | condition)? SEMICOLON
+    : RETURN (ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction | condition)? SEMICOLON
     ;
 
 
@@ -232,7 +245,7 @@ zeroParameters
     :
     ;
 parameter
-    : ID | CHARACTERS | expression | object | list | functionCall | unnamedFunction
+    : ID | CHARACTERS | expression | object | list | map | listItem | mapItem | functionCall | unnamedFunction
     ;
 
 
@@ -489,8 +502,23 @@ scrollDirection
 scrollChild
     : SCROLL_CHILD':'object COMMA?
     ;
-
-
+navigation
+    : PUSH '(' page ')'   # NavigationPushing
+    | POP                 # NavigationPopping
+    ;
+page
+    : route (', args: ' parameter)?
+    ;
+route
+    : ID'.'ID           # StringRoute
+    | object            # ObjectRoute
+    ;
+pageArgsExtracting
+    : varOrType ID '= Route.args'
+    ;
+setState
+    : SETSTATE '(()' block ')'
+    ;
 //TOKENS
 
 //CONDITIONS
@@ -519,6 +547,7 @@ INT: 'int';
 DOUBLE: 'double';
 STRING: 'String';
 LIST: 'List';
+MAP: 'Map';
 BOOL: 'bool';
 TRUE: 'true';
 FALSE: 'false';
@@ -617,6 +646,11 @@ STYLES: 'Italic' | 'Bold' | 'BoldItalic';
 ALIGNMENT: 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly' | 'spaceAround';
 HORIZONTAL: 'horizontal';
 VERTICAL: 'vertical';
+/////////////
+PUSH: 'Navigator.push';
+POP: 'Navigator.pop';
+EXTRACT: 'Route.args';
+SETSTATE: 'setState';
 
 //GENERAL
 
