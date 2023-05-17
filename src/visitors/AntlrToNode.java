@@ -436,7 +436,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
                 statements.add((Statement) visit(ctx.getChild(i)));
             }
         }
-        return new FunctionBody(statements, returnStatement);
+        FunctionBody fb = new FunctionBody(statements, returnStatement);
+        for(Statement s : statements){
+            s.parentHash = fb.hashCode();
+        }
+        if(returnStatement != null){
+            returnStatement.parentHash = fb.hashCode();
+        }
+        return fb;
     }
 
     @Override

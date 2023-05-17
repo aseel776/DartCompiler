@@ -1,1 +1,7 @@
-var i = Route.args
+fun1(){
+    int i = 4;
+    int j = 55;
+}
+fun2(){
+    int i = 4;
+}

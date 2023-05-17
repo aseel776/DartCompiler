@@ -1,6 +1,5 @@
 import nodes.*;
 import java.io.IOException;
-
 import visitors.AntlrToNode;
 import antlr.DartGrammarsLexer;
 import antlr.DartGrammarsParser;
@@ -8,6 +7,8 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CommonTokenStream;
+import visitors.AntlrToStart;
+import visitors.SymbolTable;
 
 
 public class Main {
@@ -23,9 +24,9 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         DartGrammarsParser parser = new DartGrammarsParser(tokens);
         //for test purposes
-        ParseTree ast = parser.pageArgsExtracting();
-        AntlrToNode startVisitor = new AntlrToNode();
-        Node program = startVisitor.visit(ast);
+        ParseTree ast = parser.start();
+        AntlrToStart startVisitor = new AntlrToStart();
+        Start program = startVisitor.visit(ast);
         System.out.println(program.toString());
         //Main Program
         //ParseTree ast = parser.start();
