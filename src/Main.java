@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(String[] args){
-        String source = "tests/test2.txt";
+        String source = "tests/semanticErrorsTest1.txt";
         CharStream input;
         try {
             input = CharStreams.fromFileName(source);
@@ -40,11 +40,11 @@ public class Main {
                 System.out.println(err);
             }
         }
-        System.out.println("---AST---");
-        System.out.print(program.toString());
-        System.out.println();
-        System.out.println();
-        System.out.println("---Symbol Table---");
-        System.out.println(SymbolTable.getTable());
+//        System.out.println("---AST---");
+//        System.out.print(program.toString());
+//        System.out.println();
+//        System.out.println();
+//        System.out.println("---Symbol Table---");
+//        System.out.println(SymbolTable.getTable());
     }
 }
