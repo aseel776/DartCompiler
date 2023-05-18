@@ -1,0 +1,4 @@
+class a{}
+class a{}
+a(){}
+a(){}

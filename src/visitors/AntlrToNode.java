@@ -10,7 +10,11 @@ import java.util.List;
 
 public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
-    List <String > semanitcErrors;
+    List<String> semanitcErrors;
+
+    public AntlrToNode(List<String> semanitcErrors1) {
+        semanitcErrors = semanitcErrors1;
+    }
 
     @Override
     public Node visitInteger(DartGrammarsParser.IntegerContext ctx) {
@@ -25,8 +29,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitBlock(DartGrammarsParser.BlockContext ctx) {
         Block block = new Block();
-        if(ctx.getChildCount() > 2){
-            for(int i = 1; i < ctx.getChildCount() - 1; i++){
+        if (ctx.getChildCount() > 2) {
+            for (int i = 1; i < ctx.getChildCount() - 1; i++) {
                 block.addStatement((Statement) visit(ctx.getChild(i)));
             }
         }
@@ -56,11 +60,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitIfStatement(DartGrammarsParser.IfStatementContext ctx) {
         Condition condition = (Condition) visit(ctx.getChild(2));
         Block block = (Block) visit(ctx.getChild(4));
-        if(ctx.getChildCount() > 5){
+        if (ctx.getChildCount() > 5) {
             List<ElseIf> elseIfList = new ArrayList<>();
             Else anElse;
             int i = 5;
-            while (ctx.getChild(i) != ctx.else_()){
+            while (ctx.getChild(i) != ctx.else_()) {
                 System.out.println(true);
                 ElseIf anElseif = (ElseIf) visit(ctx.getChild(i));
                 elseIfList.add(anElseif);
@@ -94,7 +98,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitSwitchBody(DartGrammarsParser.SwitchBodyContext ctx) {
         List<Case> cases = new ArrayList<>();
-        for(int i = 1; i < ctx.getChildCount() - 2; i++){
+        for (int i = 1; i < ctx.getChildCount() - 2; i++) {
             cases.add((Case) visit(ctx.getChild(i)));
         }
         DefaultCase defaultCase = (DefaultCase) visit(ctx.getChild(ctx.getChildCount() - 2));
@@ -111,7 +115,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitCharCase(DartGrammarsParser.CharCaseContext ctx) {
         String chars = ctx.getChild(1).getText();
-        //to replace 's, replace them with white spaces then trim att
+        // to replace 's, replace them with white spaces then trim att
         chars = chars.replace('\'', ' ');
         chars = chars.trim();
         CaseBody caseBody = (CaseBody) visit(ctx.getChild(3));
@@ -127,12 +131,12 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitCaseBody(DartGrammarsParser.CaseBodyContext ctx) {
         CaseBody caseBody = new CaseBody(false);
-        for (int i = 0; i < ctx.getChildCount(); i++){
-            if(ctx.getChild(i).getText().compareTo("break") == 0){
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            if (ctx.getChild(i).getText().compareTo("break") == 0) {
                 caseBody.containsBreak = true;
-            }else if(ctx.getChild(i).getText().compareTo(";") == 0){
+            } else if (ctx.getChild(i).getText().compareTo(";") == 0) {
                 continue;
-            }else {
+            } else {
                 caseBody.addStatement((Statement) visit(ctx.getChild(i)));
             }
         }
@@ -164,7 +168,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitInitialConditionDeclaration(DartGrammarsParser.InitialConditionDeclarationContext ctx) {
-        String initConditionType =ctx.getChild(0).getText();
+        String initConditionType = ctx.getChild(0).getText();
         String id = ctx.getChild(1).getText();
         Expression value = (Expression) visit(ctx.getChild(3));
         return new InitialConditionDeclaration(initConditionType, id, value);
@@ -193,49 +197,49 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitForeachStatement(DartGrammarsParser.ForeachStatementContext ctx) {
-        String type =  ctx.varOrType().getText();
+        String type = ctx.varOrType().getText();
         String id = ctx.getChild(3).getText();
         Variable list = new Variable(ctx.getChild(5).getText());
         Block block = (Block) visit(ctx.block());
         return new ForeachStatement(type, id, list, block);
     }
+
     @Override
     public Node visitFinalDeclarartion(DartGrammarsParser.FinalDeclarartionContext ctx) {
 
         boolean late = (ctx.LATE() != null);
         String type = null;
-        if(ctx.type() != null){
+        if (ctx.type() != null) {
             type = ctx.type().getText();
         }
         String id = ctx.ID().getText();
-        Initialization init= null ;
-        if(ctx.initialization() != null){
+        Initialization init = null;
+        if (ctx.initialization() != null) {
             init = (Initialization) visit(ctx.initialization());
         }
         int line = ctx.ID().getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Final Variable", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Final variable " + id + " already decleared at Line"+ line);
-        }else{
-        SymbolTable.addNode(currentElement);
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Final Variable", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Final variable " + id + " already decleared at Line" + line);
+        } else {
+            SymbolTable.addNode(currentElement);
         }
         return new FinalDeclaration(late, type, id, init);
     }
 
-
     @Override
     public Node visitConstDeclarartion(DartGrammarsParser.ConstDeclarartionContext ctx) {
         String type = null;
-        if(ctx.type() != null){
-            type= ctx.type().getText();
+        if (ctx.type() != null) {
+            type = ctx.type().getText();
         }
         String id = ctx.ID().getText();
         Initialization init = (Initialization) visit(ctx.initialization());
         int line = ctx.ID().getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Const Variable", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Const variable " + id + " already decleared at Line"+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Const Variable", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Const variable " + id + " already decleared at Line" + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new ConstDeclaration(type, id, init);
@@ -245,19 +249,19 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitNormalDeclarartion(DartGrammarsParser.NormalDeclarartionContext ctx) {
         boolean late = (ctx.LATE() != null);
         String type = null;
-        if(ctx.varOrType() != null){
+        if (ctx.varOrType() != null) {
             type = ctx.varOrType().getText();
         }
         String id = ctx.ID().getText();
-        Initialization init= null ;
-        if(ctx.initialization() != null){
-                init = (Initialization) visit(ctx.initialization());
+        Initialization init = null;
+        if (ctx.initialization() != null) {
+            init = (Initialization) visit(ctx.initialization());
         }
         int line = ctx.ID().getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Variable", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error :variable "+ id + " already decleared at Line "+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Variable", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error :variable " + id + " already decleared at Line " + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new NormalDeclaration(late, type, id, init);
@@ -265,13 +269,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitInitialization(DartGrammarsParser.InitializationContext ctx) {
-        if(ctx.getChild(1) == ctx.ID()){
+        if (ctx.getChild(1) == ctx.ID()) {
             Variable variable = new Variable(ctx.ID().getText());
             return new Initialization(variable);
         } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.CHARACTERS().getText());
             return new Initialization(chars);
-        }else{
+        } else {
             Node node = visit(ctx.getChild(1));
             return new Initialization(node);
         }
@@ -280,13 +284,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitAssign(DartGrammarsParser.AssignContext ctx) {
         String id = ctx.getChild(0).getText();
-        if(ctx.getChild(2) == ctx.ID(1)){
+        if (ctx.getChild(2) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(2).getText());
             return new Assignment(id, variable);
         } else if (ctx.getChild(2) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(2).getText());
             return new Assignment(id, chars);
-        }else{
+        } else {
             Node node = visit(ctx.getChild(2));
             return new Assignment(id, node);
         }
@@ -296,13 +300,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitObjectAssign(DartGrammarsParser.ObjectAssignContext ctx) {
         String objectId = ctx.getChild(0).getText();
         String id = ctx.getChild(2).getText();
-        if(ctx.getChild(4) == ctx.ID(2)){
+        if (ctx.getChild(4) == ctx.ID(2)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
             return new ObjectAssignment(objectId, id, variable);
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
             return new ObjectAssignment(objectId, id, chars);
-        }else{
+        } else {
             Node node = visit(ctx.getChild(4));
             return new ObjectAssignment(objectId, id, node);
         }
@@ -311,13 +315,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitThisAssign(DartGrammarsParser.ThisAssignContext ctx) {
         String id = ctx.getChild(2).getText();
-        if(ctx.getChild(4) == ctx.ID(1)){
+        if (ctx.getChild(4) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
             return new ThisStatement(id, variable);
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
             return new ThisStatement(id, chars);
-        }else{
+        } else {
             Node node = visit(ctx.getChild(4));
             return new ThisStatement(id, node);
         }
@@ -328,8 +332,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         DartList list = new DartList();
         int idCounter = 0;
         int charsCounter = 0;
-        for(int i = 1; i < ctx.getChildCount() - 1; i+=2){
-            if(ctx.getChild(i) == ctx.ID(idCounter)){
+        for (int i = 1; i < ctx.getChildCount() - 1; i += 2) {
+            if (ctx.getChild(i) == ctx.ID(idCounter)) {
                 Variable variable = new Variable(ctx.getChild(i).getText());
                 list.addElement(variable);
                 idCounter++;
@@ -337,7 +341,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
                 Characters chars = new Characters(ctx.getChild(i).getText());
                 list.addElement(chars);
                 charsCounter++;
-            }else{
+            } else {
                 list.addElement(visit(ctx.getChild(i)));
             }
         }
@@ -347,7 +351,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitSignature(DartGrammarsParser.SignatureContext ctx) {
         String type = null;
-        if(ctx.voidOrType() != null){
+        if (ctx.voidOrType() != null) {
             type = ctx.voidOrType().getText();
         }
         String id = ctx.ID().getText();
@@ -359,24 +363,24 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitFunction(DartGrammarsParser.FunctionContext ctx) {
         Signature signature = (Signature) visit(ctx.getChild(0));
         int line = ctx.signature().ID().getSymbol().getLine();
-        String id= signature.id;
+        String id = signature.id;
 
-        if(ctx.ASYNC() != null){
+        if (ctx.ASYNC() != null) {
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(2));
-            Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Async Function", line));
-            if(SymbolTable.table.contains(currentElement)){
-                semanitcErrors.add("Error :function: "+ id + " already defined at Line "+ line);
-            }else{
+            Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Async Function", line));
+            if (SymbolTable.table.contains(currentElement)) {
+                semanitcErrors.add("Error :function: " + id + " already defined at Line " + line);
+            } else {
                 SymbolTable.addNode(currentElement);
             }
             return new Function(signature, true, functionBody);
-        }else {
+        } else {
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(1));
-            Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Function", line));
+            Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Function", line));
 
-            if(SymbolTable.table.contains(currentElement)){
-                semanitcErrors.add("Error :function: "+ id + " already defined at Line "+ line);
-            }else{
+            if (SymbolTable.table.contains(currentElement)) {
+                semanitcErrors.add("Error :function: " + id + " already defined at Line " + line);
+            } else {
                 SymbolTable.addNode(currentElement);
             }
             return new Function(signature, false, functionBody);
@@ -386,10 +390,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitUnnamedFunction(DartGrammarsParser.UnnamedFunctionContext ctx) {
         Arguments arguments = (Arguments) visit(ctx.getChild(1));
-        if(ctx.ASYNC() != null){
+        if (ctx.ASYNC() != null) {
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(4));
             return new UnnamedFunction(arguments, true, functionBody);
-        }else {
+        } else {
             FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(3));
             return new UnnamedFunction(arguments, false, functionBody);
         }
@@ -411,7 +415,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitPositionalArguments(DartGrammarsParser.PositionalArgumentsContext ctx) {
         List<Argument> args = new ArrayList<>();
         int i = 0;
-        while(i < ctx.getChildCount()){
+        while (i < ctx.getChildCount()) {
             Argument argument = (Argument) visit(ctx.getChild(i));
             args.add(argument);
             i += 2;
@@ -424,14 +428,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         List<NamedArgument> args = new ArrayList<>();
         int requiredCounter = 0;
         int i = 1;
-        while(i < ctx.getChildCount() - 1){
+        while (i < ctx.getChildCount() - 1) {
             Argument argument;
-            if(ctx.getChild(i) == ctx.REQUIRED(requiredCounter)){
+            if (ctx.getChild(i) == ctx.REQUIRED(requiredCounter)) {
                 requiredCounter++;
-                argument = (Argument) visit(ctx.getChild(i+1));
+                argument = (Argument) visit(ctx.getChild(i + 1));
                 args.add(new NamedArgument(argument.type, argument.id, true));
                 i += 3;
-            }else {
+            } else {
                 argument = (Argument) visit(ctx.getChild(i));
                 args.add(new NamedArgument(argument.type, argument.id, false));
                 i += 2;
@@ -448,7 +452,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitArg(DartGrammarsParser.ArgContext ctx) {
         String type = null;
-        if(ctx.type() != null){
+        if (ctx.type() != null) {
             type = ctx.type().getText();
         }
         String id = ctx.ID().getText();
@@ -459,18 +463,18 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitFunctionBody(DartGrammarsParser.FunctionBodyContext ctx) {
         List<Statement> statements = new ArrayList<>();
         ReturnStatement returnStatement = null;
-        for(int i = 1; i < ctx.getChildCount() - 1; i++){
-            if(ctx.getChild(i) == ctx.returnStatement()){
+        for (int i = 1; i < ctx.getChildCount() - 1; i++) {
+            if (ctx.getChild(i) == ctx.returnStatement()) {
                 returnStatement = (ReturnStatement) visit(ctx.getChild(i));
-            }else{
+            } else {
                 statements.add((Statement) visit(ctx.getChild(i)));
             }
         }
         FunctionBody fb = new FunctionBody(statements, returnStatement);
-        for(Statement s : statements){
+        for (Statement s : statements) {
             s.parentHash = fb.hashCode();
         }
-        if(returnStatement != null){
+        if (returnStatement != null) {
             returnStatement.parentHash = fb.hashCode();
         }
         return fb;
@@ -478,18 +482,18 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitReturnStatement(DartGrammarsParser.ReturnStatementContext ctx) {
-        if(ctx.getChildCount() > 2){
-            if(ctx.getChild(1) == ctx.ID()){
+        if (ctx.getChildCount() > 2) {
+            if (ctx.getChild(1) == ctx.ID()) {
                 Variable value = new Variable(ctx.ID().getText());
                 return new ReturnStatement(value);
-            }else if(ctx.getChild(1) == ctx.CHARACTERS()){
+            } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
                 Characters value = new Characters(ctx.getChild(1).getText());
                 return new ReturnStatement(value);
-            }else{
+            } else {
                 Node value = visit(ctx.getChild(1));
                 return new ReturnStatement(value);
             }
-        }else{
+        } else {
             return new ReturnStatement(null);
         }
     }
@@ -498,43 +502,44 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitClass(DartGrammarsParser.ClassContext ctx) {
         boolean Abstract = (ctx.ABSTRACT() != null);
         String id = ctx.ID(0).getText();
-        String superClass=null;
+        String superClass = null;
         int idCounter = 1;
-        if(ctx.EXTENDS() != null){
+        if (ctx.EXTENDS() != null) {
             superClass = ctx.ID(idCounter).getText();
             idCounter++;
         }
-        String impInterface=null;
-        if(ctx.IMPLEMENTS() != null){
+        String impInterface = null;
+        if (ctx.IMPLEMENTS() != null) {
             impInterface = ctx.ID(idCounter).getText();
         }
         ClassBody classBody = (ClassBody) visit(ctx.classBody());
         int line = ctx.ID(0).getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Class", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Class: " + id + " already exist at Line"+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Class", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Class: " + id + " already exist at Line" + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new DartClass(Abstract, id, superClass, impInterface, classBody);
     }
+
     @Override
     public Node visitClassBody(DartGrammarsParser.ClassBodyContext ctx) {
 
         List<ClassAttribute> classAttribute = new ArrayList<>();
-        for (int i = 0 ; i < ctx.attribute().size(); i++){
+        for (int i = 0; i < ctx.attribute().size(); i++) {
             ClassAttribute attribute = (ClassAttribute) visit(ctx.attribute(i));
             classAttribute.add(attribute);
         }
 
         List<ClassMethod> classMethods = new ArrayList<>();
-        for (int i = 0 ; i < ctx.method().size(); i++){
+        for (int i = 0; i < ctx.method().size(); i++) {
             ClassMethod method = (ClassMethod) visit(ctx.method(i));
             classMethods.add(method);
         }
 
         DefaultConstructor defConst = null;
-        if(ctx.defaultConstructer() != null){
+        if (ctx.defaultConstructer() != null) {
             defConst = (DefaultConstructor) visit(ctx.defaultConstructer());
         }
 
@@ -559,12 +564,12 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         boolean async = (ctx.ASYNC() != null);
         FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
         int line = ctx.signature().ID().getSymbol().getLine();
-        String id =signature.id;
+        String id = signature.id;
 
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Class Method", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Method: " + id + " already defined for this class at Line"+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Class Method", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Method: " + id + " already defined for this class at Line" + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new NormalClassMethod(override, signature, async, functionBody);
@@ -572,15 +577,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitStaticClassMethod(DartGrammarsParser.StaticClassMethodContext ctx) {
-        Signature signature =  (Signature) visit(ctx.signature());
+        Signature signature = (Signature) visit(ctx.signature());
         boolean async = (ctx.ASYNC() != null);
         FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
         int line = ctx.signature().ID().getSymbol().getLine();
-        String id =signature.id;
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Static Class Method", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Method: " + id + " already exist at Line"+ line);
-        }else{
+        String id = signature.id;
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Static Class Method", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Method: " + id + " already exist at Line" + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new StaticClassMethod(signature, async, functionBody);
@@ -588,13 +593,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitAbstractClassMethod(DartGrammarsParser.AbstractClassMethodContext ctx) {
-        Signature signature =  (Signature) visit(ctx.signature());
+        Signature signature = (Signature) visit(ctx.signature());
         int line = ctx.signature().ID().getSymbol().getLine();
-        String id =signature.id;
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Abstract Function", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Abstract Function: " + id + " already exist at Line: "+ line);
-        }else{
+        String id = signature.id;
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Abstract Function", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Abstract Function: " + id + " already exist at Line: " + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new AbstractClassMethod(signature);
@@ -604,35 +609,35 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitNamedConstructor(DartGrammarsParser.NamedConstructorContext ctx) {
         String classId = ctx.ID(0).getText();
         String id = ctx.ID(1).getText();
-        ConsArgs consArgs = (ConsArgs) visit (ctx.consArguments());
-        FunctionBody functionBody = null ;
-        if (ctx.functionBody() != null){
+        ConsArgs consArgs = (ConsArgs) visit(ctx.consArguments());
+        FunctionBody functionBody = null;
+        if (ctx.functionBody() != null) {
             functionBody = (FunctionBody) visit(ctx.functionBody());
         }
         int line = ctx.ID(1).getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(classId+"."+id,new Pair<>("Named Constructor", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error :Named Constructor: " + classId+"."+id + " already exist at Line:"+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(classId + "." + id,
+                new Pair<>("Named Constructor", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error :Named Constructor: " + classId + "." + id + " already exist at Line:" + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new NamedConstructor(classId, id, consArgs, functionBody);
     }
 
-
     @Override
     public Node visitDefaultConstructer(DartGrammarsParser.DefaultConstructerContext ctx) {
         String id = ctx.ID().getText();
-        ConsArgs consArgs = (ConsArgs) visit( ctx.consArguments());
-        FunctionBody functionBody = null ;
-        if (ctx.functionBody() != null){
+        ConsArgs consArgs = (ConsArgs) visit(ctx.consArguments());
+        FunctionBody functionBody = null;
+        if (ctx.functionBody() != null) {
             functionBody = (FunctionBody) visit(ctx.functionBody());
         }
         int line = ctx.ID().getSymbol().getLine();
-        Pair<String, Pair<String, Integer>>currentElement=new Pair<>(id,new Pair<>("Constructor", line));
-        if(SymbolTable.table.contains(currentElement)){
-            semanitcErrors.add("Error : Constructor: " + id + " already exist at Line: "+ line);
-        }else{
+        Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Constructor", line));
+        if (SymbolTable.table.contains(currentElement)) {
+            semanitcErrors.add("Error : Constructor: " + id + " already exist at Line: " + line);
+        } else {
             SymbolTable.addNode(currentElement);
         }
         return new DefaultConstructor(id, consArgs, functionBody);
@@ -647,13 +652,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitConsPositionalNamedArguments(DartGrammarsParser.ConsPositionalNamedArgumentsContext ctx) {
         ConsPositionalArgs consPositionalNamedArgs = (ConsPositionalArgs) visit(ctx.getChild(0));
         ConsNamedArgs consNamedArgs = (ConsNamedArgs) visit(ctx.getChild(2));
-        return new ConsPositionalNamedArgs(consPositionalNamedArgs,consNamedArgs);
+        return new ConsPositionalNamedArgs(consPositionalNamedArgs, consNamedArgs);
     }
 
     @Override
     public Node visitConsPositionalArguments(DartGrammarsParser.ConsPositionalArgumentsContext ctx) {
-        List <ConsArg> list = new ArrayList<>();
-        for (int i =0  ; i< ctx.consArg().size() ; i++){
+        List<ConsArg> list = new ArrayList<>();
+        for (int i = 0; i < ctx.consArg().size(); i++) {
             ConsArg arg = (ConsArg) visit(ctx.consArg(i));
             list.add(arg);
         }
@@ -665,14 +670,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         List<ConsNamedArg> args = new ArrayList<>();
         int requiredCounter = 0;
         int i = 1;
-        while(i < ctx.getChildCount()){
+        while (i < ctx.getChildCount()) {
             ConsArg arg;
-            if(ctx.getChild(i) == ctx.REQUIRED(requiredCounter)){
+            if (ctx.getChild(i) == ctx.REQUIRED(requiredCounter)) {
                 requiredCounter++;
-                arg = (ConsArg) visit(ctx.getChild(i+1));
+                arg = (ConsArg) visit(ctx.getChild(i + 1));
                 args.add(new ConsNamedArg(true, arg.type, arg.id));
                 i += 3;
-            }else{
+            } else {
                 arg = (ConsArg) visit(ctx.getChild(i));
                 args.add(new ConsNamedArg(false, arg.type, arg.id));
                 i += 2;
@@ -689,10 +694,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitConsArg(DartGrammarsParser.ConsArgContext ctx) {
         String id = ctx.ID().getText();
-        if(ctx.getChild(0) != ctx.ID()){
+        if (ctx.getChild(0) != ctx.ID()) {
             String type = ctx.getChild(0).getText();
             return new ConsArg(type, id);
-        }else{
+        } else {
             return new ConsArg(null, id);
         }
     }
@@ -702,12 +707,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         boolean await = (ctx.AWAIT() != null);
         Parameters parameters = (Parameters) visitParameters(ctx.parameters());
         int size = ctx.ID().size();
-        if(size > 1){
+        if (size > 1) {
             String objectId = ctx.ID(0).getText();
             String id = ctx.ID(1).getText();
             return new ObjectFunctionCall(objectId, await, id, parameters);
-        }
-        else {
+        } else {
             String id = ctx.ID(0).getText();
             return new FunctionCall(await, id, parameters);
         }
@@ -715,11 +719,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitObject(DartGrammarsParser.ObjectContext ctx) {
-        if(ctx.getChild(0) == ctx.NEW()){
+        if (ctx.getChild(0) == ctx.NEW()) {
             String id = ctx.getChild(1).getText();
             Parameters parameters = (Parameters) visit(ctx.parameters());
             return new DartObject(id, parameters);
-        }else{
+        } else {
             return visit(ctx.getChild(0));
         }
     }
@@ -733,13 +737,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitPositionalNamedParameters(DartGrammarsParser.PositionalNamedParametersContext ctx) {
         PositionalParameters positionalParameters = (PositionalParameters) visit(ctx.getChild(0));
         NamedParameters namedParameters = (NamedParameters) visit(ctx.getChild(2));
-        return new PositionalNamedParameters(positionalParameters,namedParameters);
+        return new PositionalNamedParameters(positionalParameters, namedParameters);
     }
 
     @Override
     public Node visitPositionalParameters(DartGrammarsParser.PositionalParametersContext ctx) {
-        List<Parameter> parameters = new ArrayList<>() ;
-        for(int i = 0; i < ctx.parameter().size(); i++){
+        List<Parameter> parameters = new ArrayList<>();
+        for (int i = 0; i < ctx.parameter().size(); i++) {
             Parameter parameter = (Parameter) visit(ctx.parameter(i));
             parameters.add(parameter);
         }
@@ -751,10 +755,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         List<NamedParameter> namedParameters = new ArrayList<>();
         int i = 0;
         int idCounter = 0;
-        while (i < ctx.getChildCount()){
+        while (i < ctx.getChildCount()) {
             String id = ctx.ID(idCounter).getText();
             idCounter++;
-            Parameter parameter = (Parameter) visit(ctx.getChild(i+2));
+            Parameter parameter = (Parameter) visit(ctx.getChild(i + 2));
             NamedParameter namedParameter = new NamedParameter(id, parameter.value);
             namedParameters.add(namedParameter);
             i += 4;
@@ -770,11 +774,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitParameter(DartGrammarsParser.ParameterContext ctx) {
         Node value;
-        if(ctx.getChild(0) == ctx.ID()){
+        if (ctx.getChild(0) == ctx.ID()) {
             value = new Variable(ctx.ID().getText());
-        }else if(ctx.getChild(0) == ctx.CHARACTERS()){
+        } else if (ctx.getChild(0) == ctx.CHARACTERS()) {
             value = new Characters(ctx.CHARACTERS().getText());
-        }else{
+        } else {
             value = visit(ctx.getChild(0));
         }
         return new Parameter(value);
@@ -784,28 +788,28 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitMultiplicationExpression(DartGrammarsParser.MultiplicationExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.getChild(0));
         Expression right = (Expression) visit(ctx.getChild(2));
-        return new MultiplicationExpression(left,right);
+        return new MultiplicationExpression(left, right);
     }
 
     @Override
     public Node visitDivisionExpression(DartGrammarsParser.DivisionExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.getChild(0));
         Expression right = (Expression) visit(ctx.getChild(2));
-        return new DivisionExpression(left,right);
+        return new DivisionExpression(left, right);
     }
 
     @Override
     public Node visitAddtitionExpression(DartGrammarsParser.AddtitionExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.getChild(0));
         Expression right = (Expression) visit(ctx.getChild(2));
-        return new AdditionExpression(left,right);
+        return new AdditionExpression(left, right);
     }
 
     @Override
     public Node visitSubtractExpression(DartGrammarsParser.SubtractExpressionContext ctx) {
         Expression left = (Expression) visit(ctx.getChild(0));
         Expression right = (Expression) visit(ctx.getChild(2));
-        return new SubtractExpression(left,right);
+        return new SubtractExpression(left, right);
     }
 
     @Override
@@ -825,14 +829,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitMaterialApp(DartGrammarsParser.MaterialAppContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             MaterialAppAtts atts = new MaterialAppAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 MaterialAppAtt att = (MaterialAppAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new MaterialApp(atts);
-        }else {
+        } else {
             return new MaterialApp();
         }
     }
@@ -856,14 +860,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitScaffold(DartGrammarsParser.ScaffoldContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             ScaffoldAtts atts = new ScaffoldAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 ScaffoldAtt att = (ScaffoldAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Scaffold(atts);
-        }else {
+        } else {
             return new Scaffold();
         }
     }
@@ -887,28 +891,28 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitColumn(DartGrammarsParser.ColumnContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             Column_rowAtts atts = new Column_rowAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 Column_rowAtt att = (Column_rowAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Column(atts);
-        }else {
+        } else {
             return new Column();
         }
     }
 
     @Override
     public Node visitRow(DartGrammarsParser.RowContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             Column_rowAtts atts = new Column_rowAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 Column_rowAtt att = (Column_rowAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Row(atts);
-        }else {
+        } else {
             return new Row();
         }
     }
@@ -936,17 +940,17 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new Column_row_Children(dartList);
     }
 
-    //error
+    // error
     @Override
     public Node visitStack(DartGrammarsParser.StackContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             StackAtts atts = new StackAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 StackAtt att = (StackAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Stack(atts);
-        }else {
+        } else {
             return new Stack();
         }
     }
@@ -968,18 +972,18 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new StackChildren(dartList);
     }
 
-    //error
+    // error
     @Override
     public Node visitText(DartGrammarsParser.TextContext ctx) {
         String text = ctx.getChild(3).getText();
-        if(ctx.getChildCount() > 5){
+        if (ctx.getChildCount() > 5) {
             TextAtts atts = new TextAtts();
-            for(int i = 5; i < ctx.getChildCount() - 1; i++){
+            for (int i = 5; i < ctx.getChildCount() - 1; i++) {
                 TextAtt att = (TextAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Text(text, atts);
-        }else{
+        } else {
             return new Text(text);
         }
     }
@@ -1010,14 +1014,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitContainer(DartGrammarsParser.ContainerContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             ContainerAtts atts = new ContainerAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 ContainerAtt att = (ContainerAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Container(atts);
-        }else {
+        } else {
             return new Container();
         }
     }
@@ -1055,14 +1059,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitSizedBox(DartGrammarsParser.SizedBoxContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             SizedBoxAtts atts = new SizedBoxAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 SizedBoxAtt att = (SizedBoxAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new SizedBox(atts);
-        }else {
+        } else {
             return new SizedBox();
         }
     }
@@ -1094,14 +1098,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitPadding(DartGrammarsParser.PaddingContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             PaddingAtts atts = new PaddingAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 PaddingAtt att = (PaddingAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Padding(atts);
-        }else {
+        } else {
             return new Padding();
         }
     }
@@ -1120,7 +1124,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitValues(DartGrammarsParser.ValuesContext ctx) {
         String values = ctx.getChild(2).getText();
-        switch (values){
+        switch (values) {
             case "Values.zero":
                 return new Zero();
             case "Values.all":
@@ -1129,8 +1133,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
                 return new All(num);
             case "Values.symmetric":
                 List<HorizontalOrVertical> hORv = new ArrayList<>();
-                for(int i = 4; i < ctx.getChildCount() - 1; i++){
-                    if(ctx.getChild(i).getText().equals(")")){
+                for (int i = 4; i < ctx.getChildCount() - 1; i++) {
+                    if (ctx.getChild(i).getText().equals(")")) {
                         break;
                     }
                     HorizontalOrVertical temp = (HorizontalOrVertical) visit(ctx.getChild(i));
@@ -1139,8 +1143,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
                 return new Symmetric(hORv);
             case "Values.costume":
                 List<CostumeValues> valuesList = new ArrayList<>();
-                for(int i = 4; i < ctx.getChildCount() - 1; i++){
-                    if(ctx.getChild(i).getText().equals(")")){
+                for (int i = 4; i < ctx.getChildCount() - 1; i++) {
+                    if (ctx.getChild(i).getText().equals(")")) {
                         break;
                     }
                     CostumeValues temp = (CostumeValues) visit(ctx.getChild(i));
@@ -1155,9 +1159,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitHorizontalOrVertical(DartGrammarsParser.HorizontalOrVerticalContext ctx) {
         DartInteger number = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
-        if(ctx.getChild(0) == ctx.HORIZONTAL()){
+        if (ctx.getChild(0) == ctx.HORIZONTAL()) {
             return new Horizontal(number);
-        }else{
+        } else {
             return new Vertical(number);
         }
     }
@@ -1165,27 +1169,27 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitCostumeValues(DartGrammarsParser.CostumeValuesContext ctx) {
         DartInteger number = new DartInteger(Integer.parseInt(ctx.getChild(2).getText()));
-        if(ctx.getChild(0) == ctx.LEFT()){
+        if (ctx.getChild(0) == ctx.LEFT()) {
             return new Left(number);
-        }else if(ctx.getChild(0) == ctx.TOP()){
+        } else if (ctx.getChild(0) == ctx.TOP()) {
             return new Top(number);
-        }else if(ctx.getChild(0) == ctx.RIGHT()){
+        } else if (ctx.getChild(0) == ctx.RIGHT()) {
             return new Right(number);
-        }else {
+        } else {
             return new Bottom(number);
         }
     }
 
     @Override
     public Node visitInkWell(DartGrammarsParser.InkWellContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             InkwellAtts atts = new InkwellAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 InkWellAtt att = (InkWellAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new InkWell(atts);
-        }else {
+        } else {
             return new InkWell();
         }
     }
@@ -1203,10 +1207,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitInkWellOnTap(DartGrammarsParser.InkWellOnTapContext ctx) {
-        if(ctx.getChild(2) == ctx.functionCall()){
+        if (ctx.getChild(2) == ctx.functionCall()) {
             FunctionCall functionCall = (FunctionCall) visit(ctx.getChild(2));
             return new Inkwell_OnTap_FunctionCall(functionCall);
-        }else{
+        } else {
             UnnamedFunction unnamedFunction = (UnnamedFunction) visit(ctx.getChild(2));
             return new Inkwell_OnTap_UnnamedFunction(unnamedFunction);
         }
@@ -1215,14 +1219,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitImage(DartGrammarsParser.ImageContext ctx) {
         String src = ctx.getChild(3).getText();
-        if(ctx.getChildCount() > 6){
+        if (ctx.getChildCount() > 6) {
             ImageAtts atts = new ImageAtts();
-            for(int i = 5; i < ctx.getChildCount() - 1; i++){
+            for (int i = 5; i < ctx.getChildCount() - 1; i++) {
                 ImageAtt att = (ImageAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Image(src, atts);
-        }else {
+        } else {
             return new Image(src);
         }
     }
@@ -1252,14 +1256,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitButton(DartGrammarsParser.ButtonContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             ButtonAtts atts = new ButtonAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 ButtonAtt att = (ButtonAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new Button(atts);
-        }else {
+        } else {
             return new Button();
         }
     }
@@ -1271,10 +1275,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitButtonOnTap(DartGrammarsParser.ButtonOnTapContext ctx) {
-        if(ctx.getChild(2) == ctx.functionCall()){
+        if (ctx.getChild(2) == ctx.functionCall()) {
             FunctionCall functionCall = (FunctionCall) visit(ctx.getChild(2));
             return new Button_OnTap_functionCall(functionCall);
-        }else{
+        } else {
             UnnamedFunction unnamedFunction = (UnnamedFunction) visit(ctx.getChild(2));
             return new Button_OnTap_unnamedFunction(unnamedFunction);
         }
@@ -1294,14 +1298,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitScrollView(DartGrammarsParser.ScrollViewContext ctx) {
-        if(ctx.getChildCount() > 4){
+        if (ctx.getChildCount() > 4) {
             ScrollViewAtts atts = new ScrollViewAtts();
-            for(int i = 3; i < ctx.getChildCount() - 1; i++){
+            for (int i = 3; i < ctx.getChildCount() - 1; i++) {
                 ScrollViewAtt att = (ScrollViewAtt) visit(ctx.getChild(i));
                 atts.addAtt(att);
             }
             return new ScrollView(atts);
-        }else {
+        } else {
             return new ScrollView();
         }
     }
@@ -1323,7 +1327,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new ScrollViewChild(dartObject);
     }
 
-
     ////////////////////////////////////
 
     @Override
@@ -1338,19 +1341,19 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         DartMap map = new DartMap();
         int idCounter = 0;
         int charsCounter = 0;
-        for(int i = 1; i < ctx.getChildCount() - 1; i+=4){
+        for (int i = 1; i < ctx.getChildCount() - 1; i += 4) {
             String key = ctx.getChild(i).getText();
             charsCounter++;
-            if(ctx.getChild(i+2) == ctx.ID(idCounter)){
-                Variable variable = new Variable(ctx.getChild(i+2).getText());
+            if (ctx.getChild(i + 2) == ctx.ID(idCounter)) {
+                Variable variable = new Variable(ctx.getChild(i + 2).getText());
                 map.addElement(new Pair<>(key, variable));
                 idCounter++;
-            } else if (ctx.getChild(i+2) == ctx.CHARACTERS(charsCounter)) {
-                Characters chars = new Characters(ctx.getChild(i+2).getText());
+            } else if (ctx.getChild(i + 2) == ctx.CHARACTERS(charsCounter)) {
+                Characters chars = new Characters(ctx.getChild(i + 2).getText());
                 map.addElement(new Pair<>(key, chars));
                 charsCounter++;
-            }else{
-                map.addElement(new Pair<>(key, visit(ctx.getChild(i+2))));
+            } else {
+                map.addElement(new Pair<>(key, visit(ctx.getChild(i + 2))));
             }
         }
         return map;
@@ -1377,7 +1380,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitPage(DartGrammarsParser.PageContext ctx) {
         Route route = (Route) visit(ctx.route());
-        if(ctx.getChildCount() > 1){
+        if (ctx.getChildCount() > 1) {
             Parameter parameter = (Parameter) visit(ctx.parameter());
             return new Page(route, parameter);
         }

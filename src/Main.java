@@ -28,11 +28,11 @@ public class Main {
         if(startVisitor.semanticErrors.isEmpty()){
             System.out.println("No Errors");
             /*
-            * ExpressionProcessor ep =new ExpressionProcessor(program.nodes)
-            *for (String evaluation:ep.getEvaluationResults())
-            * print(evaluation)
-            *
-            * */
+             * ExpressionProcessor ep =new ExpressionProcessor(program.nodes)
+             *for (String evaluation:ep.getEvaluationResults())
+             * print(evaluation)
+             *
+             * */
 
 
         }else{
