@@ -2,3 +2,5 @@ class a{}
 class a{}
 a(){}
 a(){}
+int i =5;
+int i=7;

@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(String[] args){
-        String source = "tests/semanticErrorsTest1.txt";
+        String source = "tests/test.txt";
         CharStream input;
         try {
             input = CharStreams.fromFileName(source);

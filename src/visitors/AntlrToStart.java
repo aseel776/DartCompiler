@@ -21,6 +21,7 @@ public class AntlrToStart extends DartGrammarsBaseVisitor<Start> {
                 start.addNode(nodesVisitor.visit(ctx.getChild(i)));
             }
         }
+
         return start;
     }
 

@@ -6,6 +6,8 @@ import java.util.*;
 
 public class SymbolTable {
     public static final List<Pair<String, Pair<String, Integer>>> table = new ArrayList<>();
+    //مؤقت بس مشان اقدر جربو قبل ما ضيفو ع SymbolTable (table)
+    public static final Map<String,Integer> ParentHash=new HashMap();
 
     public static void addNode(Pair<String, Pair<String, Integer>> newNode) {
         table.add(newNode);

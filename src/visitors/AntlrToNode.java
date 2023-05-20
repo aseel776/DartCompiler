@@ -4,6 +4,8 @@ import flutter.*;
 import nodes.*;
 import antlr.*;
 import nodes.Number;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.misc.Pair;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     List<String> semanitcErrors;
+    Node currentNode;
 
     public AntlrToNode(List<String> semanitcErrors1) {
         semanitcErrors = semanitcErrors1;
@@ -53,7 +56,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Variable left = new Variable(ctx.getChild(0).getText());
         Expression right = (Expression) visit(ctx.expression());
         String symbol = ctx.getChild(1).getText();
-        return new Comparison(left, right, symbol);
+        currentNode = new Comparison(left, right, symbol);
+        currentNode.parentHash = currentNode.hashCode();
+        return currentNode;
     }
 
     @Override
@@ -217,14 +222,18 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.initialization() != null) {
             init = (Initialization) visit(ctx.initialization());
         }
+        currentNode = new FinalDeclaration(late, type, id, init);
+        currentNode.parentHash = currentNode.hashCode();
         int line = ctx.ID().getSymbol().getLine();
         Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Final Variable", line));
-        if (SymbolTable.table.contains(currentElement)) {
+        if (SymbolTable.table.contains(currentElement)
+                && currentNode.parentHash == SymbolTable.ParentHash.get(currentElement.a)) {
             semanitcErrors.add("Error : Final variable " + id + " already decleared at Line" + line);
         } else {
             SymbolTable.addNode(currentElement);
+            SymbolTable.ParentHash.put(currentElement.a, currentNode.parentHash);
         }
-        return new FinalDeclaration(late, type, id, init);
+        return currentNode;
     }
 
     @Override
@@ -233,6 +242,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.type() != null) {
             type = ctx.type().getText();
         }
+
         String id = ctx.ID().getText();
         Initialization init = (Initialization) visit(ctx.initialization());
         int line = ctx.ID().getSymbol().getLine();
@@ -259,8 +269,20 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
         int line = ctx.ID().getSymbol().getLine();
         Pair<String, Pair<String, Integer>> currentElement = new Pair<>(id, new Pair<>("Variable", line));
-        if (SymbolTable.table.contains(currentElement)) {
-            semanitcErrors.add("Error :variable " + id + " already decleared at Line " + line);
+        boolean found = false;
+        int errorLineSource = 0;
+
+        for (Pair<String, Pair<String, Integer>> pair : SymbolTable.table) {
+            if (currentElement.a.equals(pair.a)) {
+
+                found = true;
+                errorLineSource = pair.b.b;
+                break;
+            }
+        }
+
+        if (found) {
+            semanitcErrors.add("Error :variable " + id + " already decleared at Line " + errorLineSource);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -361,6 +383,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitFunction(DartGrammarsParser.FunctionContext ctx) {
+
         Signature signature = (Signature) visit(ctx.getChild(0));
         int line = ctx.signature().ID().getSymbol().getLine();
         String id = signature.id;
