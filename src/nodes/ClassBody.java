@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ClassBody extends Node{
 
+
     public List<ClassAttribute> attributes;
     public List<ClassMethod> methods;
     public DefaultConstructor defaultConstructor;
