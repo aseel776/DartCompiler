@@ -1,0 +1,8 @@
+func1(){
+int i;
+int i;
+
+}
+func1(){
+if(4<1){}Z
+}
