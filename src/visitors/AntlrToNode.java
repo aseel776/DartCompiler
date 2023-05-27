@@ -570,6 +570,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         int idCounter = 1;
         if (ctx.EXTENDS() != null) {
             superClass = ctx.ID(idCounter).getText();
+            System.out.println(id+""+superClass);
+
             //check if the super class isn't defined
             // 1. search in the table on element with the id of the superClass
             boolean superClassExist=false;
@@ -577,11 +579,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
                 // 2. add Semantic Error if there is an element with the same id
                 if (Node.id.equals(superClass)){
                     superClassExist=true;
-
-
                 }
             }
-            if(superClassExist){
+            if(!superClassExist){
                 semanitcErrors.add("Error in line: "+ line +" Class: " + superClass + " isn't defined" );
             }
             idCounter++;
@@ -606,7 +606,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         ParentNode=currentNode;
         ClassBody classBody = (ClassBody) visit(ctx.classBody());
         dClass.classBody=classBody;
-
         SymbolTableInstance currentElement =new SymbolTableInstance(id,parentHash,"Class",line);
         Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
