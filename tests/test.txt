@@ -1,4 +1,30 @@
+
+FUNC{
+
+
+}
+
+
+class A{
+
+
 fun1(){
-    final int i = 4;
-    final int i = 55;
+
+const int j=2;
+final int l=3.0;
+j=5;
+y=10;
+int k=3;
+int k;
+
+final int i =5;
+final int i =6;
+}
+INT I
+FUNC
+fun1(){
+int i =5;
+}
+}
+class A {
 }

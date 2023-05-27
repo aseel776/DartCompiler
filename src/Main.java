@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(String[] args){
-        String source = "tests/test.txt";
+        String source = "tests/S_class.txt";
         CharStream input;
         try {
             input = CharStreams.fromFileName(source);
