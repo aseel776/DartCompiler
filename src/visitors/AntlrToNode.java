@@ -572,12 +572,17 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             superClass = ctx.ID(idCounter).getText();
             //check if the super class isn't defined
             // 1. search in the table on element with the id of the superClass
+            boolean superClassExist=false;
             for (SymbolTableInstance Node : SymbolTable.symbolTable){
                 // 2. add Semantic Error if there is an element with the same id
                 if (Node.id.equals(superClass)){
-                    semanitcErrors.add("Error in line: "+ line +" Class: " + id + " isn't defined" );
+                    superClassExist=true;
+
 
                 }
+            }
+            if(superClassExist){
+                semanitcErrors.add("Error in line: "+ line +" Class: " + superClass + " isn't defined" );
             }
             idCounter++;
         }
