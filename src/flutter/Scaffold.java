@@ -7,6 +7,7 @@ public class Scaffold extends Component{
 
     public Scaffold(ScaffoldAtts atts){
         super("Scaffold", atts);
+        this.scaffoldAtts = atts;
     }
 
     public Scaffold(){

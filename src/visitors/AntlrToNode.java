@@ -5,19 +5,19 @@ import nodes.*;
 import antlr.*;
 import nodes.Number;
 import org.antlr.v4.runtime.misc.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
-    List<String> semanitcErrors;
+    List<String> semanticErrors;
     Node currentNode;
     Node ParentNode;
 
 
-
-    public AntlrToNode(List<String> semanitcErrors1) {
-        semanitcErrors = semanitcErrors1;
+    public AntlrToNode(List<String> semanticErrors) {
+        this.semanticErrors = semanticErrors;
     }
 
     @Override
@@ -43,7 +43,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitStatement(DartGrammarsParser.StatementContext ctx) {
-
         return visit(ctx.getChild(0));
     }
 
@@ -70,7 +69,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             Else anElse;
             int i = 5;
             while (ctx.getChild(i) != ctx.else_()) {
-                System.out.println(true);
                 ElseIf anElseif = (ElseIf) visit(ctx.getChild(i));
                 elseIfList.add(anElseif);
                 i++;
@@ -90,7 +88,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitElse(DartGrammarsParser.ElseContext ctx) {
-        return new Else((Block) visit(ctx.getChild(1)));
+        Block block = (Block) visit(ctx.getChild(1));
+        return new Else(block);
     }
 
     @Override
@@ -189,6 +188,12 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitInitialConditionVariable(DartGrammarsParser.InitialConditionVariableContext ctx) {
         Variable id = new Variable(ctx.getText());
+        int line = ctx.ID().getSymbol().getLine();
+        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id.id, currentNode.objectHash, "Variable", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+        if (!errorCheck.a) {
+            semanticErrors.add("Error: variable " + id.id + " at line " + line + " is not defined");
+        }
         return new InitialConditionVariable(id);
     }
 
@@ -223,18 +228,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.initialization() != null) {
             init = (Initialization) visit(ctx.initialization());
         }
-        if(type!=null &&init!=null){
-//            if()
-
-        }
-
 
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement =new SymbolTableInstance(id,currentNode.parentHash,"Final Variable",line);
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Final Variable", line);
 
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error : Final variable " + id + " already decleared at Line" + errorCheck.b);
+            semanticErrors.add("Error: final variable " + id + " is already defined at line " + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -249,19 +249,13 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             type = ctx.type().getText();
         }
         String id = ctx.ID().getText();
-
-        Initialization init = null;
-        if (ctx.initialization() != null) {
-            init = (Initialization) visit(ctx.initialization());
-        }else{
-            semanitcErrors.add("Error : Const variable " + id + "most be initialized");
-        }
-
+        Initialization init = (Initialization) visit(ctx.initialization());
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement =new SymbolTableInstance(id,currentNode.parentHash,"Const Variable",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Const Variable", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error : Const variable " + id + " already decleared at Line" + errorCheck.b);
+            semanticErrors.add("Error: const variable " + id + " is already defined at line " + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -281,10 +275,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             init = (Initialization) visit(ctx.initialization());
         }
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement =new SymbolTableInstance(id, currentNode.parentHash,"Variable",line );
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Variable", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error :variable " + id + " already decleared at Line " + errorCheck.b);
+            semanticErrors.add("Error: variable " + id + " is already defined at line " + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -293,8 +287,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitInitialization(DartGrammarsParser.InitializationContext ctx) {
+        int line = ctx.ID().getSymbol().getLine();
         if (ctx.getChild(1) == ctx.ID()) {
             Variable variable = new Variable(ctx.ID().getText());
+            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
+            Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+            if (!errorCheck.a) {
+                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
+            }
             return new Initialization(variable);
         } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.CHARACTERS().getText());
@@ -307,17 +307,21 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitAssign(DartGrammarsParser.AssignContext ctx) {
-
         String id = ctx.getChild(0).getText();
-        SymbolTableInstance currentElement =new SymbolTableInstance(id, currentNode.parentHash,"",0 );
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
-        if(!errorCheck.a){
-            semanitcErrors.add("Error :variable " + id + " is not decleared" );
+        int line = ctx.ID(0).getSymbol().getLine();
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "", 0);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+        if (!errorCheck.a) {
+            semanticErrors.add("Error: variable " + id + " at line " + line + " is not defined");
         }
-
 
         if (ctx.getChild(2) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(2).getText());
+            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
+            Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+            if (!errorCheck2.a) {
+                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
+            }
             return new Assignment(id, variable);
         } else if (ctx.getChild(2) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(2).getText());
@@ -332,8 +336,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitObjectAssign(DartGrammarsParser.ObjectAssignContext ctx) {
         String objectId = ctx.getChild(0).getText();
         String id = ctx.getChild(2).getText();
+        int line = ctx.ID(0).getSymbol().getLine();
         if (ctx.getChild(4) == ctx.ID(2)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
+            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
+            Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+            if (!errorCheck.a) {
+                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
+            }
             return new ObjectAssignment(objectId, id, variable);
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
@@ -347,8 +357,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitThisAssign(DartGrammarsParser.ThisAssignContext ctx) {
         String id = ctx.getChild(2).getText();
+        int line = ctx.ID(0).getSymbol().getLine();
         if (ctx.getChild(4) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
+            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
+            Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+            if (!errorCheck.a) {
+                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
+            }
             return new ThisStatement(id, variable);
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
@@ -393,64 +409,30 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitFunction(DartGrammarsParser.FunctionContext ctx) {
-
         Signature signature = (Signature) visit(ctx.getChild(0));
         int line = ctx.signature().ID().getSymbol().getLine();
         String id = signature.id;
-        if (ctx.ASYNC() != null) {
-            Function func=new Function(signature, true,null);
-            int hash=func.hashCode();
-            int parentHash;
-            if(ParentNode!=null){
-                parentHash=ParentNode.parentHash;
-            }else{
-                parentHash=0;
-            }
-            currentNode=func;
-            currentNode.parentHash=hash;
-            ParentNode=currentNode;
-            FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(2));
-            func.functionBody=functionBody;
-
-            SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash,"Async Function",line );
-            Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
-            if (errorCheck.a) {
-                semanitcErrors.add("Error :function: " + id + " already defined at Line " + errorCheck.b);
-            } else {
-                SymbolTable.addNode(currentElement);
-            }
-            return func;
+        Function func = new Function(signature, null, null);
+        func.isAsync = (ctx.ASYNC() != null);
+        int parentHash;
+        if (ParentNode != null && !(ParentNode instanceof Function)) {
+            parentHash = ParentNode.objectHash;
         } else {
-
-            Function func=new Function(signature, false,null);
-            int hash=func.hashCode();
-            int parentHash;
-            if(ParentNode!=null&& !(ParentNode instanceof Function)){
-                parentHash=ParentNode.parentHash;
-            }else{
-                parentHash=0;
-            }
-            currentNode=func;
-            currentNode.parentHash=hash;
-            ParentNode=currentNode;
-            FunctionBody functionBody = (FunctionBody) visit(ctx.getChild(1));
-            func.functionBody=functionBody;
-           SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Function",line);
-           Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
-            if (errorCheck.a) {
-
-                semanitcErrors.add("Error :function: " + id + " already defined at Line " + errorCheck.b);
-            } else {
-
-
-
-                SymbolTable.addNode(currentElement);
-            }
-            return func;
+            parentHash = 0;
         }
+        currentNode = func;
+        currentNode.objectHash = func.hashCode();
+        ParentNode = currentNode;
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Function", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+        if (errorCheck.a) {
+            semanticErrors.add("Error: function " + id + " is already defined at line " + errorCheck.b);
+        } else {
+            SymbolTable.addNode(currentElement);
+        }
+        func.functionBody = (FunctionBody) visit(ctx.functionBody());
+        return func;
     }
-
-
 
     @Override
     public Node visitUnnamedFunction(DartGrammarsParser.UnnamedFunctionContext ctx) {
@@ -532,14 +514,11 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             if (ctx.getChild(i) == ctx.returnStatement()) {
                 returnStatement = (ReturnStatement) visit(ctx.getChild(i));
             } else {
-
                 statements.add((Statement) visit(ctx.getChild(i)));
-                currentNode=ParentNode;
-
+                currentNode = ParentNode;
             }
         }
-        FunctionBody fb = new FunctionBody(statements, returnStatement);
-        return fb;
+        return new FunctionBody(statements, returnStatement);
     }
 
     @Override
@@ -565,51 +544,52 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         boolean Abstract = (ctx.ABSTRACT() != null);
         String id = ctx.ID(0).getText();
         int line = ctx.ID(0).getSymbol().getLine();
-
         String superClass = null;
         int idCounter = 1;
         if (ctx.EXTENDS() != null) {
             superClass = ctx.ID(idCounter).getText();
-            System.out.println(id+""+superClass);
-
             //check if the super class isn't defined
-            // 1. search in the table on element with the id of the superClass
-            boolean superClassExist=false;
-            for (SymbolTableInstance Node : SymbolTable.symbolTable){
-                // 2. add Semantic Error if there is an element with the same id
-                if (Node.id.equals(superClass)){
-                    superClassExist=true;
+            // 1. search in the table for element with the id of the superClass
+            boolean superClassExist = false;
+            for (SymbolTableInstance node : SymbolTable.symbolTable) {
+                String nodeId = node.id;
+                String nodeType = node.category;
+                boolean cond1 = (nodeId.compareTo(superClass) == 0);
+                boolean cond2 = (nodeType.compareTo("Class") == 0);
+                if (cond1 && cond2) {
+                    superClassExist = true;
+                    break;
                 }
             }
-            if(!superClassExist){
-                semanitcErrors.add("Error in line: "+ line +" Class: " + superClass + " isn't defined" );
+            // 2. add Semantic Error if there isn't an element with the same id
+            if (!superClassExist) {
+                semanticErrors.add("Error: class " + superClass +  " at line " + line + " is not defined");
             }
             idCounter++;
         }
+
         String impInterface = null;
         if (ctx.IMPLEMENTS() != null) {
             impInterface = ctx.ID(idCounter).getText();
         }
 
-
-
-        DartClass dClass=new DartClass(Abstract, id, superClass, impInterface, null);
+        DartClass dClass = new DartClass(Abstract, id, superClass, impInterface, null);
         int parentHash;
-        int hash=dClass.hashCode();
-        if(ParentNode!=null && !(ParentNode instanceof DartClass)){
-            parentHash =ParentNode.parentHash;
-        }else{
-            parentHash=0;
+        if (ParentNode != null && !(ParentNode instanceof DartClass)) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
         }
-        currentNode=dClass;
-        currentNode.parentHash=hash;
-        ParentNode=currentNode;
-        ClassBody classBody = (ClassBody) visit(ctx.classBody());
-        dClass.classBody=classBody;
-        SymbolTableInstance currentElement =new SymbolTableInstance(id,parentHash,"Class",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        currentNode = dClass;
+        currentNode.objectHash = dClass.hashCode();
+        ParentNode = currentNode;
+
+        dClass.classBody = (ClassBody) visit(ctx.classBody());
+
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Class", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error : Class: " + id + " already exist at Line" + errorCheck.b);
+            semanticErrors.add("Error: class: " + id + " already exist at line" + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -622,14 +602,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         List<ClassAttribute> classAttribute = new ArrayList<>();
         for (int i = 0; i < ctx.attribute().size(); i++) {
             ClassAttribute attribute = (ClassAttribute) visit(ctx.attribute(i));
-            currentNode=ParentNode;
+            currentNode = ParentNode;
             classAttribute.add(attribute);
         }
 
         List<ClassMethod> classMethods = new ArrayList<>();
         for (int i = 0; i < ctx.method().size(); i++) {
             ClassMethod method = (ClassMethod) visit(ctx.method(i));
-            currentNode=ParentNode;
+            currentNode = ParentNode;
             classMethods.add(method);
         }
 
@@ -647,9 +627,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         boolean isStatic = (ctx.STATIC() != null);
         Declaration dec = (Declaration) visit(ctx.declaration());
         int line = ctx.declaration().start.getLine();
-        Pair<String, Integer> oldValue = new Pair<>("Variable", line);
-        Pair<String, Integer> newValue = new Pair<>("Class Attribute", line);
-//        SymbolTable.replaceNode(dec.id, oldValue, newValue);
+        SymbolTableInstance oldValue = new SymbolTableInstance(dec.id, currentNode.objectHash, "Variable", line);
+        SymbolTableInstance newValue = new SymbolTableInstance(dec.id, currentNode.objectHash, "Class Att", line);
+        SymbolTable.replaceNode(oldValue, newValue);
         return new ClassAttribute(isStatic, dec);
     }
 
@@ -660,34 +640,29 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         String id = signature.id;
         boolean async = (ctx.ASYNC() != null);
 
-        NormalClassMethod func=new NormalClassMethod(override, signature, async, null);
-        int hash=func.hashCode();
-        int parentHash;
-        if(ParentNode!=null){
-            parentHash=ParentNode.parentHash;
-        }else{
-            parentHash=0;
-        }
-        currentNode=func;
-        currentNode.parentHash=hash;
+        NormalClassMethod func = new NormalClassMethod(override, signature, async, null);
 
-        FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
-        func.methodBody=functionBody;
+        int parentHash;
+        if (ParentNode != null) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
+        }
+        currentNode = func;
+        currentNode.objectHash = func.hashCode();
+
+        func.methodBody = (FunctionBody) visit(ctx.functionBody());
 
         int line = ctx.signature().ID().getSymbol().getLine();
 
-        SymbolTableInstance currentElement = new SymbolTableInstance(id,parentHash,"Class Method",line );
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
-
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Class Method", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
 
         if (errorCheck.a) {
-
-            semanitcErrors.add("Error : Method: " + id + " already defined for this class at Line" + errorCheck.b);
+            semanticErrors.add("Error: class method " + id + " already defined at line " + errorCheck.b);
         } else {
-
             SymbolTable.addNode(currentElement);
         }
-
 
         return func;
     }
@@ -697,28 +672,25 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Signature signature = (Signature) visit(ctx.signature());
         boolean async = (ctx.ASYNC() != null);
 
-        StaticClassMethod func=new StaticClassMethod(signature, async, null);
+        StaticClassMethod func = new StaticClassMethod(signature, async, null);
 
-        int hash=func.hashCode();
         int parentHash;
-        if(ParentNode!=null){
-            parentHash=ParentNode.parentHash;
-        }else{
-            parentHash=0;
+        if (ParentNode != null) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
         }
-        currentNode=func;
-        currentNode.parentHash=hash;
+        currentNode = func;
+        currentNode.objectHash = func.hashCode();
 
-
-        FunctionBody functionBody = (FunctionBody) visit(ctx.functionBody());
-        func.methodBody=functionBody;
+        func.methodBody = (FunctionBody) visit(ctx.functionBody());
         int line = ctx.signature().ID().getSymbol().getLine();
         String id = signature.id;
 
-        SymbolTableInstance currentElement = new SymbolTableInstance(id,parentHash,"Static Class Method",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Static Class Method", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error :: Static Method: " + id + " already exist at Line" + errorCheck.b);
+            semanticErrors.add("Error: class method " + id + " already exists at line" + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -732,19 +704,19 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         String id = signature.id;
 
         int parentHash;
-        if(ParentNode!=null){
-            parentHash=ParentNode.parentHash;
-        }else{
-            parentHash=0;
+        if (ParentNode != null) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
         }
-        SymbolTableInstance currentElement = new SymbolTableInstance(id,parentHash,"Abstract Function",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Abstract Function", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
         if (errorCheck.a) {
-            semanitcErrors.add("Error : Abstract Function: " + id + " already exist at Line: " + errorCheck.b);
+            semanticErrors.add("Error: class method " + id + " already exists at line: " + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
-        return  new AbstractClassMethod(signature);
+        return new AbstractClassMethod(signature);
     }
 
     @Override
@@ -758,13 +730,22 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
         int line = ctx.ID(1).getSymbol().getLine();
 
-        currentNode=new NamedConstructor(classId, id, consArgs, functionBody);
-        currentNode.parentHash=currentNode.hashCode();
-        SymbolTableInstance currentElement = new SymbolTableInstance(id,currentNode.parentHash,"Named Constructor",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        NamedConstructor namedConstructor = new NamedConstructor(classId, id, consArgs, functionBody);
+
+        int parentHash;
+        if (ParentNode != null) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
+        }
+        currentNode = namedConstructor;
+        currentNode.objectHash = namedConstructor.hashCode();
+
+        SymbolTableInstance currentElement = new SymbolTableInstance(classId + '.' + id, parentHash, "Named Constructor", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
 
         if (errorCheck.a) {
-            semanitcErrors.add("Error :Named Constructor: " + classId + "." + id + " already exist at Line:" + errorCheck.b);
+            semanticErrors.add("Error: named constructor " + classId + "." + id + " already exists at line:" + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -781,13 +762,23 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
         int line = ctx.ID().getSymbol().getLine();
 
-        currentNode=new DefaultConstructor(id, consArgs, functionBody);
-        currentNode.parentHash=currentNode.hashCode();
-        SymbolTableInstance currentElement = new SymbolTableInstance(id,currentNode.parentHash,"Constructor",line);
-        Pair<Boolean,Integer> errorCheck=SymbolTable.semanticErrorsCheck(currentElement);
+        int parentHash;
+        if (ParentNode != null) {
+            parentHash = ParentNode.objectHash;
+        } else {
+            parentHash = 0;
+        }
+
+        DefaultConstructor defaultConstructor = new DefaultConstructor(id, consArgs, functionBody);
+
+        currentNode = defaultConstructor;
+        currentNode.objectHash = defaultConstructor.hashCode();
+
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Constructor", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
 
         if (errorCheck.a) {
-            semanitcErrors.add("Error : Constructor: " + id + " already exist at Line: " + errorCheck.b);
+            semanticErrors.add("Error: constructor: " + id + " already exists at line " + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
@@ -1093,7 +1084,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         return new Column_row_Children(dartList);
     }
 
-    // error
     @Override
     public Node visitStack(DartGrammarsParser.StackContext ctx) {
         if (ctx.getChildCount() > 4) {

@@ -95,6 +95,7 @@ foreachStatement
     ;
 
 
+
 //variables
 type
     : INT | DOUBLE | STRING | LIST | MAP | DYNAMIC | BOOL | OBJECT | FUNCTION
@@ -226,12 +227,14 @@ object
     : NEW ID '(' parameters ')'
     | component
     ;
+
 parameters
     : positionalNamedParameters
     | positionalParameters
     | namedParameters
     | zeroParameters
     ;
+
 positionalNamedParameters
     : positionalParameters COMMA namedParameters
     ;

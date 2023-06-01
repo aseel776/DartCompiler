@@ -6,32 +6,20 @@ import java.util.*;
 
 
 public class SymbolTable {
-    //    public static final List<Pair<Pair<String,Integer>, Pair<String, Integer>>> table = new ArrayList<>();
-    //مؤقت بس مشان اقدر جربو قبل ما ضيفو ع SymbolTable (table)
-//    public static final Map<String,Integer> ParentHash=new HashMap();
-    public static final List<SymbolTableInstance> symbolTable = new ArrayList<>();
-//    public static List<SymbolTableInstance> getVariables(String id){
-//        List<SymbolTableInstance> list;
-//        for(SymbolTableInstance Node: symbolTable){
-//
-//        }
-//    }
 
+    public static final List<SymbolTableInstance> symbolTable = new ArrayList<>();
 
     public static Pair<Boolean, Integer> semanticErrorsCheck(SymbolTableInstance currentNode) {
         int variableDeclarationLine = 0;
         for (SymbolTableInstance Node : symbolTable) {
-
             if (currentNode.id.equals(Node.id)) {
-
-                if (currentNode.parentHash.equals(Node.parentHash)) {
-
+                if (currentNode.parentHash == Node.parentHash) {
                     variableDeclarationLine = Node.declarationLineNumber;
                     return new Pair<>(true, variableDeclarationLine);
                 }
             }
         }
-        return new Pair(false, variableDeclarationLine);
+        return new Pair<>(false, variableDeclarationLine);
     }
 
     public static void addNode(SymbolTableInstance newNode) {
@@ -39,9 +27,21 @@ public class SymbolTable {
     }
 
     public static void replaceNode(SymbolTableInstance oldValue, SymbolTableInstance newValue) {
-        symbolTable.remove(oldValue);
-        symbolTable.add(newValue);
+        for (SymbolTableInstance s: symbolTable) {
+            if(s.equals(oldValue)){
+                symbolTable.remove(s);
+                symbolTable.add(newValue);
+                break;
+            }
+        }
     }
 
+    public static void printSymbolTable(){
+        symbolTable.sort(Comparator.comparing(o -> o.declarationLineNumber));
+        for (SymbolTableInstance s: symbolTable) {
+            System.out.println(s.toString());
+            System.out.println("-----");
+        }
+    }
 
 }

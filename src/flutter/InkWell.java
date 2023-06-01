@@ -2,8 +2,6 @@ package flutter;
 
 import nodes.ZeroParameters;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class InkWell extends Component{
 

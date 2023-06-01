@@ -1,6 +1,5 @@
 import nodes.*;
 import java.io.IOException;
-import visitors.SymbolTable;
 import visitors.AntlrToStart;
 import antlr.DartGrammarsLexer;
 import antlr.DartGrammarsParser;
@@ -8,11 +7,12 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CommonTokenStream;
+import visitors.SymbolTable;
 
 
 public class Main {
     public static void main(String[] args){
-        String source = "tests/S_class.txt";
+        String source = "tests/test.txt";
         CharStream input;
         try {
             input = CharStreams.fromFileName(source);
@@ -27,14 +27,6 @@ public class Main {
         Start program = startVisitor.visit(ast);
         if(startVisitor.semanticErrors.isEmpty()){
             System.out.println("No Errors");
-            /*
-             * ExpressionProcessor ep =new ExpressionProcessor(program.nodes)
-             *for (String evaluation:ep.getEvaluationResults())
-             * print(evaluation)
-             *
-             * */
-
-
         }else{
             for (String err: startVisitor.semanticErrors){
                 System.out.println(err);
@@ -44,7 +36,7 @@ public class Main {
 //        System.out.print(program.toString());
 //        System.out.println();
 //        System.out.println();
-//        System.out.println("---Symbol Table---");
-//        System.out.println(SymbolTable.getTable());
+        System.out.println("---Symbol Table---");
+        SymbolTable.printSymbolTable();
     }
 }
