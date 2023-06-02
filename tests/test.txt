@@ -1,3 +1,9 @@
-void xx(){
-    for (i; i < 4; i+=8){}
+class a{}
+
+int x(){}
+
+void main(){
+   var aseel = new a();
+
+   var besan = x();
 }
