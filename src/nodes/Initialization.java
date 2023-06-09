@@ -17,4 +17,11 @@ public class Initialization extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("initialization").append("\n\t\t").append(value.astImp());
     }
+
+    // @Override
+    // public String codeGenerationImp() {
+    //     String str = "= ";
+    //     str = str.concat(value.codeGenerationImp());
+    //     return str;
+    // }
 }

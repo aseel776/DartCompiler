@@ -24,10 +24,19 @@ public class Function extends Statement{
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("function");
         str.append("\n\t\t").append(signature.astImp());
-        if(isAsync){
+        if (isAsync) {
             str.append("\n\t\tasync");
         }
         str.append("\n\t\t").append(functionBody.astImp());
         return str;
     }
+    
+    // @Override
+    // public String codeGenerationImp() {
+    //     String str = "<?php\n";
+    //     str = str.concat(signature.codeGenerationImp());
+    //     str = str.concat(functionBody.codeGenerationImp());
+    //     str = str.concat("\n?>");
+    //     return str;
+    // }
 }

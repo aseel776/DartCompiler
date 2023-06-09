@@ -24,7 +24,6 @@ statement
     | foreachStatement
     | declaration SEMICOLON
     | assignment SEMICOLON
-    | function
     | functionCall SEMICOLON
     | navigation
     | pageArgsExtracting

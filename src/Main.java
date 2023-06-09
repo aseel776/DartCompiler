@@ -26,16 +26,14 @@ public class Main {
         AntlrToStart startVisitor = new AntlrToStart();
         Start program = startVisitor.visit(ast);
         if(startVisitor.semanticErrors.isEmpty()){
-            System.out.println("No Errors");
+            program.generateCode();
         }else{
             for (String err: startVisitor.semanticErrors){
                 System.out.println(err);
             }
         }
-//        System.out.println("---AST---");
-//        System.out.print(program.toString());
-//        System.out.println();
-//        System.out.println();
+        System.out.println("---AST---");
+        System.out.print(program.astImp());
         System.out.println("---Symbol Table---");
         SymbolTable.printSymbolTable();
     }

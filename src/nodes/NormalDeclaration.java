@@ -36,4 +36,13 @@ public class NormalDeclaration extends Declaration{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    // @Override
+    // public String codeGenerationImp() {
+    //     String str = "$" + id;
+    //     if (init != null) {
+    //         str = str.concat(' ' + init.codeGenerationImp());
+    //     }
+    //     return str;
+    // }
 }
