@@ -1,0 +1,9 @@
+class a{}
+
+int x(){}
+
+void main(){
+   var aseel = new a();
+
+   var besan = x();
+}
