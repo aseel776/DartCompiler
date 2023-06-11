@@ -1,5 +1,10 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import visitors.AntlrToNode;
+import visitors.SymbolTable;
+import visitors.SymbolTableInstance;
+
 public class DartClass extends Node {
 
     public Boolean isAbstract;
@@ -18,8 +23,18 @@ public class DartClass extends Node {
             this.impInterface = impInterface;
         }
         this.classBody = classBody;
+
     }
 
+    public void SemanticCheck(String id, int line){
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "Class", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+        if (errorCheck.a) {
+            AntlrToNode.semanticErrors.add("Error: class " + id + " at line " + line + " is already defined at line" + errorCheck.b);
+        } else {
+            SymbolTable.addNode(currentElement);
+        }
+    }
     @Override
     public String toString() {
         String wholeClass;

@@ -1,5 +1,10 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import visitors.AntlrToNode;
+import visitors.SymbolTable;
+import visitors.SymbolTableInstance;
+
 public class Assignment extends Statement{
     public String id;
     public Node value;
@@ -7,6 +12,7 @@ public class Assignment extends Statement{
     public Assignment(String id, Node value){
         this.id = id;
         this.value = value;
+
     }
 
     @Override

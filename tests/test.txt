@@ -1,8 +1,12 @@
-class a{}
+class a{
+final int i =5;
+final int i=5;
+}
 
 int x(){}
 
 void main(){
+
    var aseel = new a();
 
    var besan = x();

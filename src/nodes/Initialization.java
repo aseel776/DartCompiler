@@ -1,5 +1,10 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import visitors.AntlrToNode;
+import visitors.SymbolTable;
+import visitors.SymbolTableInstance;
+
 public class Initialization extends Node{
 
     public Node value;

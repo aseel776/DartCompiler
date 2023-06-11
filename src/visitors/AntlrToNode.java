@@ -11,13 +11,13 @@ import java.util.List;
 
 public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
-    List<String> semanticErrors;
-    Node currentNode;
-    Node parentNode;
+  static public   List<String> semanticErrors;
+  static public  Node currentNode;
+  static public  Node parentNode;
 
 
     public AntlrToNode(List<String> semanticErrors) {
-        this.semanticErrors = semanticErrors;
+        AntlrToNode.semanticErrors = semanticErrors;
     }
 
     @Override
@@ -59,12 +59,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitComparison(DartGrammarsParser.ComparisonContext ctx) {
         int line = ctx.start.getLine();
         Variable left = new Variable(ctx.getChild(0).getText());
-        //checking if the variable is defined
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(left.id, currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-        if (!errorCheck.a) {
-            semanticErrors.add("Error: variable " + left.id + " at line " + line + " is not defined");
-        }
+        //semantic error check
+        left.SemanticCheck(left.id,line);
+
         Expression right = (Expression) visit(ctx.expression());
         String symbol = ctx.getChild(1).getText();
         return new Comparison(left, right, symbol);
@@ -104,7 +101,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitSwitchStatement(DartGrammarsParser.SwitchStatementContext ctx) {
+        int line = ctx.start.getLine();
         Variable id = new Variable(ctx.getChild(2).getText());
+        id.SemanticCheck(id.id,line);
         SwitchBody switchBody = (SwitchBody) visit(ctx.getChild(4));
         return new SwitchStatement(id, switchBody);
     }
@@ -195,12 +194,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitInitialConditionAssignment(DartGrammarsParser.InitialConditionAssignmentContext ctx) {
         Variable id = new Variable(ctx.getChild(0).getText());
         int line = ctx.start.getLine();
-        //checking if the variable is defined
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id.id, currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-        if (!errorCheck.a) {
-            semanticErrors.add("Error: variable " + id.id + " at line " + line + " is not defined");
-        }
+        id.SemanticCheck(id.id, line);
         Expression value = (Expression) visit(ctx.getChild(2));
         return new InitialConditionAssignment(id, value);
     }
@@ -210,17 +204,16 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Variable id = new Variable(ctx.getText());
         int line = ctx.start.getLine();
         //checking if the variable is defined
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id.id, currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-        if (!errorCheck.a) {
-            semanticErrors.add("Error: variable " + id.id + " at line " + line + " is not defined");
-        }
+        id.SemanticCheck(id.id, line);
         return new InitialConditionVariable(id);
     }
 
     @Override
     public Node visitIncrement(DartGrammarsParser.IncrementContext ctx) {
+
         Variable id = new Variable(ctx.getChild(0).getText());
+        int line = ctx.start.getLine();
+        id.SemanticCheck(id.id, line);
         String symbol = ctx.getChild(1).getText();
         Expression expression = (Expression) visit(ctx.getChild(2));
         return new Increment(id, symbol, expression);
@@ -248,18 +241,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.initialization() != null) {
             init = (Initialization) visit(ctx.initialization());
         }
-
+        FinalDeclaration finalVar= new FinalDeclaration(late, type, id, init);
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Final Variable", line);
-
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: final variable " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
-
-        return new FinalDeclaration(late, type, id, init);
+        finalVar.SemanticCheck(type,id,line);
+        return finalVar;
     }
 
     @Override
@@ -272,14 +257,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Initialization init = (Initialization) visit(ctx.initialization());
 
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Const Variable", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: const variable " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
-        return new ConstDeclaration(type, id, init);
+        ConstDeclaration constVar=new ConstDeclaration(type, id, init);
+        constVar.SemanticCheck(type,id,line);
+        return  constVar;
     }
 
     @Override
@@ -295,14 +275,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             init = (Initialization) visit(ctx.initialization());
         }
         int line = ctx.ID().getSymbol().getLine();
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, currentNode.objectHash, "Variable", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: variable " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
-        return new NormalDeclaration(late, type, id, init);
+        NormalDeclaration normalVar=new NormalDeclaration(late, type, id, init);
+        normalVar.SemanticCheck(type,id,line);
+
+        return normalVar;
     }
 
     @Override
@@ -310,12 +286,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         int line = ctx.start.getLine();
         if (ctx.getChild(1) == ctx.ID()) {
             Variable variable = new Variable(ctx.ID().getText());
-            //checking if the variable is defined
-            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "", line);
-            Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-            if (!errorCheck.a) {
-                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
-            }
+            variable.SemanticCheck(variable.id, line);
             return new Initialization(variable);
         } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.CHARACTERS().getText());
@@ -340,12 +311,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
         if (ctx.getChild(2) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(2).getText());
-            //checking if the right-hand variable is defined
-            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "", line);
-            Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-            if (!errorCheck2.a) {
-                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
-            }
+            variable.SemanticCheck(variable.id, line);
+
             return new Assignment(id, variable);
         } else if (ctx.getChild(2) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(2).getText());
@@ -360,28 +327,24 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitObjectAssign(DartGrammarsParser.ObjectAssignContext ctx) {
         int line = ctx.start.getLine();
         String objectId = ctx.getChild(0).getText();
-        //checking if the object is defined
-        SymbolTableInstance symbolTableInstance1 = new SymbolTableInstance(objectId, currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck1 = SymbolTable.semanticErrorsCheck(symbolTableInstance1);
-        if (!errorCheck1.a) {
-            semanticErrors.add("Error: variable " + objectId + " at line " + line + " is not defined");
-        }
         String id = ctx.getChild(2).getText();
 
         if (ctx.getChild(4) == ctx.ID(2)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
             //checking if the variable is defined
-            SymbolTableInstance symbolTableInstance2 = new SymbolTableInstance(variable.id, currentNode.objectHash, "", line);
-            Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance2);
-            if (!errorCheck2.a) {
-                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
-            }
-            return new ObjectAssignment(objectId, id, variable);
+            variable.SemanticCheck(variable.id, line);
+            ObjectAssignment objAssign= new ObjectAssignment(objectId, id, variable);
+            objAssign.SemanticCheck(objectId,line);
+            return objAssign;
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
+            ObjectAssignment objAssign= new ObjectAssignment(objectId, id, chars);
+            objAssign.SemanticCheck(objectId,line);
             return new ObjectAssignment(objectId, id, chars);
         } else {
             Node node = visit(ctx.getChild(4));
+            ObjectAssignment objAssign= new ObjectAssignment(objectId, id, node);
+            objAssign.SemanticCheck(objectId,line);
             return new ObjectAssignment(objectId, id, node);
         }
     }
@@ -398,12 +361,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
         if (ctx.getChild(4) == ctx.ID(1)) {
             Variable variable = new Variable(ctx.getChild(4).getText());
-            //checking if the variable is defined
-            SymbolTableInstance symbolTableInstance2 = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
-            Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance2);
-            if (!errorCheck2.a) {
-                semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
-            }
+            variable.SemanticCheck(variable.id, line);
             return new ThisStatement(id, variable);
         } else if (ctx.getChild(4) == ctx.CHARACTERS()) {
             Characters chars = new Characters(ctx.getChild(4).getText());
@@ -450,21 +408,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitFunction(DartGrammarsParser.FunctionContext ctx) {
         Signature signature = (Signature) visit(ctx.getChild(0));
         int line = ctx.signature().ID().getSymbol().getLine();
-        String id = signature.id;
         Function func = new Function(signature, null, null);
+        func.SemanticCheck(signature,line);
         func.isAsync = (ctx.ASYNC() != null);
 
         currentNode = func;
         currentNode.objectHash = func.hashCode();
         //might not need it since current node is not being written to in statements
         parentNode = currentNode;
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "Function", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: function " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
+
         func.functionBody = (FunctionBody) visit(ctx.functionBody());
         return func;
     }
@@ -559,25 +511,23 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitReturnStatement(DartGrammarsParser.ReturnStatementContext ctx) {
+        int line = ctx.ID().getSymbol().getLine();
         if (ctx.getChildCount() > 2) {
             if (ctx.getChild(1) == ctx.ID()) {
                 Variable value = new Variable(ctx.ID().getText());
-                int line = ctx.ID().getSymbol().getLine();
-                SymbolTableInstance symbolTableInstance = new SymbolTableInstance(value.id, currentNode.objectHash, "", line);
-                Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-                if (!errorCheck.a) {
-                    semanticErrors.add("Error: variable " + value.id + " at line " + line + " is not defined");
-                }
-                return new ReturnStatement(value);
+                value.SemanticCheck(value.id, line);
+                ReturnStatement returnS=new ReturnStatement(value,line);
+//                returnS.SemanticCheck(value,line);
+                return returnS;
             } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
                 Characters value = new Characters(ctx.getChild(1).getText());
-                return new ReturnStatement(value);
+                return new ReturnStatement(value,line);
             } else {
                 Node value = visit(ctx.getChild(1));
-                return new ReturnStatement(value);
+                return new ReturnStatement(value,line);
             }
         } else {
-            return new ReturnStatement(null);
+            return new ReturnStatement(null,0);
         }
     }
 
@@ -614,6 +564,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
 
         DartClass dClass = new DartClass(Abstract, id, superClass, impInterface, null);
+        dClass.SemanticCheck(id,line);
 
         currentNode = dClass;
         currentNode.objectHash = dClass.hashCode();
@@ -621,13 +572,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
         dClass.classBody = (ClassBody) visit(ctx.classBody());
 
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "Class", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: class " + id + " at line " + line + " is already defined at line" + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
+
         return dClass;
     }
 
@@ -675,9 +620,7 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         Signature signature = (Signature) visit(ctx.signature());
         String id = signature.id;
         boolean async = (ctx.ASYNC() != null);
-
-        NormalClassMethod func = new NormalClassMethod(override, signature, async, null);
-
+        int line = ctx.signature().ID().getSymbol().getLine();
         //might remove it bc parentHash will always equal parentNode.objectHash
         int parentHash;
         if (parentNode != null) {
@@ -685,22 +628,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         } else {
             parentHash = 0;
         }
+        NormalClassMethod func = new NormalClassMethod(override, signature, async, null);
+        func.SemanticCheck(signature,parentHash,line);
+
+
         //end of removal
         currentNode = func;
         currentNode.objectHash = func.hashCode();
 
         func.methodBody = (FunctionBody) visit(ctx.functionBody());
-
-        int line = ctx.signature().ID().getSymbol().getLine();
-
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Class Method", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-
-        if (errorCheck.a) {
-            semanticErrors.add("Error: class method " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
 
         return func;
     }
@@ -709,9 +645,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitStaticClassMethod(DartGrammarsParser.StaticClassMethodContext ctx) {
         Signature signature = (Signature) visit(ctx.signature());
         boolean async = (ctx.ASYNC() != null);
-
-        StaticClassMethod func = new StaticClassMethod(signature, async, null);
-
         //might remove it bc parentHash will always equal parentNode.objectHash
         int parentHash;
         if (parentNode != null) {
@@ -719,21 +652,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         } else {
             parentHash = 0;
         }
+        int line = ctx.signature().ID().getSymbol().getLine();
+
+        StaticClassMethod func = new StaticClassMethod(signature, async, null);
+        func.SemanticCheck(signature,parentHash,line);
         //end of removal
         currentNode = func;
         currentNode.objectHash = func.hashCode();
-
         func.methodBody = (FunctionBody) visit(ctx.functionBody());
-        int line = ctx.signature().ID().getSymbol().getLine();
         String id = signature.id;
-
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Static Class Method", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: class method " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
         return func;
     }
 
@@ -750,15 +677,9 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         } else {
             parentHash = 0;
         }
-        //end of removal
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Abstract Function", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-        if (errorCheck.a) {
-            semanticErrors.add("Error: class method " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
-        return new AbstractClassMethod(signature);
+        AbstractClassMethod abstractFunc= new AbstractClassMethod(signature);
+        abstractFunc.SemanticCheck(signature,parentHash,line);
+        return abstractFunc;
     }
 
     @Override
@@ -771,9 +692,6 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
             functionBody = (FunctionBody) visit(ctx.functionBody());
         }
         int line = ctx.ID(1).getSymbol().getLine();
-
-        NamedConstructor namedConstructor = new NamedConstructor(classId, id, consArgs, functionBody);
-
         //might remove it bc parentHash will always equal parentNode.objectHash
         int parentHash;
         if (parentNode != null) {
@@ -781,18 +699,14 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         } else {
             parentHash = 0;
         }
+
+        NamedConstructor namedConstructor = new NamedConstructor(classId, id, consArgs, functionBody);
+        namedConstructor.SemanticCheck(classId,id,parentHash,line);
+
+
         //end of removal
         currentNode = namedConstructor;
         currentNode.objectHash = namedConstructor.hashCode();
-
-        SymbolTableInstance currentElement = new SymbolTableInstance(classId + '.' + id, parentHash, "Named Constructor", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-
-        if (errorCheck.a) {
-            semanticErrors.add("Error: named constructor " + classId + "." + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
         return namedConstructor;
     }
 
@@ -814,18 +728,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         }
 
         DefaultConstructor defaultConstructor = new DefaultConstructor(id, consArgs, functionBody);
+        defaultConstructor.SemanticCheck(id,parentHash,line);
 
         currentNode = defaultConstructor;
         currentNode.objectHash = defaultConstructor.hashCode();
-
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Constructor", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
-
-        if (errorCheck.a) {
-            semanticErrors.add("Error: constructor " + id + " at line " + line + " is already defined at line " + errorCheck.b);
-        } else {
-            SymbolTable.addNode(currentElement);
-        }
         return defaultConstructor;
     }
 
@@ -898,23 +804,15 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         int line = ctx.start.getLine();
         if (size > 1) {
             String objectId = ctx.ID(0).getText();
-            //checking if the object is defined
-            SymbolTableInstance symbolTableInstance1 = new SymbolTableInstance(objectId, currentNode.objectHash, "", line);
-            Pair<Boolean, Integer> errorCheck1 = SymbolTable.semanticErrorsCheck(symbolTableInstance1);
-            if(!errorCheck1.a){
-                semanticErrors.add("Error: variable " + objectId + " at line " + line + "is not defined");
-            }
             String id = ctx.ID(1).getText();
-            return new ObjectFunctionCall(objectId, await, id, parameters);
+            ObjectFunctionCall obj=new ObjectFunctionCall(objectId, await, id, parameters);
+            obj.SemanticCheck(objectId,line);
+            return obj;
         } else {
             String id = ctx.ID(0).getText();
-            //checking if the function is defined
-            SymbolTableInstance symbolTableInstance2 = new SymbolTableInstance(id, 0, "", line);
-            Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance2);
-            if(!errorCheck2.a){
-                semanticErrors.add("Error: function " + id + " at line " + line + " is not defined");
-            }
-            return new FunctionCall(await, id, parameters);
+            FunctionCall func=new FunctionCall(await, id, parameters);
+            func.SemanticCheck(id,line);
+            return func;
         }
     }
 
@@ -923,14 +821,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
         if (ctx.getChild(0) == ctx.NEW()) {
             String id = ctx.getChild(1).getText();
             int line = ctx.start.getLine();
-            //checking if the class is defined
-            SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id, 0, "", line);
-            Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-            if (!errorCheck.a) {
-                semanticErrors.add("Error: class " + id + " at line " + line + " is not defined");
-            }
             Parameters parameters = (Parameters) visit(ctx.parameters());
-            return new DartObject(id, parameters);
+            DartObject dartObj=new DartObject(id, parameters);
+            dartObj.SemanticCheck(id,line);
+            return dartObj;
         } else {
             return visit(ctx.getChild(0));
         }
@@ -1027,13 +921,10 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
 
     @Override
     public Node visitVariableExpression(DartGrammarsParser.VariableExpressionContext ctx) {
-        Variable variable = new Variable(ctx.getChild(0).getText());
         int line = ctx.start.getLine();
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(variable.id, currentNode.objectHash, "Variable", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
-        if (!errorCheck.a) {
-            semanticErrors.add("Error: variable " + variable.id + " at line " + line + " is not defined");
-        }
+
+        Variable variable = new Variable(ctx.getChild(0).getText());
+      variable.SemanticCheck(variable.id, line);
         return variable;
     }
 

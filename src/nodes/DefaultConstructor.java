@@ -1,5 +1,10 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import visitors.AntlrToNode;
+import visitors.SymbolTable;
+import visitors.SymbolTableInstance;
+
 public class DefaultConstructor extends Node {
 
     public String id;
@@ -12,7 +17,19 @@ public class DefaultConstructor extends Node {
         if(consBody != null){
             this.consBody = consBody;
         }
+
     }
+    public void SemanticCheck(String id,int parentHash, int line){
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, parentHash, "Constructor", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+
+        if (errorCheck.a) {
+            AntlrToNode.semanticErrors.add("Error: constructor " + id + " at line " + line + " is already defined at line " + errorCheck.b);
+        } else {
+            SymbolTable.addNode(currentElement);
+        }
+    }
+
 
     @Override
     public String toString() {

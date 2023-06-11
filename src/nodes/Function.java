@@ -1,5 +1,10 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import visitors.AntlrToNode;
+import visitors.SymbolTable;
+import visitors.SymbolTableInstance;
+
 public class Function extends Statement{
     public Signature signature;
     public Boolean isAsync;
@@ -9,6 +14,16 @@ public class Function extends Statement{
         this.signature = signature;
         this.isAsync = isAsync;
         this.functionBody = functionBody;
+
+    }
+    public void SemanticCheck(Signature signature,int line){
+        SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, 0, "Function", line);
+        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+        if (errorCheck.a) {
+            AntlrToNode.semanticErrors.add("Error: function " + signature.id + " at line " + line + " is already defined at line " + errorCheck.b);
+        } else {
+            SymbolTable.addNode(currentElement);
+        }
     }
 
     @Override
