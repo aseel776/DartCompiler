@@ -33,4 +33,16 @@ public class ForStatement extends Statement{
         str.append("\n\t\t").append(block.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "for" + '(' 
+        + initialCondition.codeGenerationImp() + ';'
+        + stopCondition.codeGenerationImp() + ';' 
+        + increment.codeGenerationImp() + ')' 
+        + '\n' + block.codeGenerationImp()
+        ;
+        return str;
+    }
 }

@@ -12,4 +12,11 @@ public class ObjectAssignment extends Assignment {
     public String toString() {
         return objectId + "." + id + " = " + value.toString() + ";";
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + objectId + "->" + id + "=" + value.codeGenerationImp() + ";";
+        return str;
+    }
 }

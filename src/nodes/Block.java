@@ -33,4 +33,14 @@ public class Block extends Node{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str="{";
+        for (Node n : statements){
+            str = str.concat(n.codeGenerationImp());
+        }
+        str =str.concat("\n}");
+        return str;
+    }
 }

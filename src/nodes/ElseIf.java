@@ -22,4 +22,11 @@ public class ElseIf extends Node{
         str.append("\n\t\t").append(block.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str ="";
+        str = "else if" + '(' + condition.codeGenerationImp() + ')' + '\n' + block.codeGenerationImp();
+        return str;
+    }
 }

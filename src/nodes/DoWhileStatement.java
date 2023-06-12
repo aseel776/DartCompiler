@@ -18,4 +18,11 @@ public class DoWhileStatement extends WhileStatement{
         str.append("\n\t\twhile ").append(condition.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "do" + '\n' + block.codeGenerationImp() + "while" + '(' + condition.codeGenerationImp() + ");" ;
+        return str;
+    }
 }

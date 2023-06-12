@@ -17,4 +17,11 @@ public class Else extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("else").append("\n\t\t").append(block.astImp());
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "else" + '\n' + block.codeGenerationImp();
+        return str;
+    }
 }

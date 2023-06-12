@@ -10,4 +10,10 @@ public class ThisStatement extends Assignment{
     public String toString() {
         return "this." + id + " = " + value.toString() + ";";
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + "this" + "->" + id + "=" + "$"+ value.codeGenerationImp() + ";";
+        return str;
+    }
 }
