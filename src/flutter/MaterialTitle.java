@@ -1,18 +1,18 @@
 package flutter;
 
-public class MaterialTitle extends MaterialAppAtt{
+public class MaterialTitle extends MaterialAppAtt {
 
     public String title;
 
-    public MaterialTitle(String character){
+    public MaterialTitle(String character) {
         super();
-        this.title= character;
+        this.title = character;
 
     }
 
     @Override
     public String toString() {
-        return "title:"+title;
+        return "title:" + title;
     }
 
     @Override
@@ -21,5 +21,13 @@ public class MaterialTitle extends MaterialAppAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
-}
 
+    @Override
+    public String codeGenerationImp() {
+        String top = "<h1"+ this.setWidgetName("MaterialTitle", this.hashCode())+  ">";
+        top.concat(title);
+        top.concat("</h1> ");
+        this.printLine(top);
+        return top;
+    }
+}

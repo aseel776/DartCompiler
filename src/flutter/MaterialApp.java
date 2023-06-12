@@ -31,4 +31,28 @@ public class MaterialApp extends Component{
         }
         return str;
     }
+
+    // MaterialApp it tells Flutter that you are going to use Material components and follow the material design in your app.
+    /**
+     * by GPT
+     *  In Flutter, the MaterialApp widget is the root of the widget tree ,
+     *  and is responsible for setting up the basic structure and behavior of the application.
+     *  In HTML, there is no direct equivalent element to MaterialApp.
+     *  However, you can use the <div> or <body> tag as the closest approximation.
+     */
+    // i use body because the body must be the root of page 
+    // class='container' for  container for the content 
+
+    @Override
+    public String codeGenerationImp() {
+       
+        String top = "<body"+ this.setClassName("container")  +this.setWidgetName("MaterialApp", this.hashCode())+ ">";
+        this.printLine(top);
+        top = top.concat(materialAppAtts.codeGenerationImp());
+        this.printLine(top);
+        top.concat("</body>");
+        return top ; 
+
+    }
+
 }

@@ -7,15 +7,15 @@ import java.util.List;
 public class MaterialAppAtts extends Parameters {
     public List<MaterialAppAtt> atts;
 
-    public MaterialAppAtts(List<MaterialAppAtt> atts){
+    public MaterialAppAtts(List<MaterialAppAtt> atts) {
         this.atts = atts;
     }
 
-    public MaterialAppAtts(){
+    public MaterialAppAtts() {
         atts = new ArrayList<>();
     }
 
-    public void addAtt(MaterialAppAtt att){
+    public void addAtt(MaterialAppAtt att) {
         atts.add(att);
     }
 
@@ -35,9 +35,23 @@ public class MaterialAppAtts extends Parameters {
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("material app atts");
-        for (MaterialAppAtt att: atts) {
+        for (MaterialAppAtt att : atts) {
             str.append("\n\t\t").append(att.astImp());
         }
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = "<div>"+this.setWidgetName("MaterialAppAtts",this.hashCode());
+        this.printLine(top);
+        for (int i = 0; i < atts.size(); i++) {
+            top = top.concat(atts.get(i).codeGenerationImp()  );
+            this.printLine(top);
+        }
+        top.concat(  "</div>");
+        this.printLine(top);
+        return top;
+
     }
 }

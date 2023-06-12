@@ -2,23 +2,23 @@ package flutter;
 
 import nodes.ZeroParameters;
 
-public class Scaffold extends Component{
-    public ScaffoldAtts scaffoldAtts ;
+public class Scaffold extends Component {
+    public ScaffoldAtts scaffoldAtts;
 
-    public Scaffold(ScaffoldAtts atts){
+    public Scaffold(ScaffoldAtts atts) {
         super("Scaffold", atts);
         this.scaffoldAtts = atts;
     }
 
-    public Scaffold(){
+    public Scaffold() {
         super("Scaffold", new ZeroParameters());
     }
 
     @Override
     public String toString() {
-        if(scaffoldAtts != null){
+        if (scaffoldAtts != null) {
             return "new Scaffold (\n" + scaffoldAtts.toString() + "\n)";
-        }else{
+        } else {
             return "new Scaffold()";
         }
     }
@@ -26,10 +26,21 @@ public class Scaffold extends Component{
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("scaffold");
-        if(scaffoldAtts != null){
+        if (scaffoldAtts != null) {
             str.append("\n\t\t").append(scaffoldAtts.astImp());
         }
         return str;
     }
-}
 
+    @Override
+    public String codeGenerationImp() {
+        String str = "<div " + this.setWidgetName("Scaffold", this.hashCode()) + " >";
+        this.printLine(str);
+        if (scaffoldAtts != null) {
+            str.concat(scaffoldAtts.codeGenerationImp());
+            this.printLine(str);
+        }
+        str.concat("</div>");
+        return str;
+    }
+}
