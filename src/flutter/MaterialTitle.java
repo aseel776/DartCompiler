@@ -24,10 +24,10 @@ public class MaterialTitle extends MaterialAppAtt {
 
     @Override
     public String codeGenerationImp() {
-        String top = "<h1"+ this.setWidgetName("MaterialTitle", this.hashCode())+  ">";
+        String top = "<h1"+ Utils.setWidgetName("MaterialTitle", this.hashCode())+  ">";
         top.concat(title);
         top.concat("</h1> ");
-        this.printLine(top);
+        Utils.printLine(top);
         return top;
     }
 }

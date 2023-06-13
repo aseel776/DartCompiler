@@ -34,11 +34,11 @@ public class Scaffold extends Component {
 
     @Override
     public String codeGenerationImp() {
-        String str = "<div " + this.setWidgetName("Scaffold", this.hashCode()) + " >";
-        this.printLine(str);
+        String str = "<div " + Utils.setWidgetName("Scaffold", this.hashCode()) + " >";
+        Utils.printLine(str);
         if (scaffoldAtts != null) {
             str.concat(scaffoldAtts.codeGenerationImp());
-            this.printLine(str);
+            Utils.printLine(str);
         }
         str.concat("</div>");
         return str;

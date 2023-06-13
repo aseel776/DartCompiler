@@ -25,17 +25,17 @@ public class ScaffoldBackground extends ScaffoldAtt {
     @Override
     public String codeGenerationImp() {
       
-        String top = "<script"  +  this.setWidgetName("ScaffoldBackground", this.hashCode())   +">";
-        this.printLine(top);
+        String top = "<script"  +  Utils.setWidgetName("ScaffoldBackground", this.hashCode())   +">";
+        Utils.printLine(top);
         // Get the parent (scaffold) of parent (scaffoldAtts) element"
         top.concat("var parentDiv = document.currentScript.parentNode.parentNode;" );
-        this.printLine(top);
+        Utils.printLine(top);
         // Add a class to the parent element
-        top.concat("parentDiv."+this.setClassNameByJs("bg-"+ color + "')") );
-        this.printLine(top);
-        top.concat("parentDiv."+this.setClassNameByJs("w-100"));// to get full parent width 
-        this.printLine(top);
-        top.concat("parentDiv."+this.setClassNameByJs("h-100"));// to get full parent hight 
+        top.concat("parentDiv."+Utils.setClassNameByJs("bg-"+ color + "')") );
+        Utils.printLine(top);
+        top.concat("parentDiv."+Utils.setClassNameByJs("w-100"));// to get full parent width 
+        Utils.printLine(top);
+        top.concat("parentDiv."+Utils.setClassNameByJs("h-100"));// to get full parent hight 
         top.concat("</script>" );
         return top;
     }

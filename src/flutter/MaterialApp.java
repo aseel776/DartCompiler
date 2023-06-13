@@ -46,10 +46,10 @@ public class MaterialApp extends Component{
     @Override
     public String codeGenerationImp() {
        
-        String top = "<body"+ this.setClassName("container")  +this.setWidgetName("MaterialApp", this.hashCode())+ ">";
-        this.printLine(top);
+        String top = "<body"+ Utils.setClassName("container")  +Utils.setWidgetName("MaterialApp", this.hashCode())+ ">";
+        Utils.printLine(top);
         top = top.concat(materialAppAtts.codeGenerationImp());
-        this.printLine(top);
+        Utils.printLine(top);
         top.concat("</body>");
         return top ; 
 
