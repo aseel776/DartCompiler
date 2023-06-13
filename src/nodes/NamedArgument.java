@@ -30,4 +30,10 @@ public class NamedArgument extends Argument{
     public StringBuilder astImp() {
         return new StringBuilder("named arg").append("\n\t\t").append(this);
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + id;
+        return str;
+    }
 }

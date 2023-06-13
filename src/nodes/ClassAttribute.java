@@ -27,4 +27,16 @@ public class ClassAttribute extends Node {
         str.append("\n\t\t").append(declaration.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = ""; 
+        if(isStatic){
+            str = "static" + " " + declaration.codeGenerationImp();
+            return str;
+        }else {
+            str = declaration.codeGenerationImp();
+            return str;
+        }
+        
+    }
 }

@@ -31,4 +31,14 @@ public class UnnamedFunction extends Node{
         str.append("\n\t\t").append(functionBody.astImp());
         return str;
     }
+
+        @Override
+    public String codeGenerationImp() {
+        String str = "<?php\n";
+        str = str.concat("function");
+        str = str.concat( "id" + "(" + arguments.codeGenerationImp() + ")");
+        str = str.concat(functionBody.codeGenerationImp());
+        str = str.concat("\n?>");
+        return str;
+    }
 }

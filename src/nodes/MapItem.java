@@ -19,4 +19,10 @@ public class MapItem extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("map item").append("\n\t\t").append(this);
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + mapId + "[" + "]";
+        return str;
+    }
 }

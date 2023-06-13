@@ -18,4 +18,12 @@ public class NamedParameter extends Parameter{
     public StringBuilder astImp() {
         return new StringBuilder("named parameter").append("\n\t\t").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = id + ":" + " " + value.codeGenerationImp();
+        return str ; 
+    }
+
 }

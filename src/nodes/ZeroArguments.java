@@ -11,4 +11,10 @@ public class ZeroArguments extends Arguments{
     public StringBuilder astImp() {
         return new StringBuilder("zero arguments");
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "()";
+        return str;
+    }
 }

@@ -44,4 +44,20 @@ public class DartMap extends Node{
         }
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "[\n";
+        for(int i = 0; i < elements.size(); i++){
+            String item = elements.get(i).a + "=>";
+            item = item.concat(elements.get(i).b.codeGenerationImp());
+            if(i == elements.size() - 1){
+                str = str.concat(item + "\n");
+            }else {
+                str = str.concat(item + ",\n");
+            }
+        }
+        str = str.concat("]");
+        return str;
+
+    }
 }

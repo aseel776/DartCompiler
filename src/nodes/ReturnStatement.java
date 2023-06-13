@@ -22,4 +22,16 @@ public class ReturnStatement extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("return").append("\n\t\t").append(returnValue.astImp());
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        if(returnValue != null) {
+            str =  "return" + " " + returnValue.codeGenerationImp() + ";";
+            return str;
+        }else {
+            str =  "return;" ;
+            return str;
+        }
+    }
 }

@@ -31,12 +31,13 @@ public class Function extends Statement{
         return str;
     }
     
-    // @Override
-    // public String codeGenerationImp() {
-    //     String str = "<?php\n";
-    //     str = str.concat(signature.codeGenerationImp());
-    //     str = str.concat(functionBody.codeGenerationImp());
-    //     str = str.concat("\n?>");
-    //     return str;
-    // }
+    @Override
+    public String codeGenerationImp() {
+        String str = "<?php\n";
+        str = str.concat("function");
+        str = str.concat(signature.codeGenerationImp());
+        str = str.concat(functionBody.codeGenerationImp());
+        str = str.concat("\n?>");
+        return str;
+    }
 }

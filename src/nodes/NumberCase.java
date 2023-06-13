@@ -20,4 +20,10 @@ public class NumberCase extends Case{
         str.append("\n\t\t").append(caseBody.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "case " + number.codeGenerationImp() + ':' + caseBody.codeGenerationImp();
+        return str;
+    }
 }

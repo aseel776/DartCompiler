@@ -23,7 +23,7 @@ public class InitialConditionVariable extends InitialCondition{
     @Override
     public String codeGenerationImp() {
         String str = "";
-        str = "$" +id.codeGenerationImp();
+        str = id.codeGenerationImp();
         return str ;
     }
 }

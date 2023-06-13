@@ -30,4 +30,17 @@ public class PositionalParameters extends Parameters{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "(";
+        for (int i = 0; i < parameters.size(); i++){
+            if(i == parameters.size() - 1){
+                str = str.concat(parameters.get(i).codeGenerationImp() + ")");
+            }else{
+                str = str.concat(parameters.get(i).codeGenerationImp() + ", ");
+            }
+        }
+        return str;
+    }
 }

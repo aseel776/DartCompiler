@@ -38,4 +38,18 @@ public class PositionalNamedArguments extends Arguments{
         str.append("\n\t\t").append(namedArgs.astImp());
         return str;
     }
+
+     @Override
+    public String codeGenerationImp() {
+        String str = "(";
+        for (int i = 0; i < posArgs.args.size(); i++){
+            if(i == posArgs.args.size() - 1){
+                str = str.concat(posArgs.args.get(i).codeGenerationImp());
+            }else {
+                str = str.concat(posArgs.args.get(i).codeGenerationImp() + ", ");
+            }
+        }
+        str = str.concat(")");
+        return str;
+    }
 }

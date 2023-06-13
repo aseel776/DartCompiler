@@ -26,7 +26,7 @@ public class SwitchStatement extends Statement{
     @Override
     public String codeGenerationImp() {
         String str = "";
-        str = "switch" + '(' + "$" + id.codeGenerationImp() + ')' +  body.codeGenerationImp();
+        str = "switch" + '(' + id.codeGenerationImp() + ')' +  body.codeGenerationImp();
         return str;
     }
 }

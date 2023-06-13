@@ -25,4 +25,11 @@ public class Argument extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("arg ").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + id;
+        return str;
+    }
 }

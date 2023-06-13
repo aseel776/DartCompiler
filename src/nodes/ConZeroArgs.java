@@ -11,4 +11,10 @@ public class ConZeroArgs extends ConsArgs{
     public StringBuilder astImp() {
         return new StringBuilder("constructor zero arguments");
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "()";
+        return str;
+    }
 }

@@ -17,4 +17,11 @@ public class Parameter extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("parameter").append("\n\t\t").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = value.codeGenerationImp();
+        return str;
+    }
 }

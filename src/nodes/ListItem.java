@@ -19,4 +19,11 @@ public class ListItem extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("list item").append("\n\t\t").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$"+ listId + "["  + "]";
+        return str;  
+    }
 }

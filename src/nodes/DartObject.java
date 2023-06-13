@@ -22,4 +22,11 @@ public class DartObject extends Node {
         str.append("\n\t\t").append(parameters.astImp());
         return str;
     }
+    
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "new" + " " + id + parameters.codeGenerationImp();
+        return str;
+    }
 }

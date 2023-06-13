@@ -79,4 +79,22 @@ public class DartClass extends Node {
 
     //     return str;
     // }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "" ;
+        if (isAbstract) {
+            str = "abstract class" + " " + id + " ";
+        } else {
+            str = "class" + " " + id + " ";
+        }
+        if (superClass != null) {
+            str = str.concat("extends" + " " + superClass + " ");
+        }
+        if (impInterface != null) {
+            str = str.concat("implements" + " " + impInterface + " ");
+        }
+        str = str.concat(classBody.codeGenerationImp());
+        return str;
+    }
 }

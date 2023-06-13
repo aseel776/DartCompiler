@@ -37,4 +37,18 @@ public class FunctionBody extends Block {
         }
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "{\n";
+        for (Statement statement: statements) {
+            str = str.concat(statement.codeGenerationImp() + '\n');
+        }
+        if(returnStatement != null){
+            str = str.concat(returnStatement.codeGenerationImp() + "\n}");
+        }else{
+            str = str.concat("}");
+        }
+        return str;
+
+    }
 }

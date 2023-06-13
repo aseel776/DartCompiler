@@ -29,4 +29,10 @@ public class ConsArg extends Node {
     public StringBuilder astImp() {
         return new StringBuilder("constructor arg").append("\n\t\t").append(this);
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + id ;
+        return str;
+    }
 }

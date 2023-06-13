@@ -32,4 +32,12 @@ public class StaticClassMethod extends ClassMethod{
         str.append("\n\t\t").append(methodBody.astImp());
         return str;
     }
-}
+    
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "static"+ " " +"function"+ " " + signature.codeGenerationImp() + " ";
+        str = str.concat(methodBody.codeGenerationImp());
+        return str;
+    }
+ }

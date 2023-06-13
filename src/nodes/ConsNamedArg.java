@@ -27,4 +27,10 @@ public class ConsNamedArg extends ConsArg {
     public StringBuilder astImp() {
         return new StringBuilder("constructor named arg").append("\n\t\t").append(this);
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = type.toString() + " " + "$" + id;
+        return str;
+    }
 }

@@ -17,4 +17,11 @@ public class DartDouble extends Number {
     public StringBuilder astImp() {
         return new StringBuilder("double").append("\n\t\t").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = String.valueOf(num);
+        return str;
+    }
 }

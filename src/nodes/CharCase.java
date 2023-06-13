@@ -21,4 +21,10 @@ public class CharCase extends Case{
         str.append("\n\t\t").append(caseBody.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "case " + "\"" + str + "\"" + ':' + caseBody.codeGenerationImp();
+        return str;
+    }
 }

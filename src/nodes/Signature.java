@@ -33,4 +33,11 @@ public class Signature extends Node{
         str.append("\n\t\t").append(arguments.astImp());
         return  str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = id + "(" + arguments.codeGenerationImp() + ")";
+        return str ;
+    }
 }

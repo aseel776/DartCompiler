@@ -32,4 +32,18 @@ public class NamedArguments extends Arguments{
         }
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String str = "(";
+         for (int i = 0; i < args.size(); i++){
+            if(i == args.size() - 1){
+                str = str.concat(args.get(i).codeGenerationImp());
+            }else {
+                str = str.concat(args.get(i).codeGenerationImp() + ", ");
+            }
+        }
+        str = str.concat(")");
+        return str;
+
+    }
 }
