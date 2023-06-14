@@ -32,4 +32,18 @@ public class Row extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String classes []= {"d-flex", "flex-column"}; 
+
+        String top= Utils.setCommentWidgetName("Row", this.hashCode());
+
+        top.concat( "<div"+ Utils.setClassesNames(classes) +">" );
+        Utils.printLine(top);
+        top.concat( rowAtts.codeGenerationImp());
+        Utils.printLine(top);
+        top.concat("</div>");
+        return top;
+    }
 }

@@ -38,4 +38,15 @@ public  class Column_rowAtts extends Parameters {
         }
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+
+        String top= Utils.setCommentWidgetName("Column_rowAtts", this.hashCode());
+
+        for (int i = 0; i < column_rowAtt.size(); i++) {
+            top = top.concat(column_rowAtt.get(i).codeGenerationImp() );
+            Utils.printLine(top);
+        }
+        return top ;
+    }
 }

@@ -20,5 +20,12 @@ public  class Column_row_Children extends Column_rowAtt{
         str.append("\n\t\t").append(list.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String top= Utils.setCommentWidgetName("Column_row_Children", this.hashCode());
+        top.concat(list.codeGenerationImp());
+        return top;
+    }
+
 }
 
