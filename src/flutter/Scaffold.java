@@ -34,13 +34,11 @@ public class Scaffold extends Component {
 
     @Override
     public String codeGenerationImp() {
-        String str = "<div " + Utils.setWidgetName("Scaffold", this.hashCode()) + " >";
-        Utils.printLine(str);
+        String top = Utils.setCommentWidgetName("Scaffold", this.hashCode()) ;
         if (scaffoldAtts != null) {
-            str.concat(scaffoldAtts.codeGenerationImp());
-            Utils.printLine(str);
+            top.concat(scaffoldAtts.codeGenerationImp());
+            Utils.printLine(top);
         }
-        str.concat("</div>");
-        return str;
+        return top;
     }
 }

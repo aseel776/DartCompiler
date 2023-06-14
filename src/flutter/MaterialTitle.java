@@ -24,9 +24,9 @@ public class MaterialTitle extends MaterialAppAtt {
 
     @Override
     public String codeGenerationImp() {
-        String top = "<h1"+ Utils.setWidgetName("MaterialTitle", this.hashCode())+  ">";
-        top.concat(title);
-        top.concat("</h1> ");
+        String top = Utils.setCommentWidgetName("MaterialTitle", this.hashCode());
+        
+        top.concat("<h1>" + title + "</h1>");
         Utils.printLine(top);
         return top;
     }

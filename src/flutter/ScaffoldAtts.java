@@ -43,11 +43,13 @@ public class ScaffoldAtts extends Parameters {
 
     @Override
     public String codeGenerationImp() {
-        String classes []= {"w-100", "h-100"}; // 'w-100 h-100'  to get full parent width and hight
-        String top = "<div " + Utils.setClassesNames(classes) + Utils.setWidgetName("ScaffoldAtts", this.hashCode())+ ">"; 
+        String top = Utils.setCommentWidgetName("ScaffoldAtts", this.hashCode());
+        String classes[] = { "w-100", "h-100" }; // 'w-100 h-100' to get full parent width and hight
+        
+        top.concat("<div " + Utils.setClassesNames(classes) + ">");
         Utils.printLine(top);
         for (int i = 0; i < atts.size(); i++) {
-            top = top.concat(atts.get(i).codeGenerationImp() );
+            top = top.concat(atts.get(i).codeGenerationImp());
             Utils.printLine(top);
         }
         top.concat("</div>");

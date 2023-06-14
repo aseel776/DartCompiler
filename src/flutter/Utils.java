@@ -2,8 +2,12 @@
 package flutter;
 
 public class Utils {
-    public static String setWidgetName(String name, Integer code) {
-        return "name=' " + name + " " + code + "'";
+    public static String printLine(String str) {
+        return str.concat("\n");
+    }
+
+    public static String setCommentWidgetName(String name, Integer code) {
+        return printLine("<!-- name:" + name + " code:" + code + "-->");
     }
 
     public static String setClassName(String name) {
@@ -18,10 +22,6 @@ public class Utils {
         }
         top.append("'");
         return top.toString();
-    }
-
-    public static String printLine(String str) {
-        return str.concat("\n");
     }
 
     public static String setClassNameByJs(String className) {

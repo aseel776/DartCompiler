@@ -25,13 +25,10 @@ public class ScaffoldBody extends ScaffoldAtt {
 
     @Override
     public String codeGenerationImp() {
-
-        String top = "<div " + Utils.setWidgetName("ScaffoldBody", this.hashCode())+" >" ;
-        Utils.printLine(top);
+        String top = Utils.setCommentWidgetName("ScaffoldBody", this.hashCode());
+  
         top.concat(object.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
-
+      
         return top;
     }
 }
