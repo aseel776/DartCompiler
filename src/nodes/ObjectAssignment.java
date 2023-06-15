@@ -1,9 +1,10 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTableInstance;
 
 public class ObjectAssignment extends Assignment {
     public String objectId;
@@ -13,11 +14,13 @@ public class ObjectAssignment extends Assignment {
         this.objectId = objectId;
 
     }
-    public void SemanticCheck(String objectId, int line){
+    public void check(int line){
+        Type type = Type.object;
+        int parentHash = SymbolTableTraveller.currentNode.objectHash;
         //checking if the object is defined
-        SymbolTableInstance symbolTableInstance1 = new SymbolTableInstance(objectId, AntlrToNode.currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck1 = SymbolTable.semanticErrorsCheck(symbolTableInstance1);
-        if (!errorCheck1.a) {
+        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(objectId, parentHash, "", line, type);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(symbolTableInstance);
+        if (!errorCheck.a) {
            AntlrToNode.semanticErrors.add("Error: variable " + objectId + " at line " + line + " is not defined");
         }
     }

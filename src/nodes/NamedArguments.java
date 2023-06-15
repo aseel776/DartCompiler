@@ -11,6 +11,13 @@ public class NamedArguments extends Arguments{
     }
 
     @Override
+    public void check(int line) {
+        for (Argument arg: args) {
+            arg.check(line);
+        }
+    }
+
+    @Override
     public String toString() {
         String namedArgs = "({";
         for (int i = 0; i < args.size(); i++){

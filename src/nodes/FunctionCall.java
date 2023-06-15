@@ -1,9 +1,11 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
+import utils.TypeIdentifier;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTableInstance;
 
 public class FunctionCall extends Statement{
 
@@ -17,12 +19,17 @@ public class FunctionCall extends Statement{
         this.parameters = parameters;
 
     }
-    public void SemanticCheck(String id, int line){
+    public void check(int line){
+        Type returnType = TypeIdentifier.getReturnType(this);
         //checking if the function is defined
-        SymbolTableInstance symbolTableInstance2 = new SymbolTableInstance(id, 0, "", line);
-        Pair<Boolean, Integer> errorCheck2 = SymbolTable.semanticErrorsCheck(symbolTableInstance2);
-        if(!errorCheck2.a){
-            AntlrToNode.semanticErrors.add("Error: function " + id + " at line " + line + " is not defined");
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "", line, returnType);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
+        if(!errorCheck.a){
+            currentElement = new SymbolTableInstance(id, SymbolTableTraveller.parentNode.objectHash, "", line, returnType);
+            Pair<Boolean, Integer> errorCheck2 = SymbolTableTraveller.checkIfDefined(currentElement);
+            if(!errorCheck2.a){
+                AntlrToNode.semanticErrors.add("Error: function " + id + " at line " + line + " is not defined");
+            }
         }
     }
 

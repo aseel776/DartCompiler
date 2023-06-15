@@ -1,9 +1,11 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableInstance;
 
 public class NamedConstructor extends ClassMethod{
 
@@ -21,9 +23,11 @@ public class NamedConstructor extends ClassMethod{
         }
 
     }
-    public void SemanticCheck(String classId,String id,int parentHash, int line){
-        SymbolTableInstance currentElement = new SymbolTableInstance(classId + '.' + id, parentHash, "Named Constructor", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+    public void check(int line){
+        Type type = Type.constructor;
+        int parentHash = SymbolTableTraveller.parentNode.objectHash;
+        SymbolTableInstance currentElement = new SymbolTableInstance(classId + '.' + id, parentHash, "Named Constructor", line, type);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
 
         if (errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: named constructor " + classId + "." + id + " at line " + line + " is already defined at line " + errorCheck.b);

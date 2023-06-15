@@ -1,9 +1,12 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
+import utils.TypeIdentifier;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableInstance;
 
 public class AbstractClassMethod extends ClassMethod{
 
@@ -13,9 +16,11 @@ public class AbstractClassMethod extends ClassMethod{
         this.signature = signature;
 
     }
-    public void SemanticCheck(Signature signature,int parentHash, int line){
-        SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, parentHash, "Abstract Function", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+    public void check(int line){
+        Type returnType = signature.returnType != null ? TypeIdentifier.getType(signature.returnType) : Type.dynamic;
+        int parentHash = SymbolTableTraveller.parentNode.objectHash;
+        SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, parentHash, "Abstract Function", line, returnType);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
         if (errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: class method " + signature.id + " at line " + line + " is already defined at line " + errorCheck.b);
         } else {

@@ -1,36 +1,38 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTableInstance;
 
 public class ObjectFunctionCall extends FunctionCall {
 
     public String objectId;
 
-    public ObjectFunctionCall(String objectId, Boolean await, String id, Parameters parameters){
+    public ObjectFunctionCall(String objectId, Boolean await, String id, Parameters parameters) {
         super(await, id, parameters);
         this.objectId = objectId;
     }
-    public void SemanticCheck(String objectId ,int line){
 
-
-        SymbolTableInstance symbolTableInstance1 = new SymbolTableInstance(objectId, AntlrToNode.currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck1 = SymbolTable.semanticErrorsCheck(symbolTableInstance1);
-        if(!errorCheck1.a){
-                 AntlrToNode.semanticErrors.add("Error: variable " + objectId + " at line " + line + "is not defined");
-                }
+    public void check(int line) {
+        Type type = Type.object;
+        int parentHash = SymbolTableTraveller.currentNode.objectHash;
+        //check if the object is defined
+        SymbolTableInstance currentElement = new SymbolTableInstance(objectId, parentHash, "", line, type);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
+        if (!errorCheck.a) {
+            AntlrToNode.semanticErrors.add("Error: variable " + objectId + " at line " + line + "is not defined");
         }
-
+    }
 
 
     @Override
     public String toString() {
-        if(await){
-            return "await" + " " + objectId + "." + id + parameters.toString() + ";" ;
-        }else {
-            return objectId + "." + id + parameters.toString() + ";" ;
+        if (await) {
+            return "await" + " " + objectId + "." + id + parameters.toString() + ";";
+        } else {
+            return objectId + "." + id + parameters.toString() + ";";
         }
     }
 

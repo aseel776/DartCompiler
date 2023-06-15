@@ -8,6 +8,9 @@ public class ZeroArguments extends Arguments{
     }
 
     @Override
+    public void check(int line){}
+
+    @Override
     public StringBuilder astImp() {
         return new StringBuilder("zero arguments");
     }

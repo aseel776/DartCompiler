@@ -1,24 +1,26 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTableInstance;
 
 public class DartObject extends Node {
 
     public String id;
     public Parameters parameters;
 
-    public DartObject(String id, Parameters parameters){
+    public DartObject(String id, Parameters parameters) {
         this.id = id;
         this.parameters = parameters;
 
     }
-    public void SemanticCheck(String id, int line){
-        //checking if the class is defined
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id, 0, "", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+
+    public void check(int line) {
+        // checking if the class is defined
+        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id, 0, "", line, Type.Class);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(symbolTableInstance);
         if (!errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: class " + id + " at line " + line + " is not defined");
         }

@@ -11,6 +11,12 @@ public class PositionalNamedArguments extends Arguments{
     }
 
     @Override
+    public void check(int line) {
+        posArgs.check(line);
+        namedArgs.check(line);
+    }
+
+    @Override
     public String toString() {
         String args = "(";
         for (int i = 0; i < posArgs.args.size(); i++){

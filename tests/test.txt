@@ -1,13 +1,41 @@
 class a{
-final int i =5;
-final int i=5;
+    int a1 = 0;
+    double a2 = a1;
+    String a3 = 'test';
+
+    int t2(){
+        int c = 0;
+        return c;
+    }
+
+    void tt(){
+        int c1 = t2();
+        String c2 = t2();
+    }
 }
 
-int x(){}
+class b extends a{
+    int a1;
+    String a2;
+    double a3;
+
+   void t1(){
+        int c1 = a1;
+        c1 = a2;
+        while(c1 > 0){
+            c1 = c1 + 2;
+        }
+   }
+}
+
+class c extends d{
+}
 
 void main(){
-
-   var aseel = new a();
-
-   var besan = x();
+    Object as = new a();
+    dynamic be = new b();
+    as = be;
+    be = 3;
+    be = no;
+    bool xx = 3;
 }

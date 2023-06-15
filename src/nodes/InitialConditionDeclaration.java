@@ -1,5 +1,13 @@
 package nodes;
 
+import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
+import utils.TypeIdentifier;
+import visitors.AntlrToNode;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableInstance;
+
 public class InitialConditionDeclaration extends InitialCondition{
 
     public String type;
@@ -11,6 +19,17 @@ public class InitialConditionDeclaration extends InitialCondition{
         this.id = id;
         this.value = value;
 
+    }
+
+    public void check(int line){
+        Type type_ = TypeIdentifier.getType(type);
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, SymbolTableTraveller.currentNode.objectHash, "Local Variable", line, type_);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
+        if (errorCheck.a) {
+            AntlrToNode.semanticErrors.add("Error: variable " + id + " at line " + line + " is already defined at line " + errorCheck.b);
+        } else {
+            SymbolTable.addNode(currentElement);
+        }
     }
 
     @Override

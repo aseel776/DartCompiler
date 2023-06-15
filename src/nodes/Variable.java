@@ -1,9 +1,11 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
+import utils.TypeIdentifier;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTableInstance;
 
 public class Variable extends Expression{
 
@@ -13,10 +15,16 @@ public class Variable extends Expression{
         this.id = id;
 
     }
-    public void SemanticCheck(String id, int line){
+    public void check(int line){
+        int parentHash = SymbolTableTraveller.currentNode.objectHash;
+        Type type = TypeIdentifier.getVarType(this, parentHash);
+        if(type == Type.undefined){
+            parentHash = SymbolTableTraveller.parentNode.objectHash;
+            type = TypeIdentifier.getVarType(this, parentHash);
+        }
         //checking if the variable is defined
-        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id, AntlrToNode.currentNode.objectHash, "", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(symbolTableInstance);
+        SymbolTableInstance symbolTableInstance = new SymbolTableInstance(id, parentHash, "", line, type);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(symbolTableInstance);
         if (!errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: variable " + id + " at line " + line + " is not defined");
         }

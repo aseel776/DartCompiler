@@ -1,9 +1,11 @@
 package nodes;
 
 import org.antlr.v4.runtime.misc.Pair;
+import symbolTable.SymbolTableTraveller;
+import utils.Type;
 import visitors.AntlrToNode;
-import visitors.SymbolTable;
-import visitors.SymbolTableInstance;
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableInstance;
 
 public class DartClass extends Node {
 
@@ -26,15 +28,27 @@ public class DartClass extends Node {
 
     }
 
-    public void SemanticCheck(String id, int line){
-        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "Class", line);
-        Pair<Boolean, Integer> errorCheck = SymbolTable.semanticErrorsCheck(currentElement);
+    public void check(int line) {
+        Type type = Type.Class;
+        if (superClass != null) {
+            // checking if the super class is defined
+            SymbolTableInstance superClassElement = new SymbolTableInstance(superClass, 0, "Class", 0, type);
+            Pair<Boolean, Integer> superClassExist = SymbolTableTraveller.checkIfDefined(superClassElement);
+            if (!superClassExist.a) {
+                AntlrToNode.semanticErrors.add("Error: class " + superClass + " at line " + line + " is not defined");
+            }
+        }
+        // checking if the class is defined
+        SymbolTableInstance currentElement = new SymbolTableInstance(id, 0, "Class", line, type);
+        Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
         if (errorCheck.a) {
-            AntlrToNode.semanticErrors.add("Error: class " + id + " at line " + line + " is already defined at line" + errorCheck.b);
+            AntlrToNode.semanticErrors
+                    .add("Error: class " + id + " at line " + line + " is already defined at line" + errorCheck.b);
         } else {
             SymbolTable.addNode(currentElement);
         }
     }
+
     @Override
     public String toString() {
         String wholeClass;
@@ -72,26 +86,4 @@ public class DartClass extends Node {
 
     }
 
-    // @Override
-    // public String codeGenerationImp() {
-    //     String str = """
-    //             <!DOCTYPE html>
-    //             <html lang="en">
-    //             <head>
-    //             <meta charset="UTF-8">
-    //             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //             <title>""";
-    //     str = str.concat(id);
-    //     str = str.concat("""
-    //             </title>
-    //             </head>
-    //             <body>""");
-    //     str = str.concat('\n' + classBody.codeGenerationImp());
-    //     str = str.concat("""
-    //             \n</body>
-    //             </html>
-    //             """);
-
-    //     return str;
-    // }
 }

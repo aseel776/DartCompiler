@@ -10,6 +10,13 @@ public class PositionalArguments extends Arguments{
     }
 
     @Override
+    public void check(int line) {
+        for (Argument arg: args) {
+            arg.check(line);
+        }
+    }
+
+    @Override
     public String toString() {
         String posArgs = "(";
         for (int i = 0; i < args.size(); i++){
