@@ -18,4 +18,28 @@ public class TextStyle extends TextAtt {
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("TextStyle", this.hashCode());
+        // TODO
+        // add class name in conditions 
+        String className;
+        if (style == "Italic")
+            className = "";
+        else if (style == "Bold")
+            className = "";
+        else
+            className = "";
+
+        top.concat("<script>");
+        Utils.printLine(top);
+        top.concat("var parentDiv = document.currentScript.parentNode;");
+        Utils.printLine(top);
+        top.concat("parentDiv." + Utils.setClassNameByJs(className));
+        Utils.printLine(top);
+        top.concat("</script>");
+        return top;
+
+    }
 }

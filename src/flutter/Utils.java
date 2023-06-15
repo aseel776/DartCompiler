@@ -27,4 +27,24 @@ public class Utils {
     public static String setClassNameByJs(String className) {
         return "classList.add('" + className + "'')";
     }
+
+      public static String getBootstrapColor(String flutterColorName) {
+            String[] flutterColor = {"Blue", "Gray", "Green", "Red", "Yellow", "Black", "White"};
+            String[] bootstrapColor = {"primary", "secondary", "success", "danger", "warning", "dark", "white"};
+
+            int index = -1;
+            for (int i = 0; i < flutterColor.length; i++) {
+                if (flutterColor[i].equalsIgnoreCase(flutterColorName)) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index >= 0 && index < bootstrapColor.length) {
+                return bootstrapColor[index];
+            } else {
+                return "null"; // Color not found
+            }
+        }
+
 }
