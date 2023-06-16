@@ -24,7 +24,7 @@ public class TextAtts_Color extends TextAtt {
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("TextAtts_color", this.hashCode());
-        top = Utils.addClassToParentElementByScript(top, Utils.getBootstrapColor(color));
+        top = Utils.addClassToParentElementByScript(top, "text-"+Utils.getBootstrapColor(color));
         return top;
     }
 }
