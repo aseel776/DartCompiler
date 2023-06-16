@@ -19,4 +19,5 @@ public class NavigationPushing extends Navigation{
         str.append("\n\t\t").append(page.astImp());
         return str;
     }
+    
 }

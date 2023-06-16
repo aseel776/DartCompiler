@@ -20,4 +20,10 @@ public class Button_OnTap_unnamedFunction extends Button_OnTap{
         str.append("\n\t\t").append(unnamedFunction.astImp());
         return str;
     }
+     @Override
+    public String codeGenerationImp() {
+        // functionCall.
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

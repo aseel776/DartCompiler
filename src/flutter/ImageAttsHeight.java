@@ -2,8 +2,9 @@ package flutter;
 
 import nodes.DartInteger;
 
-public class ImageAttsHeight extends ImageAtt{
-    DartInteger number ;
+public class ImageAttsHeight extends ImageAtt {
+    DartInteger number;
+
     public ImageAttsHeight(DartInteger number) {
         this.number = number;
     }
@@ -18,5 +19,10 @@ public class ImageAttsHeight extends ImageAtt{
         StringBuilder str = new StringBuilder("image height");
         str.append("\n\t\t").append(this);
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+       return "height='"+number+ "'";
     }
 }

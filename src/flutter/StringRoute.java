@@ -1,11 +1,11 @@
 package flutter;
 
-public class StringRoute extends Route{
+public class StringRoute extends Route {
 
     public String routeName;
 
-    public StringRoute(String name){
-        routeName =  name;
+    public StringRoute(String name) {
+        routeName = name;
     }
 
     @Override
@@ -18,5 +18,11 @@ public class StringRoute extends Route{
         StringBuilder str = new StringBuilder("route");
         str.append("\n\t\t").append(routeName);
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        return routeName;
+
     }
 }

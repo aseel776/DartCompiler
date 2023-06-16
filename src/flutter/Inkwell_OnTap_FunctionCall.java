@@ -20,4 +20,9 @@ public class Inkwell_OnTap_FunctionCall extends Inkwell_OnTap{
         str.append("\n\t\t").append(functionCall.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

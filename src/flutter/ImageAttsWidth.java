@@ -2,9 +2,9 @@ package flutter;
 
 import nodes.DartInteger;
 
-public class ImageAttsWidth extends ImageAtt{
+public class ImageAttsWidth extends ImageAtt {
 
-    DartInteger number ;
+    DartInteger number;
 
     public ImageAttsWidth(DartInteger number) {
         this.number = number;
@@ -20,5 +20,10 @@ public class ImageAttsWidth extends ImageAtt{
         StringBuilder str = new StringBuilder("image width");
         str.append("\n\t\t").append(this);
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        return "width='" + number + "'";
     }
 }

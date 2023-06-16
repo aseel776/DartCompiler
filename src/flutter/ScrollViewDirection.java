@@ -19,4 +19,16 @@ public class ScrollViewDirection extends ScrollViewAtt {
         str.append("\n\t\t").append(this);
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String top ="";
+        if(scrollDirection=="horizontal"){
+            top=top.concat("d-flex flex-column");
+        }else if (scrollDirection=="vertical"){
+            top=top.concat("d-flex flex-column");
+        }
+
+        return top; 
+
+    }
 }

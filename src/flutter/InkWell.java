@@ -33,4 +33,14 @@ public class InkWell extends Component{
         }
         return str;
     }
+      @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("InkWell", this.hashCode());
+        top.concat("<button>");
+        Utils.printLine(top);
+        top.concat(inkwellAtts.codeGenerationImp());
+        Utils.printLine(top);
+        top.concat("</button>");
+        return top;
+    }
 }

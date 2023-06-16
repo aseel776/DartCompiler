@@ -21,4 +21,9 @@ public class ObjectRoute extends Route{
         str.append("\n\t\t").append(route.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        return route.codeGenerationImp();
+    }
+
 }

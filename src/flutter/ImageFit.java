@@ -19,4 +19,10 @@ public class ImageFit extends ImageAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        // TODO add fit for image 
+        String style = "";
+        return style;
+    }
 }

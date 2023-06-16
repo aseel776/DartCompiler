@@ -9,15 +9,15 @@ public class InkwellAtts extends Parameters {
 
     List<InkWellAtt> atts;
 
-    public InkwellAtts(List<InkWellAtt> atts){
+    public InkwellAtts(List<InkWellAtt> atts) {
         this.atts = atts;
     }
 
-    public InkwellAtts(){
+    public InkwellAtts() {
         atts = new ArrayList<>();
     }
 
-    public void addAtt(InkWellAtt att){
+    public void addAtt(InkWellAtt att) {
         atts.add(att);
     }
 
@@ -37,9 +37,19 @@ public class InkwellAtts extends Parameters {
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("inkwell atts");
-        for (InkWellAtt att: atts){
+        for (InkWellAtt att : atts) {
             str.append("\n\t\t").append(att.astImp());
         }
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("InkwellAtts", this.hashCode());
+        for (int i = 0; i < atts.size(); i++) {
+            top = top.concat(atts.get(i).codeGenerationImp());
+            Utils.printLine(top);
+        }
+        return top;
     }
 }

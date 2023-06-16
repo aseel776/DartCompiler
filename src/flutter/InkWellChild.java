@@ -2,11 +2,11 @@ package flutter;
 
 import nodes.DartObject;
 
-public class InkWellChild extends InkWellAtt{
+public class InkWellChild extends InkWellAtt {
 
     public DartObject object;
 
-    public InkWellChild(DartObject object){
+    public InkWellChild(DartObject object) {
         this.object = object;
     }
 
@@ -20,5 +20,13 @@ public class InkWellChild extends InkWellAtt{
         StringBuilder str = new StringBuilder("inkwell child");
         str.append("\n\t\t").append(object.astImp());
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("InkWellChild", this.hashCode());
+        top.concat(object.codeGenerationImp());
+        Utils.printLine(top);
+        return top;
     }
 }
