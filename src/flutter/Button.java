@@ -2,24 +2,24 @@ package flutter;
 
 import nodes.ZeroParameters;
 
-public class Button extends Component{
+public class Button extends Component {
 
-    public ButtonAtts buttonAtts ;
+    public ButtonAtts buttonAtts;
 
     public Button(ButtonAtts buttonAtts) {
         super("Button", buttonAtts);
         this.buttonAtts = buttonAtts;
     }
 
-    public Button(){
+    public Button() {
         super("Button", new ZeroParameters());
     }
 
     @Override
     public String toString() {
-        if(buttonAtts != null){
+        if (buttonAtts != null) {
             return "new Button (\n" + buttonAtts.toString() + ")";
-        }else{
+        } else {
             return "new Button ()";
         }
     }
@@ -27,9 +27,20 @@ public class Button extends Component{
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("button");
-        if(buttonAtts != null){
+        if (buttonAtts != null) {
             str.append("\n\t\t").append(buttonAtts.astImp());
         }
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Button", this.hashCode());
+        top.concat("<button>");
+        Utils.printLine(top);
+        top.concat(buttonAtts.codeGenerationImp());
+        Utils.printLine(top);
+        top.concat("</button>");
+        return top;
     }
 }
