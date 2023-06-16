@@ -509,21 +509,21 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     @Override
     public Node visitReturnStatement(DartGrammarsParser.ReturnStatementContext ctx) {
         int line = ctx.start.getLine();
+        ReturnStatement returnStatement = new ReturnStatement(null);
         if (ctx.getChildCount() > 2) {
             if (ctx.getChild(1) == ctx.ID()) {
                 Variable value = new Variable(ctx.ID().getText());
                 value.check(line);
-                return new ReturnStatement(value);
+                returnStatement.returnValue = value;
             } else if (ctx.getChild(1) == ctx.CHARACTERS()) {
-                Characters value = new Characters(ctx.getChild(1).getText());
-                return new ReturnStatement(value);
+                returnStatement.returnValue = new Characters(ctx.getChild(1).getText());
             } else {
-                Node value = visit(ctx.getChild(1));
-                return new ReturnStatement(value);
+                returnStatement.returnValue = visit(ctx.getChild(1));
             }
-        } else {
-            return new ReturnStatement(null);
         }
+        int parentHash = SymbolTableTraveller.currentNode.objectHash;
+        returnStatement.check(line, parentHash);
+        return returnStatement;
     }
 
     @Override

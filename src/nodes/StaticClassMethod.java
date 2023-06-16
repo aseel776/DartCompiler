@@ -24,6 +24,7 @@ public class StaticClassMethod extends ClassMethod{
         Type returnType = signature.returnType != null ? TypeIdentifier.getType(signature.returnType) : Type.dynamic;
         int parentHash = SymbolTableTraveller.parentNode.objectHash;
         SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, parentHash, "Static Class Method", line, returnType);
+        currentElement.objectHash = this.hashCode();
         Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
         if (errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: class method " + signature.id + " at line " + line + " is already defined at line " + errorCheck.b);

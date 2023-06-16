@@ -22,6 +22,7 @@ public class Function extends Statement{
     public void check(int line){
         Type returnType = signature.returnType != null ? TypeIdentifier.getType(signature.returnType) : Type.dynamic;
         SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, 0, "Function", line, returnType);
+        currentElement.objectHash = this.hashCode();
         Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
         if (errorCheck.a) {
             AntlrToNode.semanticErrors.add("Error: function " + signature.id + " at line " + line + " is already defined at line " + errorCheck.b);

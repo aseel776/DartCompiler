@@ -40,9 +40,9 @@ public class TypeIdentifier {
 
     public static Type getNodeType(Node node) {
         if (node instanceof Variable) {
-            Type type = getVarType((Variable) node, SymbolTableTraveller.parentNode.objectHash);
-            if (type == Type.undefined) {
-                type = getVarType((Variable) node, SymbolTableTraveller.currentNode.objectHash);
+            Type type = getVarType((Variable) node, SymbolTableTraveller.currentNode.objectHash);
+            if (type == Type.undefined && SymbolTableTraveller.parentNode != null) {
+                type = getVarType((Variable) node, SymbolTableTraveller.parentNode.objectHash);
             }
             return type;
         } else if (node instanceof FunctionCall) {
@@ -69,7 +69,6 @@ public class TypeIdentifier {
     }
 
     public static Type getVarType(Variable var, int parentHash) {
-        Type type = Type.undefined;
         for (SymbolTableInstance instance : SymbolTable.table) {
             boolean cond1 = (instance.id.compareTo(var.id) == 0);
             boolean cond2 = (instance.parentHash == parentHash);
@@ -77,7 +76,7 @@ public class TypeIdentifier {
                 return instance.type;
             }
         }
-        return type;
+        return Type.undefined;
     }
 
     public static Type getReturnType(FunctionCall functionCall) {

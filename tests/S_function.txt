@@ -1,8 +1,30 @@
-func1(){
-int i;
-int i;
-
+int xx(){
+int v = 6;
+    return v;
 }
-func1(){
-if(4<1){}Z
+
+void main(){
+return 77;
+}
+
+String cc(){
+String aaaa = 'd';
+ return aaaa;
+}
+
+class ccccc{
+ int a = 0;
+
+static int xx(){
+    return a;
+}
+
+static void main(){
+return;
+}
+
+String cc(){
+ return 'sss';
+}
+
 }

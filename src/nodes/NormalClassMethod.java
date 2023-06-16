@@ -26,6 +26,7 @@ public class NormalClassMethod extends ClassMethod{
         Type returnType = signature.returnType != null ? TypeIdentifier.getType(signature.returnType) : Type.dynamic;
         int parentHash = SymbolTableTraveller.parentNode.objectHash;
         SymbolTableInstance currentElement = new SymbolTableInstance(signature.id, parentHash, "Class Method", line, returnType);
+        currentElement.objectHash = this.hashCode();
         Pair<Boolean, Integer> errorCheck = SymbolTableTraveller.checkIfDefined(currentElement);
 
         if (errorCheck.a) {

@@ -18,7 +18,7 @@ public class Variable extends Expression{
     public void check(int line){
         int parentHash = SymbolTableTraveller.currentNode.objectHash;
         Type type = TypeIdentifier.getVarType(this, parentHash);
-        if(type == Type.undefined){
+        if(type == Type.undefined && SymbolTableTraveller.parentNode != null){
             parentHash = SymbolTableTraveller.parentNode.objectHash;
             type = TypeIdentifier.getVarType(this, parentHash);
         }

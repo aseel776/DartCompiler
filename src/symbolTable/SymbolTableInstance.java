@@ -5,6 +5,7 @@ import utils.Type;
 public class SymbolTableInstance {
     public String id;
     public int parentHash;
+    public int objectHash;
     public String category;
     public int declarationLineNumber;
 
