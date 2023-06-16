@@ -21,4 +21,19 @@ public class SizedBoxWidth extends SizedBoxAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+      // TODO
+    // may remove css style and do another thing
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("SizedBoxWidth", this.hashCode());
+
+        top.concat("<script>");
+        Utils.printLine(top);
+        top.concat("var parentDiv = document.currentScript.parentNode;");
+        Utils.printLine(top);
+        top.concat("  parentDiv.style.width = '" + number + "px';");
+        Utils.printLine(top);
+        top.concat("</script>");
+        return top;
+    }
 }

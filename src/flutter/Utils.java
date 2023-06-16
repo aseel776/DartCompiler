@@ -28,23 +28,59 @@ public class Utils {
         return "classList.add('" + className + "'')";
     }
 
-      public static String getBootstrapColor(String flutterColorName) {
-            String[] flutterColor = {"Blue", "Gray", "Green", "Red", "Yellow", "Black", "White"};
-            String[] bootstrapColor = {"primary", "secondary", "success", "danger", "warning", "dark", "white"};
+    public static String addScript(String top, String classesName) {
+        top.concat("<script>");
+        printLine(top);
+        top.concat("var parentDiv = document.currentScript.parentNode;");
+        printLine(top);
+        top.concat("parentDiv.classList.add("  + classesName  + ")");
+        printLine(top);
+        top.concat("</script>");
+        return top;
+    }
 
-            int index = -1;
-            for (int i = 0; i < flutterColor.length; i++) {
-                if (flutterColor[i].equalsIgnoreCase(flutterColorName)) {
-                    index = i;
-                    break;
-                }
-            }
+    public static String addClassToParentElementByScript(String top, String className) {
+        return (addScript(top, className));
+    }
 
-            if (index >= 0 && index < bootstrapColor.length) {
-                return bootstrapColor[index];
-            } else {
-                return "null"; // Color not found
+    public static String addClassesToParentElementByScript(String top,String []className) {
+        
+        return (addScript(top,formatStringArray(className)));
+
+    }
+
+    /*
+     * input :["element 1" , "element 2 ", "element 2"]
+     * output :" 'element 1' ,'element 2' ,'element 3' "
+     */
+    public static String formatStringArray(String[] input) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < input.length; i++) {
+            sb.append("'").append(input[i]).append("'");
+            if (i != input.length - 1) {
+                sb.append(", ");
             }
         }
+        return sb.toString();
+    }
+
+    public static String getBootstrapColor(String flutterColorName) {
+        String[] flutterColor = { "Blue", "Gray", "Green", "Red", "Yellow", "Black", "White" };
+        String[] bootstrapColor = { "primary", "secondary", "success", "danger", "warning", "dark", "white" };
+
+        int index = -1;
+        for (int i = 0; i < flutterColor.length; i++) {
+            if (flutterColor[i].equalsIgnoreCase(flutterColorName)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index >= 0 && index < bootstrapColor.length) {
+            return bootstrapColor[index];
+        } else {
+            return "null"; // Color not found
+        }
+    }
 
 }

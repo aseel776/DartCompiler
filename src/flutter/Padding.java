@@ -2,7 +2,7 @@ package flutter;
 
 import nodes.ZeroParameters;
 
-public class Padding extends Component{
+public class Padding extends Component {
 
     public PaddingAtts paddingAtts;
 
@@ -11,15 +11,15 @@ public class Padding extends Component{
         this.paddingAtts = paddingAtts;
     }
 
-    public Padding(){
+    public Padding() {
         super("Padding", new ZeroParameters());
     }
 
     @Override
     public String toString() {
-        if(paddingAtts != null){
+        if (paddingAtts != null) {
             return "new Padding (\n" + paddingAtts.toString() + "\n)";
-        }else{
+        } else {
             return "new Padding ()";
         }
     }
@@ -27,9 +27,20 @@ public class Padding extends Component{
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("padding");
-        if(paddingAtts != null){
+        if (paddingAtts != null) {
             str.append("\n\t\t").append(paddingAtts.astImp());
         }
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Padding", this.hashCode());
+        top.concat("<div>");
+        Utils.printLine(top);
+        top.concat(paddingAtts.codeGenerationImp());
+        Utils.printLine(top);
+        top.concat("</div>");
+        return top;
     }
 }

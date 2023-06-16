@@ -8,15 +8,15 @@ public class PaddingAtts extends Parameters {
 
     public List<PaddingAtt> atts;
 
-    public PaddingAtts(List<PaddingAtt> atts){
+    public PaddingAtts(List<PaddingAtt> atts) {
         this.atts = atts;
     }
 
-    public PaddingAtts(){
+    public PaddingAtts() {
         atts = new ArrayList<>();
     }
 
-    public void addAtt(PaddingAtt att){
+    public void addAtt(PaddingAtt att) {
         atts.add(att);
     }
 
@@ -36,9 +36,20 @@ public class PaddingAtts extends Parameters {
     @Override
     public StringBuilder astImp() {
         StringBuilder str = new StringBuilder("padding atts");
-        for(PaddingAtt att: atts){
+        for (PaddingAtt att : atts) {
             str.append("\n\t\t").append(att.astImp());
         }
         return str;
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("PaddingAtts", this.hashCode());
+        for (int i = 0; i < atts.size(); i++) {
+            top = top.concat(atts.get(i).codeGenerationImp());
+            Utils.printLine(top);
+        }
+        return top;
+
     }
 }

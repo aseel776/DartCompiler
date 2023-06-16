@@ -22,4 +22,11 @@ public class PaddingChild extends PaddingAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+        @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("PaddingChild", this.hashCode());
+        top.concat(object.codeGenerationImp());
+        Utils.printLine(top);
+        return top; 
+    }
 }

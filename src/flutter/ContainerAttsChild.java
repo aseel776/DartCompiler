@@ -22,4 +22,10 @@ public class ContainerAttsChild extends ContainerAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ContainerAttsChild", this.hashCode());
+        top.concat(object.codeGenerationImp());
+        return top; 
+    }
 }
