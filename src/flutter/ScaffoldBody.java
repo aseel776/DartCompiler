@@ -27,7 +27,7 @@ public class ScaffoldBody extends ScaffoldAtt {
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("ScaffoldBody", this.hashCode());
   
-        top.concat(object.codeGenerationImp());
+        top =top.concat(object.codeGenerationImp());
       
         return top;
     }

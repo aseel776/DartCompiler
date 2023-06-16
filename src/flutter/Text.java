@@ -41,10 +41,10 @@ public class Text extends Component {
     public String codeGenerationImp() {
         
         String top  = Utils.setCommentWidgetName("Text", this.hashCode());
-        top.concat("<div>");
-        top.concat(text);
-        top.concat(textAtts.codeGenerationImp());
-        top.concat("</div>");
+        top =top.concat("<div>");
+        top =top.concat(text);
+        top =top.concat(textAtts.codeGenerationImp());
+        top =top.concat("</div>");
         return top; 
 
         

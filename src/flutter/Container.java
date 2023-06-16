@@ -36,11 +36,11 @@ public class Container extends Component {
     public String codeGenerationImp() {
 
         String top = Utils.setCommentWidgetName("Container", this.hashCode());
-        top.concat("<div>");
-        Utils.printLine(top);
-        top.concat(containerAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat("<div>");
+        top =top.concat("\n");
+        top =top.concat(containerAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
         return top;
 
     }

@@ -23,7 +23,7 @@ public class StackFit extends StackAtt{
     public String codeGenerationImp() {
         //TODO
         String top = Utils.setCommentWidgetName("stackFit", this.hashCode());
-        top.concat("<!-- not found in bootstrap-->");
+        top =top.concat("<!-- not found in bootstrap-->");
         return top;
     }
 }

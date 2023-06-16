@@ -40,7 +40,7 @@ public class Symmetric extends PaddingValues {
 
         for (int i = 0; i < horizontalOrVertical.size(); i++) {
             top = top.concat(horizontalOrVertical.get(i).codeGenerationImp());
-            Utils.printLine(top);
+            top =top.concat("\n");
         }
         return top;
 

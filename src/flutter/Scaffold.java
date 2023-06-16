@@ -36,8 +36,8 @@ public class Scaffold extends Component {
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("Scaffold", this.hashCode()) ;
         if (scaffoldAtts != null) {
-            top.concat(scaffoldAtts.codeGenerationImp());
-            Utils.printLine(top);
+            top =top.concat(scaffoldAtts.codeGenerationImp());
+            top =top.concat("\n");
         }
         return top;
     }

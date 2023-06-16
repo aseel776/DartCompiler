@@ -28,13 +28,13 @@ public class ContainerAttsWidth extends ContainerAtt {
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("ContainerAttsWidth", this.hashCode());
 
-        top.concat("<script>");
-        Utils.printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;");
-        Utils.printLine(top);
-        top.concat("  parentDiv.style.width = '" + number + "px';");
-        Utils.printLine(top);
-        top.concat("</script>");
+        top =top.concat("<script>");
+        top =top.concat("\n");
+        top =top.concat("var parentDiv = document.currentScript.parentNode;");
+        top =top.concat("\n");
+        top =top.concat("  parentDiv.style.width = '" + number + "px';");
+        top =top.concat("\n");
+        top =top.concat("</script>");
         return top;
     }
 }

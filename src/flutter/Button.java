@@ -36,11 +36,11 @@ public class Button extends Component {
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("Button", this.hashCode());
-        top.concat("<button>");
-        Utils.printLine(top);
-        top.concat(buttonAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</button>");
+        top =top.concat("<button>");
+        top =top.concat("\n");
+        top =top.concat(buttonAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</button>");
         return top;
     }
 }

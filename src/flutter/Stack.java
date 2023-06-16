@@ -39,11 +39,11 @@ public class Stack extends Component {
         
         String classes[] = { "position-relative", "" };
 
-        top.concat("<div" + Utils.setClassesNames(classes) + ">");
-        Utils.printLine(top);
-        top.concat(stackAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat("<div" + Utils.setClassesNames(classes) + ">");
+        top =top.concat("\n");
+        top =top.concat(stackAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
 
         return top;
 

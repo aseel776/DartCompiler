@@ -29,13 +29,13 @@ public class Utils {
     // }
 
     public static String addScript(String top, String classesName) {
-        top.concat("<script>");
-        printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;");
-        printLine(top);
-        top.concat("parentDiv.classList.add(" + classesName + ")");
-        printLine(top);
-        top.concat("</script>");
+        top=top.concat("<script>");
+        top=printLine(top);
+        top=top.concat("var parentDiv = document.currentScript.parentNode;");
+        top=printLine(top);
+        top=top.concat("parentDiv.classList.add(" + classesName + ")");
+        top=printLine(top);
+        top=top.concat("</script>");
         return top;
     }
 

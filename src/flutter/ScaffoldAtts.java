@@ -46,13 +46,13 @@ public class ScaffoldAtts extends Parameters {
         String top = Utils.setCommentWidgetName("ScaffoldAtts", this.hashCode());
         String classes[] = { "w-100", "h-100" }; // 'w-100 h-100' to get full parent width and hight
         
-        top.concat("<div " + Utils.setClassesNames(classes) + ">");
-        Utils.printLine(top);
+        top =top.concat("<div " + Utils.setClassesNames(classes) + ">");
+        top.concat("\n");
         for (int i = 0; i < atts.size(); i++) {
             top = top.concat(atts.get(i).codeGenerationImp());
-            Utils.printLine(top);
+            top =top.concat("\n");
         }
-        top.concat("</div>");
+        top =top.concat("</div>");
         return top;
     }
 

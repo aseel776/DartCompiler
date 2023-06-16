@@ -39,7 +39,7 @@ public class Costume extends PaddingValues {
         String top = Utils.setCommentWidgetName("CostumeValues", this.hashCode());
         for (int i = 0; i < costumeValues.size(); i++) {
             top = top.concat(costumeValues.get(i).codeGenerationImp());
-            Utils.printLine(top);
+            top =top.concat("\n");
         }
         return top;
 

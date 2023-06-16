@@ -37,11 +37,11 @@ public class SizedBox extends Component {
     public String codeGenerationImp() {
 
         String top = Utils.setCommentWidgetName("SizedBox", this.hashCode());
-        top.concat("<div class='d-block'>");
-        Utils.printLine(top);
-        top.concat(sizedBoxAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat("<div class='d-block'>");
+        top =top.concat("\n");
+        top =top.concat(sizedBoxAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
         return top;
 
     }

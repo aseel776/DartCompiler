@@ -45,7 +45,7 @@ public  class Column_rowAtts extends Parameters {
 
         for (int i = 0; i < column_rowAtt.size(); i++) {
             top = top.concat(column_rowAtt.get(i).codeGenerationImp() );
-            Utils.printLine(top);
+            top =top.concat("\n");
         }
         return top ;
     }

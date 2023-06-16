@@ -28,11 +28,11 @@ public class StackChildren extends StackAtt{
         // by add script inside there to inject class by js in parent (this div)
         String classes []= {"position-absolute", ""}; 
         String top = Utils.setCommentWidgetName("StackChildren", this.hashCode());
-        top.concat("<div"+Utils.setClassesNames(classes)+">");
-        Utils.printLine(top);
-        top.concat(list.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat("<div"+Utils.setClassesNames(classes)+">");
+        top =top.concat("\n");
+        top =top.concat(list.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
         return top;
     }
 }

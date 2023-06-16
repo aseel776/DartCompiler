@@ -27,13 +27,13 @@ public class SizedBoxHeight extends SizedBoxAtt {
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("SizedBoxHeight", this.hashCode());
 
-        top.concat("<script>");
-        Utils.printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;");
-        Utils.printLine(top);
-        top.concat("  parentDiv.style.height  = '" + number + "px';");
-        Utils.printLine(top);
-        top.concat("</script>");
+        top =top.concat("<script>");
+        top =top.concat("\n");
+        top =top.concat("var parentDiv = document.currentScript.parentNode;");
+        top =top.concat("\n");
+        top =top.concat("  parentDiv.style.height  = '" + number + "px';");
+        top =top.concat("\n");
+        top =top.concat("</script>");
         return top;
     }
 }

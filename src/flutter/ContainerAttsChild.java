@@ -25,7 +25,7 @@ public class ContainerAttsChild extends ContainerAtt{
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("ContainerAttsChild", this.hashCode());
-        top.concat(object.codeGenerationImp());
+        top =top.concat(object.codeGenerationImp());
         return top; 
     }
 }

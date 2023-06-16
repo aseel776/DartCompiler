@@ -23,7 +23,7 @@ public  class Column_row_Children extends Column_rowAtt{
     @Override
     public String codeGenerationImp() {
         String top= Utils.setCommentWidgetName("Column_row_Children", this.hashCode());
-        top.concat(list.codeGenerationImp());
+        top =top.concat(list.codeGenerationImp());
         return top;
     }
 

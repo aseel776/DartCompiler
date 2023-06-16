@@ -38,11 +38,11 @@ public class Column extends Component{
 
         String top= Utils.setCommentWidgetName("Column", this.hashCode());
 
-        top.concat( "<div"+ Utils.setClassesNames(classes) +">" );
-        Utils.printLine(top);
-        top.concat( columnAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat( "<div"+ Utils.setClassesNames(classes) +">" );
+        top =top.concat("\n");
+        top =top.concat( columnAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
 
         return top;
     }

@@ -44,7 +44,7 @@ public class Image extends Component {
         String atts =imageAtts.codeGenerationImp();
         top=top.concat("<img src='"+src+"'"+   atts +  " >");
         
-        // TODO Auto-generated method stub
+        // TODO Fit
         return null;
     }
 }

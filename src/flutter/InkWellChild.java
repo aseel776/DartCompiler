@@ -25,8 +25,8 @@ public class InkWellChild extends InkWellAtt {
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("InkWellChild", this.hashCode());
-        top.concat(object.codeGenerationImp());
-        Utils.printLine(top);
+        top =top.concat(object.codeGenerationImp());
+        top =top.concat("\n");
         return top;
     }
 }

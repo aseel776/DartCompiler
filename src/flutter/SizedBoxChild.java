@@ -25,7 +25,7 @@ public class SizedBoxChild extends SizedBoxAtt {
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("SizedBoxChild", this.hashCode());
-        top.concat(object.codeGenerationImp());
+        top =top.concat(object.codeGenerationImp());
         return top;
     }
 }

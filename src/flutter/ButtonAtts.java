@@ -47,7 +47,7 @@ public class ButtonAtts extends Parameters {
         String top = Utils.setCommentWidgetName("ButtonAtts", this.hashCode());
         for (int i = 0; i < atts.size(); i++) {
             top = top.concat(atts.get(i).codeGenerationImp());
-            Utils.printLine(top);
+            top =top.concat("\n");
         }
         return top;
     }

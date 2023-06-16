@@ -39,11 +39,11 @@ public class Row extends Component{
 
         String top= Utils.setCommentWidgetName("Row", this.hashCode());
 
-        top.concat( "<div"+ Utils.setClassesNames(classes) +">" );
-        Utils.printLine(top);
-        top.concat( rowAtts.codeGenerationImp());
-        Utils.printLine(top);
-        top.concat("</div>");
+        top =top.concat( "<div"+ Utils.setClassesNames(classes) +">" );
+        top =top.concat("\n");
+        top =top.concat( rowAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
         return top;
     }
 }
