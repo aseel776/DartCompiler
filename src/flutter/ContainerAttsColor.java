@@ -25,13 +25,8 @@ public class ContainerAttsColor extends ContainerAtt {
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("ContainerAttsColor", this.hashCode());
 
-        top.concat("<script>");
-        Utils.printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;");
-        Utils.printLine(top);
-        top.concat("parentDiv." + Utils.setClassNameByJs("bg-" + Utils.getBootstrapColor(color)));
-        Utils.printLine(top);
-        top.concat("</script>");
+        top=Utils.addClassToParentElementByScript(top, "bg-" + Utils.getBootstrapColor(color));
+
         return top;
     }
 }

@@ -23,15 +23,8 @@ public class CrossAxis extends Column_rowAtt{
     public String codeGenerationImp() {
         String top= Utils.setCommentWidgetName("CrossAxis", this.hashCode());
 
-        top.concat("<script>");
-        Utils.printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;" );
-        Utils.printLine(top);
         // Add a class to the parent element <div class="d-flex flex-column|row + ></div>"
-        top.concat("parentDiv."+Utils.setClassNameByJs("align-items-"+al) );
-        Utils.printLine(top);
-        top.concat("</script>");
-
+        top=Utils.addClassToParentElementByScript(top, "align-items-"+al);
         return top;
     }
 }

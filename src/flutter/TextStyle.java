@@ -22,23 +22,19 @@ public class TextStyle extends TextAtt {
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("TextStyle", this.hashCode());
-        // TODO
-        // add class name in conditions 
+      
+        
         String className;
         if (style == "Italic")
-            className = "";
+            className = "fst-italic";
         else if (style == "Bold")
-            className = "";
+            className = "fw-bold";
         else
-            className = "";
+            className = ""; //   // TODO fst-italic fw-bold
 
-        top.concat("<script>");
-        Utils.printLine(top);
-        top.concat("var parentDiv = document.currentScript.parentNode;");
-        Utils.printLine(top);
-        top.concat("parentDiv." + Utils.setClassNameByJs(className));
-        Utils.printLine(top);
-        top.concat("</script>");
+        top = Utils.addClassToParentElementByScript(top, className);
+
+
         return top;
 
     }

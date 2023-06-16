@@ -24,16 +24,16 @@ public class Utils {
         return top.toString();
     }
 
-    public static String setClassNameByJs(String className) {
-        return "classList.add('" + className + "'')";
-    }
+    // public static String setClassNameByJs(String className) {
+    //     return "classList.add('" + className + "'')";
+    // }
 
     public static String addScript(String top, String classesName) {
         top.concat("<script>");
         printLine(top);
         top.concat("var parentDiv = document.currentScript.parentNode;");
         printLine(top);
-        top.concat("parentDiv.classList.add("  + classesName  + ")");
+        top.concat("parentDiv.classList.add(" + classesName + ")");
         printLine(top);
         top.concat("</script>");
         return top;
@@ -43,9 +43,9 @@ public class Utils {
         return (addScript(top, className));
     }
 
-    public static String addClassesToParentElementByScript(String top,String []className) {
-        
-        return (addScript(top,formatStringArray(className)));
+    public static String addClassesToParentElementByScript(String top, String[] className) {
+
+        return (addScript(top, formatStringArray(className)));
 
     }
 
