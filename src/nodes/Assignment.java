@@ -21,7 +21,7 @@ public class Assignment extends Statement{
         int parentHash = SymbolTableTraveller.currentNode.objectHash;
         Type leftType = TypeIdentifier.getVarType(new Variable(id), parentHash);
         //if it's undefined, it might be a class member being accessed through a method
-        if(leftType == Type.undefined){
+        if(leftType == Type.undefined && SymbolTableTraveller.parentNode != null){
             parentHash = SymbolTableTraveller.parentNode.objectHash;
             leftType = TypeIdentifier.getVarType(new Variable(id), parentHash);
         }

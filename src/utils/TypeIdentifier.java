@@ -47,10 +47,6 @@ public class TypeIdentifier {
             return type;
         } else if (node instanceof FunctionCall) {
             return getReturnType((FunctionCall) node);
-        } else if (node instanceof ListItem) {
-            return getListType((ListItem) node);
-        } else if (node instanceof MapItem) {
-            return getMapType((MapItem) node);
         } else if (node instanceof DartObject) {
             return Type.object;
         } else if (node instanceof Characters) {
@@ -86,16 +82,6 @@ public class TypeIdentifier {
                 return instance.type;
             }
         }
-        return type;
-    }
-
-    public static Type getListType(ListItem item) {
-        Type type = Type.dynamic;
-        return type;
-    }
-
-    public static Type getMapType(MapItem item) {
-        Type type = Type.dynamic;
         return type;
     }
 
