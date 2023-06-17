@@ -21,4 +21,12 @@ public class ButtonChild extends ButtonAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ButtonChild", this.hashCode());
+        top.concat(object.codeGenerationImp());
+        top =top.concat("\n");
+        return top;
+    }
 }

@@ -30,4 +30,9 @@ public class PageArgsExtracting extends Statement {
     public StringBuilder astImp() {
         return new StringBuilder("data extracting");
     }
+
+    @Override
+    public String codeGenerationImp() {
+        return null;
+    }
 }

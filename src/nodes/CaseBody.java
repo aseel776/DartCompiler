@@ -32,4 +32,16 @@ public class CaseBody extends Block{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "\n";
+        for (Node n : statements) {
+            str = str.concat(n.codeGenerationImp() + "\n");
+        }
+        if(containsBreak){
+            str = str.concat("break;");
+        }
+        return str;
+    }
 }

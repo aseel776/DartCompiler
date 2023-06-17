@@ -47,4 +47,20 @@ public class ClassBody extends Node{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "{\n";
+        for (ClassAttribute att: attributes) {
+            str = str.concat(att.codeGenerationImp()) + "\n";
+        }
+        if(defaultConstructor != null){
+            str = str.concat(defaultConstructor.codeGenerationImp() + '\n');
+        }
+        for (ClassMethod method: methods) {
+            str = str.concat(method.codeGenerationImp() + '\n');
+        }
+        str = str.concat("}");
+        return str;
+    }
 }

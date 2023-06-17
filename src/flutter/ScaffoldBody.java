@@ -23,4 +23,13 @@ public class ScaffoldBody extends ScaffoldAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ScaffoldBody", this.hashCode());
+
+        top =top.concat(object.codeGenerationImp());
+
+        return top;
+    }
 }

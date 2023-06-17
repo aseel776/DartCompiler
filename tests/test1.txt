@@ -19,7 +19,7 @@ class productPage{
       );
     }
 
-    void build() {
+    build() {
         return new Scaffold(
             backgroundColor: Red,
             body:new Row(
@@ -69,6 +69,6 @@ class productPage{
 }
 
 void main(){
-    var page = new ProductPage();
+    var page = new productPage();
     page.build();
 }

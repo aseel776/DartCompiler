@@ -33,4 +33,16 @@ public  class Symmetric extends PaddingValues {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Symmetric", this.hashCode());
+
+        for (int i = 0; i < horizontalOrVertical.size(); i++) {
+            top = top.concat(horizontalOrVertical.get(i).codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+
+    }
 }

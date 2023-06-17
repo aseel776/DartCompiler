@@ -18,4 +18,11 @@ public class Bottom extends CostumeValues{
     public StringBuilder astImp() {
         return new StringBuilder(toString());
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Bottom", this.hashCode());
+        top = Utils.addClassToParentElementByScript(top, "pb-" + number);
+        return top;
+    }
 }

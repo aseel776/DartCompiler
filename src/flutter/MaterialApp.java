@@ -31,4 +31,16 @@ public class MaterialApp extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("MaterialApp", this.hashCode());
+        top = top.concat( "<body" + Utils.setClassName("container") + ">");
+        top = top.concat("\n");
+        top = top.concat(materialAppAtts.codeGenerationImp());
+        top = top.concat("\n");
+        top = top.concat("</body>");
+        return top;
+
+    }
 }

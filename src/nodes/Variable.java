@@ -39,4 +39,11 @@ public class Variable extends Expression{
     public StringBuilder astImp() {
         return new StringBuilder("variable").append("\n\t\t").append(id);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + id ;
+        return str;
+    }
 }

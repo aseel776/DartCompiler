@@ -36,4 +36,14 @@ public   class ContainerAtts extends Parameters {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ContainerAtts", this.hashCode());
+        for (int i = 0; i < containerAtt.size(); i++) {
+            top = top.concat(containerAtt.get(i).codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+    }
 }

@@ -1,4 +1,0 @@
-class cars {
-}
-class a extends cars{
-}

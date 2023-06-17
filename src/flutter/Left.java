@@ -19,4 +19,11 @@ public class Left extends CostumeValues{
     public StringBuilder astImp() {
         return new StringBuilder(toString());
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Left", this.hashCode());
+        top = Utils.addClassToParentElementByScript(top, "pl-" + number);
+        return top;
+    }
 }

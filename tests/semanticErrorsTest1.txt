@@ -1,4 +1,0 @@
-abstract class a{
-abstract func1();
-}
-

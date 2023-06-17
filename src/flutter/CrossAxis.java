@@ -19,4 +19,13 @@ public class CrossAxis extends Column_rowAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top= Utils.setCommentWidgetName("CrossAxis", this.hashCode());
+
+        // Add a class to the parent element <div class="d-flex flex-column|row + ></div>"
+        top=Utils.addClassToParentElementByScript(top, "align-items-"+al);
+        return top;
+    }
 }

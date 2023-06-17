@@ -37,4 +37,15 @@ public class Page extends Node {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        // TODO Auto-generated method stub
+        String top = "";
+
+        if(parameter!=null){
+
+        }
+        return null;
+    }
 }

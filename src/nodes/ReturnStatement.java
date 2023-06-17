@@ -6,7 +6,7 @@ import utils.Type;
 import utils.TypeIdentifier;
 import visitors.AntlrToNode;
 
-public class ReturnStatement extends Node{
+public class    ReturnStatement extends Node{
     public Node returnValue;
 
     public ReturnStatement(Node returnValue){
@@ -53,5 +53,17 @@ public class ReturnStatement extends Node{
     @Override
     public StringBuilder astImp() {
         return new StringBuilder("return").append("\n\t\t").append(returnValue.astImp());
+    }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        if(returnValue != null) {
+            str =  "return" + " " + returnValue.codeGenerationImp() + ";";
+            return str;
+        }else {
+            str =  "return;" ;
+            return str;
+        }
     }
 }

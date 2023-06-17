@@ -21,4 +21,14 @@ public class TextSize extends TextAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("TextSize", this.hashCode());
+        // TODO
+        // make function get number and return small-large
+        top = Utils.addClassToParentElementByScript(top, "text-" + number);
+
+        return top;
+    }
 }

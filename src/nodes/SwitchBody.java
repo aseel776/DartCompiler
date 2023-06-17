@@ -40,4 +40,15 @@ public class SwitchBody extends Node{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "{ \n";
+        for (Case aCase :cases) {
+            str = str.concat(aCase.codeGenerationImp() + '\n') ;
+        }
+        str = str.concat(defaultCase.codeGenerationImp() + '\n');
+        str = str.concat("}");
+        return str;
+    }
 }

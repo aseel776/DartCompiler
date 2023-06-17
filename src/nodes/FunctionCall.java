@@ -53,4 +53,11 @@ public class FunctionCall extends Statement{
         str.append("\n\t\t").append(parameters.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = id + parameters.codeGenerationImp() + ";" ;
+        return str;
+    }
 }

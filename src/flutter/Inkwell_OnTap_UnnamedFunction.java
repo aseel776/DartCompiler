@@ -21,4 +21,10 @@ public class Inkwell_OnTap_UnnamedFunction extends Inkwell_OnTap{
         str.append("\n\t\t").append(unnamedFunction.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

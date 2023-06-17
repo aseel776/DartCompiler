@@ -64,4 +64,13 @@ public class NormalClassMethod extends ClassMethod{
         str.append("\n\t\t").append(methodBody.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "function ";
+        str = str.concat(signature.codeGenerationImp() + " ") ;
+        str = str.concat(methodBody.codeGenerationImp());
+        return str;
+
+    }
 }

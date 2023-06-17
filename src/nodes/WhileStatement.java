@@ -22,4 +22,11 @@ public class WhileStatement extends Statement{
         str.append("\n\t\t").append(block.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "while" + '(' + condition.codeGenerationImp() + ')' + '\n' + block.codeGenerationImp();
+        return str;
+    }
 }

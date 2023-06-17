@@ -17,4 +17,9 @@ public class Characters extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("characters").append(text);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        return "\"" + text + "\"";
+    }
 }

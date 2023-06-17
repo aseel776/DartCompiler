@@ -20,4 +20,11 @@ public class TextAtts_Color extends TextAtt {
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("TextAtts_color", this.hashCode());
+        top = Utils.addClassToParentElementByScript(top, "text-"+Utils.getBootstrapColor(color));
+        return top;
+    }
 }

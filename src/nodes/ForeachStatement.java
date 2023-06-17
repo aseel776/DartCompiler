@@ -27,4 +27,11 @@ public class ForeachStatement extends Statement{
         str.append("\n\t\t").append(block.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "foreach" + '('  + list.codeGenerationImp() + " as " +"$" + id + ')' + '\n' + block.codeGenerationImp();
+        return str;
+    }
 }

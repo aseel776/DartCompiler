@@ -32,4 +32,21 @@ public class PositionalNamedParameters extends Parameters{
         str.append("\n\t\t").append(namedParameters.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "(...[";
+        for (int i = 0; i < positionalParameters.parameters.size(); i++){
+            str = str.concat(positionalParameters.parameters.get(i).codeGenerationImp() + ", ");
+        }
+        for (int i = 0; i < namedParameters.parameters.size(); i++){
+            if(namedParameters.parameters.size() == 1 || i == namedParameters.parameters.size() - 1){
+                str = str.concat(namedParameters.parameters.get(i).codeGenerationImp() + " ])");
+            }else {
+                str = str.concat(namedParameters.parameters.get(i).codeGenerationImp() + ", ");
+            }
+        }
+        return str;
+
+    }
 }

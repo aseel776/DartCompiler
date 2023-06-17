@@ -64,8 +64,7 @@ public class Start {
 
                 if (file.createNewFile()) {
                     fileWriter = new FileWriter(file);
-                    fileWriter.write(node.toString());
-                    // should be node.codeGeneration
+                    fileWriter.write(node.codeGenerationImp());
                     fileWriter.close();
                 }
             

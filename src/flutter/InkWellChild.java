@@ -21,4 +21,12 @@ public class InkWellChild extends InkWellAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("InkWellChild", this.hashCode());
+        top =top.concat(object.codeGenerationImp());
+        top =top.concat("\n");
+        return top;
+    }
 }

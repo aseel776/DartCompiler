@@ -28,5 +28,16 @@ public class MaterialHome extends MaterialAppAtt{
         str.append("\n\t\t").append(object.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("MaterialHome", this.hashCode());
+        top =top.concat("<div>");
+        top =top.concat("\n");
+        top =top.concat(object.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
+        return top;
+    }
 }
 

@@ -43,4 +43,11 @@ public class InitialConditionDeclaration extends InitialCondition{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "$" + id + '=' +value.codeGenerationImp();
+        return str;
+    }
 }

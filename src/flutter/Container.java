@@ -31,4 +31,17 @@ public class Container extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+
+        String top = Utils.setCommentWidgetName("Container", this.hashCode());
+        top =top.concat("<div>");
+        top =top.concat("\n");
+        top =top.concat(containerAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
+        return top;
+
+    }
 }

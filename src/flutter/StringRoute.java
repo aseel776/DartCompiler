@@ -19,4 +19,10 @@ public class StringRoute extends Route{
         str.append("\n\t\t").append(routeName);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        return routeName;
+
+    }
 }

@@ -41,4 +41,11 @@ public class AbstractClassMethod extends ClassMethod{
         str.append("\n\t\t").append(signature.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "abstract" + " " + "function" + " " + signature.codeGenerationImp();
+        return str;
+    }
 }

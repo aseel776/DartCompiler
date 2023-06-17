@@ -12,4 +12,11 @@ public class InitialConditionAssignment extends InitialConditionVariable{
     public String toString() {
         return id.toString() + '=' + value.toString();
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str ="";
+        str = "$" + id.codeGenerationImp() + '=' + value.codeGenerationImp();
+        return str ;
+    }
 }

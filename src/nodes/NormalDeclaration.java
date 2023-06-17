@@ -68,4 +68,13 @@ public class NormalDeclaration extends Declaration{
         return str;
     }
 
+    @Override
+    public String codeGenerationImp() {
+        String str = "public $" + id;
+        if (init != null) {
+            str = str.concat(' ' + init.codeGenerationImp());
+        }
+        return str;
+    }
+
 }

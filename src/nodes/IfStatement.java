@@ -58,4 +58,29 @@ public class IfStatement extends Statement{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        if(elseIfs != null){
+            String str = "";
+            str = "if" + '(' + condition.codeGenerationImp() + ')' + '\n' + block.codeGenerationImp() + '\n';
+            for (ElseIf elseIf :elseIfs) {
+                str = str.concat(elseIf.codeGenerationImp() + '\n');
+            }
+            str =str.concat(anElse.codeGenerationImp());
+            return str;
+        }
+        else{
+            if(anElse != null){
+                String str = "";
+                str = "if" + '(' + condition.codeGenerationImp() + ')' + '\n' + block.codeGenerationImp() + '\n'+ anElse.codeGenerationImp();
+                return str;
+            }
+            else{
+                String str = "";
+                str = "if" + '(' + condition.codeGenerationImp() + ')' + '\n' + block.codeGenerationImp();
+                return str;
+            }
+        }
+    }
 }

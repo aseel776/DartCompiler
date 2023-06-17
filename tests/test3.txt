@@ -13,7 +13,6 @@ class bmw extends cars{
 
     void newCarId(int id){
         this.carId = id;
-        return carId;
     }
 }
 

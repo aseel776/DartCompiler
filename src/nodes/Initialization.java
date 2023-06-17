@@ -18,10 +18,10 @@ public class Initialization extends Node{
         return new StringBuilder("initialization").append("\n\t\t").append(value.astImp());
     }
 
-    // @Override
-    // public String codeGenerationImp() {
-    //     String str = "= ";
-    //     str = str.concat(value.codeGenerationImp());
-    //     return str;
-    // }
+    @Override
+    public String codeGenerationImp() {
+        String str = "= ";
+        str = str.concat(value.codeGenerationImp());
+        return str;
+    }
 }

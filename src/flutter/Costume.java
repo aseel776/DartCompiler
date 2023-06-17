@@ -33,4 +33,15 @@ public class Costume extends PaddingValues {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("CostumeValues", this.hashCode());
+        for (int i = 0; i < costumeValues.size(); i++) {
+            top = top.concat(costumeValues.get(i).codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+
+    }
 }

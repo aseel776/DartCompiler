@@ -41,4 +41,14 @@ public  class StackAtts extends Parameters {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("StackAtts", this.hashCode());
+        for (int i = 0; i < stackAtt.size(); i++) {
+            top = top.concat(stackAtt.get(i).codeGenerationImp());
+            top = top.concat("\n");
+        }
+        return top;
+    }
 }

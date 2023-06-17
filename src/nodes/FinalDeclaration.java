@@ -65,4 +65,14 @@ public class FinalDeclaration extends Declaration{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "public $" + id;
+        if (init != null) {
+            str = str.concat(' ' + init.codeGenerationImp());
+        }
+        str = str.concat(";");
+        return str;
+    }
 }

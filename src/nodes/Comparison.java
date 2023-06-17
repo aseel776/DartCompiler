@@ -20,4 +20,13 @@ public class Comparison extends Node{
     public StringBuilder astImp() {
         return new StringBuilder(toString());
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = str.concat(left.codeGenerationImp());
+        str = str.concat(symbol);
+        str = str.concat(right.codeGenerationImp());
+        return str;
+    }
 }

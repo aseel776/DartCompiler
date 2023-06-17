@@ -20,4 +20,20 @@ public class ContainerAttsHeight extends ContainerAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    // CSS
+    // may remove css style and do another thing
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ContainerAttsHeight", this.hashCode());
+
+        top =top.concat("<script>");
+        top =top.concat("\n");
+        top =top.concat("var parentDiv = document.currentScript.parentNode;");
+        top =top.concat("\n");
+        top =top.concat("  parentDiv.style.height  = '" + number + "px';");
+        top =top.concat("\n");
+        top =top.concat("</script>");
+        return top;
+    }
 }

@@ -43,4 +43,14 @@ public class SizedBoxAtts extends Parameters {
         return str;
     }
 
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("SizedBoxAtts", this.hashCode());
+        for (int i = 0; i < atts.size(); i++) {
+            top = top.concat(atts.get(i).codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+    }
+
 }

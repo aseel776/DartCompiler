@@ -32,4 +32,15 @@ public class Padding extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Padding", this.hashCode());
+        top =top.concat("<div>");
+        top =top.concat("\n");
+        top =top.concat(paddingAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
+        return top;
+    }
 }

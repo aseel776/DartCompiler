@@ -20,4 +20,19 @@ public class SizedBoxHeight extends SizedBoxAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    // may remove css style and do another thing
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("SizedBoxHeight", this.hashCode());
+
+        top =top.concat("<script>");
+        top =top.concat("\n");
+        top =top.concat("var parentDiv = document.currentScript.parentNode;");
+        top =top.concat("\n");
+        top =top.concat("  parentDiv.style.height  = '" + number + "px';");
+        top =top.concat("\n");
+        top =top.concat("</script>");
+        return top;
+    }
 }

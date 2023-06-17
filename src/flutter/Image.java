@@ -37,4 +37,15 @@ public class Image extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Image", this.hashCode());
+
+        String atts =imageAtts.codeGenerationImp();
+        top=top.concat("<img src='"+src+"'"+   atts +  " >");
+
+        // TODO Fit
+        return null;
+    }
 }

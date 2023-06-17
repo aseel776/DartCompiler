@@ -41,4 +41,23 @@ public class ScrollViewAtts extends Parameters {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String direction = "";
+        String child = "";
+
+        for (int i = 0; i < atts.size(); i++) {
+            if (atts.get(i).getClass().getName() == "flutter.ScrollViewChild") {
+                direction = direction.concat(atts.get(i).codeGenerationImp());
+            } else if (atts.get(i).getClass().getName() == "flutter.ScrollViewDirection") {
+                child = child.concat(atts.get(i).codeGenerationImp());
+            }
+        }
+        String top = "<div class='" + direction + "'> \n";
+        top=top.concat(child+"\n");
+        top=top.concat("</div> \n");
+
+        return top;
+    }
 }

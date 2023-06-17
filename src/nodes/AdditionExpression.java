@@ -22,4 +22,11 @@ public class AdditionExpression extends Expression{
         str.append("\n\t\t").append(right.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = left.codeGenerationImp() + '+' + right.codeGenerationImp();
+        return str ;
+    }
 }

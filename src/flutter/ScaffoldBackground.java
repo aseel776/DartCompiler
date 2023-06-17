@@ -20,4 +20,14 @@ public class ScaffoldBackground extends ScaffoldAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String classes[] = { "bg-" + color + "')", "w-100", "h-100" };
+
+        String top = Utils.setCommentWidgetName("ScaffoldBackground", this.hashCode());
+        top = Utils.addClassesToParentElementByScript(top, classes);
+
+        return top;
+    }
 }

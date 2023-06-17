@@ -19,4 +19,13 @@ public class ContainerAttsColor extends ContainerAtt {
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("ContainerAttsColor", this.hashCode());
+
+        top=Utils.addClassToParentElementByScript(top, "bg-" + Utils.getBootstrapColor(color));
+
+        return top;
+    }
 }

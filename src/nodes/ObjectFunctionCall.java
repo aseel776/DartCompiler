@@ -44,4 +44,11 @@ public class ObjectFunctionCall extends FunctionCall {
         str.append("\n\t\t").append(parameters.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str;
+        str = "$" + objectId + "->" + id + parameters.codeGenerationImp() + ";";
+        return str;
+    }
 }

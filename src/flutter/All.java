@@ -20,6 +20,13 @@ public class All extends PaddingValues {
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("All", this.hashCode());
+        top = Utils.addClassToParentElementByScript(top, "p-" + number);
+        return top;
+    }
 }
 
 

@@ -41,4 +41,13 @@ public class ImageAtts extends Parameters {
         return str;
     }
 
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Image", this.hashCode());
+        for (int i = 0; i < atts.size(); i++) {
+            top = top.concat(atts.get(i).toString());
+        }
+        return top;
+    }
+
 }

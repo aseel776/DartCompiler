@@ -40,4 +40,19 @@ public class DartList extends Node{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "array(" ;
+        for(int i = 0; i < elements.size(); i++){
+            if(i == elements.size() - 1){
+                str = str.concat(elements.get(i).codeGenerationImp());
+            }else {
+                str = str.concat(elements.get(i).codeGenerationImp() + ',');
+            }
+        }
+        str = str.concat(")");
+        return str;
+
+    }
 }

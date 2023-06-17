@@ -17,4 +17,11 @@ public class DartInteger extends Number {
     public StringBuilder astImp() {
         return new StringBuilder("int").append("\n\t\t").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = String.valueOf(number);
+        return str;
+    }
 }

@@ -45,4 +45,14 @@ public class Argument extends Node{
     public StringBuilder astImp() {
         return new StringBuilder("arg ").append(this);
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        if(type != null){
+            str = str.concat(type + " ");
+        }
+        str = str.concat("$" + id);
+        return str;
+    }
 }

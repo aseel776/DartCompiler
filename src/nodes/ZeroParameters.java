@@ -11,4 +11,10 @@ public class ZeroParameters extends Parameters{
     public StringBuilder astImp() {
         return new StringBuilder("zero parameters");
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "()";
+        return str;
+    }
 }

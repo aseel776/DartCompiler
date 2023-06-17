@@ -17,4 +17,11 @@ public class DefaultCase extends Case{
         str.append("\n\t\t").append(caseBody.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "default:" + caseBody.codeGenerationImp();
+        return str;
+    }
 }

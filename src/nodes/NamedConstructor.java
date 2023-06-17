@@ -60,4 +60,16 @@ public class NamedConstructor extends ClassMethod{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "function" + " " + "__construct" + "(" + args.codeGenerationImp() + ")";
+        if(consBody != null){
+            str = str.concat(consBody.codeGenerationImp());
+        }else {
+            str = str.concat(";");
+        }
+        return str;
+    }
 }

@@ -31,5 +31,15 @@ public class Scaffold extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Scaffold", this.hashCode()) ;
+        if (scaffoldAtts != null) {
+            top =top.concat(scaffoldAtts.codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+    }
 }
 

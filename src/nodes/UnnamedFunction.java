@@ -31,4 +31,13 @@ public class UnnamedFunction extends Node{
         str.append("\n\t\t").append(functionBody.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = str.concat("function");
+        str = str.concat(arguments.codeGenerationImp());
+        str = str.concat(functionBody.codeGenerationImp());
+        return str;
+    }
 }

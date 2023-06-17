@@ -19,4 +19,12 @@ public class StackFit extends StackAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        //TODO
+        String top = Utils.setCommentWidgetName("stackFit", this.hashCode());
+        top =top.concat("<!-- not found in bootstrap-->");
+        return top;
+    }
 }

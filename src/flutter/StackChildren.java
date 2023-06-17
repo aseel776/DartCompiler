@@ -21,4 +21,19 @@ public class StackChildren extends StackAtt{
         str.append("\n\t\t").append(list.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        // TOOO
+        // add top and left right bottom when find there classes
+        // by add script inside there to inject class by js in parent (this div)
+        String classes []= {"position-absolute", ""};
+        String top = Utils.setCommentWidgetName("StackChildren", this.hashCode());
+        top =top.concat("<div"+Utils.setClassesNames(classes)+">");
+        top =top.concat("\n");
+        top =top.concat(list.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
+        return top;
+    }
 }

@@ -21,4 +21,9 @@ public class ImageAttsWidth extends ImageAtt{
         str.append("\n\t\t").append(this);
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        return "width='" + number + "'";
+    }
 }

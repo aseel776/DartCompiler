@@ -32,5 +32,21 @@ public class Stack extends Component{
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("Stack", this.hashCode());
+
+        String classes[] = { "position-relative", "" };
+
+        top =top.concat("<div" + Utils.setClassesNames(classes) + ">");
+        top =top.concat("\n");
+        top =top.concat(stackAtts.codeGenerationImp());
+        top =top.concat("\n");
+        top =top.concat("</div>");
+
+        return top;
+
+    }
 }
 

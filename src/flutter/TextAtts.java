@@ -40,4 +40,14 @@ public  class TextAtts extends Parameters {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String top = Utils.setCommentWidgetName("TextAtts", this.hashCode());
+        for (int i = 0; i < textAtt.size(); i++) {
+            top = top.concat(textAtt.get(i).codeGenerationImp());
+            top =top.concat("\n");
+        }
+        return top;
+    }
 }

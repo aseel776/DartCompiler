@@ -37,4 +37,17 @@ public class Text extends Component {
         }
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+
+        String top  = Utils.setCommentWidgetName("Text", this.hashCode());
+        top =top.concat("<div>");
+        top =top.concat(text);
+        top =top.concat(textAtts.codeGenerationImp());
+        top =top.concat("</div>");
+        return top;
+
+
+    }
 }

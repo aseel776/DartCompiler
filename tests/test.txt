@@ -36,6 +36,7 @@ void main(){
     dynamic be = new b();
     as = be;
     be = 3;
-    be = no;
+    be = as + no;
     bool xx = 3;
+    return xx;
 }

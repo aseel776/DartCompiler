@@ -24,4 +24,9 @@ public class SetState extends Statement {
         str.append("\n\t\t").append(block.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        return null;
+    }
 }

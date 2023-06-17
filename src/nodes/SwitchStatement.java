@@ -22,4 +22,11 @@ public class SwitchStatement extends Statement{
         str.append("\n\t\t").append(body.astImp());
         return str;
     }
+
+    @Override
+    public String codeGenerationImp() {
+        String str = "";
+        str = "switch" + '(' + id.codeGenerationImp() + ')' +  body.codeGenerationImp();
+        return str;
+    }
 }
