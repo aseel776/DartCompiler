@@ -36,6 +36,9 @@ public class Start {
     }
 
     public void generateCode() {
+
+        clearFiles();
+
         try {
 
             File mainFile = new File("code_generation/start.php");
@@ -76,6 +79,29 @@ public class Start {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void clearFiles(){
+        String dirPath = "code_generation/classes";
+        File dir = new File(dirPath);
+        File[] files = dir.listFiles();
+        for(File file: files){
+            file.delete();
+        }
+        dirPath = "code_generation/functions";
+        dir = new File(dirPath);
+        files = dir.listFiles();
+        for(File file: files){
+            file.delete();
+        }
+        dirPath = "code_generation";
+        dir = new File(dirPath);
+        files = dir.listFiles();
+        for(File file: files){
+            if(file.isFile() && file.getName().equalsIgnoreCase("bootstrap.css")){
+                file.delete();
+            }
         }
     }
 }

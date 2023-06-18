@@ -9,13 +9,11 @@ import symbolTable.SymbolTable;
 import symbolTable.SymbolTableInstance;
 
 public class StaticClassMethod extends ClassMethod{
-
-    public Signature signature;
     public Boolean isAsync;
     public FunctionBody methodBody;
 
     public StaticClassMethod(Signature signature, Boolean isAsync, FunctionBody methodBody){
-        this.signature = signature;
+        super(signature);
         this.isAsync = isAsync;
         this.methodBody = methodBody;
 

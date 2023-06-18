@@ -1,0 +1,16 @@
+class App extends StatelessWidget{
+
+    build(){
+        return new MaterialApp(
+            title: 'Test',
+            home: new Scaffold(
+                backgroundColor: Red,
+                body: new Text(
+                    'Text',
+                    textColor: Black,
+                )
+            )
+        );
+    }
+
+}

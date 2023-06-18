@@ -23,11 +23,13 @@ public class ScaffoldBackground extends ScaffoldAtt{
 
     @Override
     public String codeGenerationImp() {
-        String classes[] = { "bg-" + color + "')", "w-100", "h-100" };
+        // String classes[] = {/"bg-" + color + "')", "w-100", "h-100" };
 
         String top = Utils.setCommentWidgetName("ScaffoldBackground", this.hashCode());
-        top = Utils.addClassesToParentElementByScript(top, classes);
-
+        top=top.concat(" <script>");
+        top=top.concat(" var parentDiv =document.querySelector('body');");
+        top=top.concat("parentDiv.classList.add('bg-danger');");
+        top=top.concat("</script>");
         return top;
     }
 }

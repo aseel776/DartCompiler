@@ -1,6 +1,6 @@
 package symbolTable;
 
-import org.antlr.v4.runtime.misc.Pair;
+import utils.Type;
 
 import java.util.*;
 

@@ -15,6 +15,7 @@ public class NamedConstructor extends ClassMethod{
     public FunctionBody consBody;
 
     public NamedConstructor(String classId, String id, ConsArgs args, FunctionBody consBody){
+        super(new Signature("void", classId+'.'+id, new ZeroArguments()));
         this.classId = classId;
         this.id = id;
         this.args = args;

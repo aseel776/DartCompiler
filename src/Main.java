@@ -1,6 +1,9 @@
 import nodes.*;
 import java.io.IOException;
 
+import symbolTable.SymbolTable;
+import symbolTable.SymbolTableInstance;
+import utils.Type;
 import visitors.AntlrToStart;
 import antlr.DartGrammarsLexer;
 import antlr.DartGrammarsParser;
@@ -12,6 +15,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(String[] args){
+        SymbolTable.table.add(new SymbolTableInstance("StatelessWidget", 0, "Predefined Class", -1, Type.Class));
+        SymbolTable.table.add(new SymbolTableInstance("StatefulWidget", 0, "Predefined Class", -1, Type.Class));
         String source = "./tests/test3.txt";
         CharStream input;
         try {

@@ -7,7 +7,7 @@ public class Utils {
     }
 
     public static String setCommentWidgetName(String name, Integer code) {
-        return printLine("<!-- name:" + name + " code:" + code + "-->");
+        return ("<!-- name:" + name + " code:" + code + "--> \n");
     }
 
     public static String setClassName(String name) {
@@ -23,7 +23,15 @@ public class Utils {
         top.append("'");
         return top.toString();
     }
-
+    public static String setStyles(String[] classes) {
+        StringBuilder top = new StringBuilder();
+        top.append("style='");
+        for (String s : classes) {
+            top.append(s).append("; ");
+        }
+        top.append("'");
+        return top.toString();
+    }
     // public static String setClassNameByJs(String className) {
     //     return "classList.add('" + className + "'')";
     // }

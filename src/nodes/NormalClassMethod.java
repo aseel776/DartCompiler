@@ -1,5 +1,6 @@
 package nodes;
 
+import flutter.Component;
 import org.antlr.v4.runtime.misc.Pair;
 import symbolTable.SymbolTableTraveller;
 import utils.Type;
@@ -11,13 +12,12 @@ import symbolTable.SymbolTableInstance;
 public class NormalClassMethod extends ClassMethod{
 
     public Boolean overrides;
-    public Signature signature;
     public Boolean isAsync;
     public FunctionBody methodBody;
 
     public NormalClassMethod(Boolean overrides, Signature signature, Boolean isAsync, FunctionBody methodBody){
+        super(signature);
         this.overrides = overrides;
-        this.signature = signature;
         this.isAsync = isAsync;
         this.methodBody = methodBody;
 
@@ -67,10 +67,13 @@ public class NormalClassMethod extends ClassMethod{
 
     @Override
     public String codeGenerationImp() {
-        String str = "function ";
-        str = str.concat(signature.codeGenerationImp() + " ") ;
-        str = str.concat(methodBody.codeGenerationImp());
-        return str;
-
+        if(!(methodBody.returnStatement.returnValue instanceof Component)) {
+            String str = "function ";
+            str = str.concat(signature.codeGenerationImp() + " ");
+            str = str.concat(methodBody.codeGenerationImp());
+            return str;
+        }else{
+            return methodBody.returnStatement.returnValue.codeGenerationImp();
+        }
     }
 }

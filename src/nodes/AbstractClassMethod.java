@@ -10,10 +10,8 @@ import symbolTable.SymbolTableInstance;
 
 public class AbstractClassMethod extends ClassMethod{
 
-    public Signature signature;
-
     public AbstractClassMethod(Signature signature){
-        this.signature = signature;
+        super(signature);
 
     }
     public void check(int line){

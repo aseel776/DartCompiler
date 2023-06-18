@@ -35,7 +35,9 @@ public class MaterialApp extends Component{
     @Override
     public String codeGenerationImp() {
         String top = Utils.setCommentWidgetName("MaterialApp", this.hashCode());
-        top = top.concat( "<body" + Utils.setClassName("container") + ">");
+
+        top=  top.concat(" <link rel='stylesheet' href='code_generation/bootstrap.css'> \n");
+        top = top.concat( "<body " + Utils.setClassName("container") + ">");
         top = top.concat("\n");
         top = top.concat(materialAppAtts.codeGenerationImp());
         top = top.concat("\n");

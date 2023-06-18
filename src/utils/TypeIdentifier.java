@@ -2,7 +2,6 @@ package utils;
 
 import nodes.*;
 import symbolTable.SymbolTableTraveller;
-import visitors.AntlrToNode;
 import symbolTable.SymbolTable;
 import symbolTable.SymbolTableInstance;
 

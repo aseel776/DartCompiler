@@ -1,5 +1,6 @@
 package nodes;
 
+import flutter.Component;
 import symbolTable.SymbolTable;
 import symbolTable.SymbolTableInstance;
 import utils.Type;
@@ -58,10 +59,12 @@ public class    ReturnStatement extends Node{
     @Override
     public String codeGenerationImp() {
         String str = "";
-        if(returnValue != null) {
-            str =  "return" + " " + returnValue.codeGenerationImp() + ";";
+        if(returnValue != null && returnValue instanceof Component) {
+            return returnValue.codeGenerationImp();
+        } else if(returnValue != null) {
+            str = "return" + " " + returnValue.codeGenerationImp() + ";";
             return str;
-        }else {
+        } else{
             str =  "return;" ;
             return str;
         }

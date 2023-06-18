@@ -88,20 +88,44 @@ public class DartClass extends Node {
 
     @Override
     public String codeGenerationImp() {
-        String str = "" ;
-        if (isAbstract) {
-            str = "abstract class" + " " + id + " ";
-        } else {
-            str = "class" + " " + id + " ";
-        }
         if (superClass != null) {
-            str = str.concat("extends" + " " + superClass + " ");
+            if (superClass.equalsIgnoreCase("StatelessWidget") || superClass.equalsIgnoreCase("StatefulWidget")) {
+                ClassMethod build = null;
+                for (ClassMethod method : classBody.methods) {
+                    if (method.signature.id.equalsIgnoreCase("build")) {
+                        build = method;
+                    }
+                }
+                assert build != null;
+                return build.codeGenerationImp();
+            } else {
+                String str = "";
+                if (isAbstract) {
+                    str = "abstract class" + " " + id + " ";
+                } else {
+                    str = "class" + " " + id + " ";
+                }
+                str = str.concat("extends" + " " + superClass + " ");
+                if (impInterface != null) {
+                    str = str.concat("implements" + " " + impInterface + " ");
+                }
+                str = str.concat(classBody.codeGenerationImp());
+                return str;
+            }
         }
-        if (impInterface != null) {
-            str = str.concat("implements" + " " + impInterface + " ");
+        else{
+            String str = "";
+            if (isAbstract) {
+                str = "abstract class" + " " + id + " ";
+            } else {
+                str = "class" + " " + id + " ";
+            }
+            if (impInterface != null) {
+                str = str.concat("implements" + " " + impInterface + " ");
+            }
+            str = str.concat(classBody.codeGenerationImp());
+            return str;
         }
-        str = str.concat(classBody.codeGenerationImp());
-        return str;
     }
 
     // @Override

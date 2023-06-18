@@ -1,5 +1,6 @@
 package nodes;
 
+import flutter.Component;
 import org.antlr.v4.runtime.misc.Pair;
 import symbolTable.SymbolTableTraveller;
 import utils.Type;
@@ -53,20 +54,16 @@ public class Function extends Statement{
 
     @Override
     public String codeGenerationImp() {
-        String str = "<?php\n";
-        str = str.concat("function ");
-        str = str.concat(signature.codeGenerationImp());
-        str = str.concat(functionBody.codeGenerationImp());
-        str = str.concat("\n?>");
-        return str;
+        if(!(functionBody.returnStatement.returnValue instanceof Component)){
+            String str = "<?php\n";
+            str = str.concat("function ");
+            str = str.concat(signature.codeGenerationImp());
+            str = str.concat(functionBody.codeGenerationImp());
+            str = str.concat("\n?>");
+            return str;
+        } else{
+            return functionBody.returnStatement.codeGenerationImp();
+        }
+
     }
-    
-    // @Override
-    // public String codeGenerationImp() {
-    //     String str = "<?php\n";
-    //     str = str.concat(signature.codeGenerationImp());
-    //     str = str.concat(functionBody.codeGenerationImp());
-    //     str = str.concat("\n?>");
-    //     return str;
-    // }
 }

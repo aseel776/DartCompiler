@@ -14,10 +14,7 @@ public class NavigationPopping extends Navigation{
 
     @Override
     public String codeGenerationImp() {
-        String top="<button onclick='goBack()' style='color: #fff; background-color: #333;'>go Back</button>\n";
-        top=top.concat("<script> \n");
-        top=top.concat(" function goBack(){window.history.back()}\n");
-        top=top.concat("</script>\n");
-        return top;
+        return("<script>window.history.back()</script>\n");
+        
     }
 }
