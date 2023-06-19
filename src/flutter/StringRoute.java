@@ -22,7 +22,7 @@ public class StringRoute extends Route{
 
     @Override
     public String codeGenerationImp() {
-        return routeName;
+        return "code_generation/classes/"+ routeName+".php";
 
     }
 }

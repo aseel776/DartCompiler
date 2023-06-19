@@ -24,6 +24,6 @@ public class ObjectRoute extends Route{
 
     @Override
     public String codeGenerationImp() {
-        return route.codeGenerationImp();
+        return "code_generation/classes/"+ route.id+".php";
     }
 }

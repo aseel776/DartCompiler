@@ -83,23 +83,28 @@ public class Start {
     }
 
     public void clearFiles(){
+        System.out.println("firsy");
         String dirPath = "code_generation/classes";
         File dir = new File(dirPath);
         File[] files = dir.listFiles();
         for(File file: files){
+            System.out.println(file.getName());
             file.delete();
         }
         dirPath = "code_generation/functions";
         dir = new File(dirPath);
         files = dir.listFiles();
         for(File file: files){
+            System.out.println(file.getName());
             file.delete();
         }
         dirPath = "code_generation";
         dir = new File(dirPath);
         files = dir.listFiles();
         for(File file: files){
-            if(file.isFile() && file.getName().equalsIgnoreCase("bootstrap.css")){
+            System.out.println(file.getName());
+            if(file.isFile() && !file.getName().equalsIgnoreCase("bootstrap.css")){
+                System.out.println(file.getName());
                 file.delete();
             }
         }

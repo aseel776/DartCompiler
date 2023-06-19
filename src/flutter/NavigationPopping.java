@@ -14,7 +14,10 @@ public class NavigationPopping extends Navigation{
 
     @Override
     public String codeGenerationImp() {
-        return("<script>window.history.back()</script>\n");
+        return"""
+                    header('Location: ' . $_SERVER['HTTP_REFERER']); \n
+                    exit();
+             """;
         
     }
 }

@@ -1434,8 +1434,8 @@ public class AntlrToNode extends DartGrammarsBaseVisitor<Node> {
     public Node visitPage(DartGrammarsParser.PageContext ctx) {
         Route route = (Route) visit(ctx.route());
         if (ctx.getChildCount() > 1) {
-            Parameter parameter = (Parameter) visit(ctx.parameter());
-            return new Page(route, parameter);
+            DartMap map = (DartMap) visit(ctx.map());
+            return new Page(route, map);
         }
         return new Page(route);
     }

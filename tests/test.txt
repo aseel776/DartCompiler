@@ -15,11 +15,8 @@ class a{
 }
 
 class b extends a{
-    int a1;
-    String a2;
-    double a3;
 
-   void t1(){
+    void t1(){
         int c1 = a1;
         c1 = a2;
         while(c1 > 0){

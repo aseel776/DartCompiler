@@ -67,13 +67,17 @@ public class NormalClassMethod extends ClassMethod{
 
     @Override
     public String codeGenerationImp() {
-        if(!(methodBody.returnStatement.returnValue instanceof Component)) {
-            String str = "function ";
-            str = str.concat(signature.codeGenerationImp() + " ");
-            str = str.concat(methodBody.codeGenerationImp());
-            return str;
+        if(methodBody.returnStatement != null && methodBody.returnStatement.returnValue != null){
+            if(!(methodBody.returnStatement.returnValue instanceof Component)) {
+                String str = "function ";
+                str = str.concat(signature.codeGenerationImp() + " ");
+                str = str.concat(methodBody.codeGenerationImp());
+                return str;
+            }else{
+                return methodBody.returnStatement.returnValue.codeGenerationImp();
+            }
         }else{
-            return methodBody.returnStatement.returnValue.codeGenerationImp();
+            return "return ;";
         }
     }
 }

@@ -509,7 +509,7 @@ navigation
     | POP                 # NavigationPopping
     ;
 page
-    : route (', args: ' parameter)?
+    : route (', args: ' map)?
     ;
 route
     : ID'.'ID           # StringRoute
